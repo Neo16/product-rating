@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dal\ProductRating.Dal.csproj" />
+    <ProjectReference Include="..\ProductRating.Model\ProductRating.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="ServiceInterfaces\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+</Project>
