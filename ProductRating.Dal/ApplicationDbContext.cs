@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProductRating.Model.Entities.Product;
-using ProductRating.Model.Entities.Product.Properties;
+using ProductRating.Model.Entities.Product.Attributes;
 using ProductRating.Model.Identity;
 using System;
 using System.Linq;
@@ -19,11 +19,13 @@ namespace ProductRating.Dal
 
         public virtual DbSet<Category> Categories { get; set; }
 
-        public virtual DbSet<ProductProperty> ProductProperty { get; set; }
+        public virtual DbSet<ProductAttribute> ProductProperty { get; set; }
 
-        public virtual DbSet<ProductPropertyStringValue> ProductPropertyStringValues { get; set; }
+        public virtual DbSet<ProductAttributeStringValue> ProductAttributeStringValues { get; set; }
 
-        public virtual DbSet<ProductPropertyIntValue> ProductPropertyIntValues { get; set; }
+        public virtual DbSet<ProductAttributeIntValue> ProductAttributeIntValues { get; set; }
+
+        public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

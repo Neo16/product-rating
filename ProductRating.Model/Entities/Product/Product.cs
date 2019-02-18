@@ -22,6 +22,6 @@ namespace ProductRating.Model.Entities.Product
 
         public Guid CategoryId { get; set; }
 
-        public ICollection<ProductPropertyValue> PropertyValues { get; set; }
+        public ICollection<ProductAttributeValue> PropertyValues { get; set; }
     }
 }

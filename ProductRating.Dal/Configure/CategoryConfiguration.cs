@@ -16,7 +16,7 @@ namespace ProductRating.Dal.Configure
                  .HasForeignKey(e => e.ParentId)
                  .OnDelete(DeleteBehavior.ClientSetNull);
 
-            builder.HasMany(e => e.PropertyTypes)
+            builder.HasMany(e => e.Attributes)
                .WithOne(e => e.Category)
                .HasForeignKey(e => e.CategoryId);
         }
