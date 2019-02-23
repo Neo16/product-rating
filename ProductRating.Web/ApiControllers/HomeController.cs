@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.ServiceInterfaces;
+using System.Threading.Tasks;
 
 namespace ProductRating.Controllers
 {
@@ -12,9 +13,9 @@ namespace ProductRating.Controllers
             this.productService = productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            productService.Test();
+            var result = await productService.Test();
             return Ok();
         }   
     }

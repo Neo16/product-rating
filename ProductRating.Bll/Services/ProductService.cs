@@ -19,16 +19,16 @@ namespace ProductRating.Bll.Services
        
         }
  
-        public async Task Test()
+        public async Task<List<Product>> Test()
         {
            List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
 
             filters.Add(e => e.Type == "ProductAttributeStringValue" && (e as ProductAttributeStringValue).StringValue == "Ez az érték");
             var query = FilterForStringAttributes(filters);
 
-            var result = query.ToList();
+            var result = await query.ToListAsync();
 
-            return;
+            return result;
         }
 
         //Todo tesztelni 1 

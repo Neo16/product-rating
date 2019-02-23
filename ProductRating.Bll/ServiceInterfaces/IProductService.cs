@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductRating.Model.Entities.Product;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,6 @@ namespace ProductRating.Bll.ServiceInterfaces
 {
     public interface IProductService
     {
-        Task Test();
+        Task<List<Product>> Test();
     }
 }
