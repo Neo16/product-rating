@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
+using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Product;
 using ProductRating.Model.Entities.Product.Attributes;
@@ -6,24 +8,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ProductRating.Bll.Services
 {
-    public class ProductService
-    {
-        private readonly ApplicationDbContext context;
-
-        public ProductService(ApplicationDbContext context)
+    public class ProductService : ServiceBase, IProductService
+    {        
+        public ProductService(ApplicationDbContext context) : base(context)
         {
-            this.context = context;
+       
         }
  
-        public void Test()
+        public async Task Test()
         {
            List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
 
-            filters.Add(e => e.Type == "string" && (e as ProductAttributeStringValue).StringValue == "asd");
-            FilterForStringAttributes(filters);
+            filters.Add(e => e.Type == "ProductAttributeStringValue" && (e as ProductAttributeStringValue).StringValue == "Ez az érték");
+            var query = FilterForStringAttributes(filters);
+
+            var result = query.ToList();
+
+            return;
         }
 
         //Todo tesztelni 1 

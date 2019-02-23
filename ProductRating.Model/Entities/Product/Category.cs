@@ -11,7 +11,7 @@ namespace ProductRating.Model.Entities.Product
 
         public Category Parent { get; set; }
 
-        public Guid ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         public ICollection<Category> Children { get; set; }
 
