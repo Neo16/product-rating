@@ -9,8 +9,4 @@
     <ProjectReference Include="..\ProductRating.Model\ProductRating.Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dtos\Product\Attributes\" />
-  </ItemGroup>
-
 </Project>

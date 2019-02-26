@@ -25,7 +25,7 @@ namespace ProductRating.Dal
 
         public virtual DbSet<ProductAttributeIntValue> ProductAttributeIntValues { get; set; }
 
-        public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
+       // public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -35,6 +35,8 @@ namespace ProductRating.Dal
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+//            builder.Ignore<ProductAttributeValue>();
 
             #region Identity_Table_Names
             builder.Entity<ApplicationUser>().ToTable("Users");

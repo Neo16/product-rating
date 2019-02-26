@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Product;
@@ -13,26 +14,27 @@ using System.Threading.Tasks;
 namespace ProductRating.Bll.Services
 {
     public class ProductService : ServiceBase, IProductService
-    {        
+    {
         public ProductService(ApplicationDbContext context) : base(context)
         {
-       
+
         }
- 
-        public async Task<List<Product>> Test()
+
+        public async Task<List<Product>> Test(ProductFilter filterDto)
         {
-           List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
+            List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
+            foreach (var stringFilter in filterDto.StringAttributeFilters)
+            {
+                filters.Add(e => e.Type == "ProductAttributeStringValue" && e.ProductAttribute.Name == stringFilter.AttributeName
+                        && (e as ProductAttributeStringValue).StringValue == stringFilter.Value);
+            }
 
-            filters.Add(e => e.Type == "ProductAttributeStringValue" && (e as ProductAttributeStringValue).StringValue == "Ez az érték");
-            var query = FilterForStringAttributes(filters);
-
+            var query = FilterForAttributes(filters);
             var result = await query.ToListAsync();
-
             return result;
         }
 
-        //Todo tesztelni 1 
-        IQueryable<Product> FilterForStringAttributes(List<Expression<Func<ProductAttributeValue, bool>>> filters)
+        IQueryable<Product> FilterForAttributes(List<Expression<Func<ProductAttributeValue, bool>>> filters)
         {
             var query = context.Products
                 .AsQueryable();
@@ -40,22 +42,8 @@ namespace ProductRating.Bll.Services
             foreach (var filter in filters)
             {
                 query = query.Where(e => e.PropertyValues.AsQueryable().Any(filter));
-            }    
+            }
             return query;
         }
-
-        //Todo tesztelni 2
-        ////Generikusan...
-        //IQueryable<Product> FilterForGenericAttributes(List<Expression<Func<ProductAttributeValue<string>, bool>>> filters)
-        //{
-        //    var query = context.Products
-        //        .AsQueryable();
-
-        //    foreach (var filter in filters)
-        //    {
-        //        query = query.Where(e => e.PropertyValues.OfType<ProductAttributeValue<string>>().AsQueryable().Any(filter));
-        //    }
-        //    return query;
-        //}
     }
 }
