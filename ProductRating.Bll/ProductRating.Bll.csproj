@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProductRating.Dal\ProductRating.Dal.csproj" />
     <ProjectReference Include="..\ProductRating.Model\ProductRating.Model.csproj" />
   </ItemGroup>

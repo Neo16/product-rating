@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Autofac;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,11 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using ProductRating.Bll.ServiceInterfaces;
-using ProductRating.Bll.Services;
+using ProductRating.Bll;
 using ProductRating.Dal;
 using ProductRating.Model.Identity;
-using System.Linq;
 
 namespace ProductRating
 {
@@ -41,20 +40,12 @@ namespace ProductRating
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);          
+        }
 
-            // Add application services.
-            // Todo, ehelyett autofac 
-            var assembly = typeof(IProductService).Assembly;
-            var serviceTypes = assembly.ExportedTypes
-               .Where(e => e.IsClass && e.IsPublic && !e.IsAbstract)
-               .Where(e => e.IsSubclassOf(typeof(ServiceBase)))
-               .ToList();
-
-            foreach (var serviceType in serviceTypes)
-            {
-                services.AddTransient(serviceType.GetInterface($"I{serviceType.Name}"), serviceType);
-            }
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new BllAutofacModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
