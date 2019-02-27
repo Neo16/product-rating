@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ProductRating.Bll;
 using ProductRating.Dal;
 using ProductRating.Model.Identity;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace ProductRating
 {
@@ -40,7 +41,13 @@ namespace ProductRating
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);          
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "ProductRating API" });
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -53,7 +60,7 @@ namespace ProductRating
             IApplicationBuilder app,
             IHostingEnvironment env,
             ApplicationDbContext context)
-        {
+        {        
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -66,19 +73,21 @@ namespace ProductRating
                 app.UseHsts();
             }
 
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
+            app.UseMvc();
             context.Seed();
         }
     }

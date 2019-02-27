@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace ProductRating.Controllers
 {
+    [ApiController]
+    [Route("Test")]
     public class HomeController : Controller
     {
         private readonly IProductService productService;
@@ -16,6 +18,7 @@ namespace ProductRating.Controllers
             this.productService = productService;
         }
 
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var result = await productService.Test(new ProductFilter()
