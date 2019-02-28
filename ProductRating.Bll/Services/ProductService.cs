@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using ProductRating.Bll.Dtos.Product;
+using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Product;
@@ -23,18 +24,22 @@ namespace ProductRating.Bll.Services
         public async Task<List<Product>> Test(ProductFilter filterDto)
         {
             List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
-            foreach (var stringFilter in filterDto.StringAttributeFilters)
+
+            var stringFilterAttributes = filterDto.Attributes.OfType<StringAttribute>();
+            foreach (var stringFilterAttr in stringFilterAttributes)
             {
-                filters.Add(e => e.Type == "ProductAttributeStringValue" && e.ProductAttribute.Name == stringFilter.AttributeName
-                        && (e as ProductAttributeStringValue).StringValue == stringFilter.Value);
+                filters.Add(e => e.Type == "ProductAttributeStringValue" && e.ProductAttribute.Name == stringFilterAttr.AttributeName
+                        && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value);
             }
+
+            //Todo int 
 
             var query = FilterForAttributes(filters);
             var result = await query.ToListAsync();
             return result;
         }
 
-        IQueryable<Product> FilterForAttributes(List<Expression<Func<ProductAttributeValue, bool>>> filters)
+        private IQueryable<Product> FilterForAttributes(List<Expression<Func<ProductAttributeValue, bool>>> filters)
         {
             var query = context.Products
                 .AsQueryable();

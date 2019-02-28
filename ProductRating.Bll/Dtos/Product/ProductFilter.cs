@@ -1,12 +1,9 @@
-﻿using ProductRating.Bll.Dtos.Product.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ProductRating.Bll.Dtos.Product
 {
     public class ProductFilter
     {
-        public List<StringAttribute> StringAttributeFilters { set; get; }       
+        public ICollection<AttributeBase> Attributes { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace ProductRating.Controllers
         {
             var result = await productService.Test(new ProductFilter()
             {
-                StringAttributeFilters = new List<StringAttribute>()
+                Attributes = new List<AttributeBase>()
                 {
                     new StringAttribute(){AttributeName = "asd", Value = "Ez az érték" }
                 }
