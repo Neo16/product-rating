@@ -17,5 +17,9 @@ namespace ProductRating.Bll.Dtos.Product
         public Guid CategoryId { get; set; }
 
         public ICollection<AttributeBase> Attributes { get; set; }
+
+        //Todo pictures
+
+        // stb... 
     }
 }

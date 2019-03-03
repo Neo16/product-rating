@@ -10,11 +10,11 @@ namespace ProductRating.Controllers
 {
     [ApiController]
     [Route("Test")]
-    public class HomeController : Controller
+    public class TestController : Controller
     {
         private readonly IProductService productService;
 
-        public HomeController(IProductService productService)
+        public TestController(IProductService productService)
         {
             this.productService = productService;
         }
