@@ -31,8 +31,9 @@ namespace ProductRating.Model.Entities.Products
 
         public int ScoreValue { get; set; }
 
-
         public Picture ThumbnailPicture { get; set; }
+
+        public Guid? ThumbnailPictureId { get; set; }
 
         public ICollection<Picture> Pictures { get; set; }
     }

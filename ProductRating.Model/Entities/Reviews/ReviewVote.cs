@@ -1,7 +1,5 @@
 ﻿using ProductRating.Model.Identity;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Model.Entities.Reviews
 {
@@ -13,6 +11,6 @@ namespace ProductRating.Model.Entities.Reviews
 
         public Guid UserId { get; set; }
 
-        public VoteType MyProperty { get; set; }
+        public VoteType VoteType { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ProductRating.Model.Entities.Products;
 using ProductRating.Model.Entities.Products.Attributes;
+using ProductRating.Model.Entities.Reviews;
 using ProductRating.Model.Identity;
 using System;
 using System.Linq;
@@ -25,7 +26,12 @@ namespace ProductRating.Dal
 
         public virtual DbSet<ProductAttributeIntValue> ProductAttributeIntValues { get; set; }
 
-       // public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
+        public virtual DbSet<Scorereview> Scores { get; set; }
+
+        public virtual DbSet<TextReview> Reviews { get; set; }
+
+        public virtual DbSet<Picture> Pictures { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

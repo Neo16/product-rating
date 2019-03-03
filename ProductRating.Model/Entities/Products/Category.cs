@@ -17,6 +17,10 @@ namespace ProductRating.Model.Entities.Products
 
         public ICollection<Product> Products { get; set; }
 
-        public ICollection<ProductAttribute> Attributes { get; set; }        
+        public ICollection<ProductAttribute> Attributes { get; set; }
+
+        public Picture ThumbnailPicture { get; set; }
+
+        public Guid? ThumbnailPictureId { get; set; }
     }
 }

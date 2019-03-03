@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.ServiceInterfaces;
@@ -21,13 +22,14 @@ namespace ProductRating.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var result = await productService.Test(new ProductFilter()
+            var result = await productService.Find(new ProductFilterDto()
             {
                 Attributes = new List<AttributeBase>()
                 {
                     new StringAttribute(){AttributeName = "asd", Value = "Ez az érték" }
                 }
-            });
+            }, 
+            new PaginationDto());
             return Ok();
         }
     }

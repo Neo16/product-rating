@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.ServiceInterfaces;
@@ -21,29 +23,46 @@ namespace ProductRating.Bll.Services
 
         }
 
-        public async Task<List<Product>> Test(ProductFilter filterDto)
+        public async Task<List<ProductHeaderDto>> Find(ProductFilterDto filter, PaginationDto pagination)
+        {
+            var attributeFilters = MapAttributeFilters(filter.Attributes);
+
+            var query = context.Products             
+             .AsQueryable();
+          
+            query = FilterForAttributes(attributeFilters, query);
+
+            //Todo filter for: category, brand etc 
+
+            var result = await query
+                .ProjectTo<ProductHeaderDto>()
+                .ToListAsync();
+            return result;
+        }
+
+        public Task<ProductDetailsDto> GetDetails(Guid productId)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<Expression<Func<ProductAttributeValue, bool>>> MapAttributeFilters(List<AttributeBase> filterDtoAttributes)
         {
             List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
 
-            var stringFilterAttributes = filterDto.Attributes.OfType<StringAttribute>();
+            var stringFilterAttributes = filterDtoAttributes.OfType<StringAttribute>();
             foreach (var stringFilterAttr in stringFilterAttributes)
             {
                 filters.Add(e => e.Type == "ProductAttributeStringValue" && e.ProductAttribute.Name == stringFilterAttr.AttributeName
                         && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value);
             }
 
-            //Todo int 
+            //Todo int... 
 
-            var query = FilterForAttributes(filters);
-            var result = await query.ToListAsync();
-            return result;
+            return filters;
         }
 
-        private IQueryable<Product> FilterForAttributes(List<Expression<Func<ProductAttributeValue, bool>>> filters)
+        private static IQueryable<Product> FilterForAttributes(List<Expression<Func<ProductAttributeValue, bool>>> filters, IQueryable<Product> query)
         {
-            var query = context.Products
-                .AsQueryable();
-
             foreach (var filter in filters)
             {
                 query = query.Where(e => e.PropertyValues.AsQueryable().Any(filter));

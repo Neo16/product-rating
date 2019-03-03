@@ -1,12 +1,9 @@
-﻿using ProductRating.Model.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using ProductRating.Model.Entities.Products;
 
 namespace ProductRating.Model.Entities.Reviews
 {
-    public class TextReview : IEntity
+    public class TextReview : ReviewBase, IEntity
     {
         public Guid Id { get; set; }
 
