@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProductRating.Model.Entities.Product
+namespace ProductRating.Model.Entities.Products
 {
     public class Category : IEntity
     {

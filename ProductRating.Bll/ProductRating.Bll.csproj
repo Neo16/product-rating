@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProductRating.Common\ProductRating.Common.csproj" />
     <ProjectReference Include="..\ProductRating.Dal\ProductRating.Dal.csproj" />
     <ProjectReference Include="..\ProductRating.Model\ProductRating.Model.csproj" />
   </ItemGroup>

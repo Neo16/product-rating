@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ProductRating.Model.Entities.Reviews;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProductRating.Model.Entities.Product
+namespace ProductRating.Model.Entities.Products
 {
     public class Product : IEntity
     {       
@@ -24,6 +25,15 @@ namespace ProductRating.Model.Entities.Product
 
         public ICollection<ProductAttributeValue> PropertyValues { get; set; }
 
-        //Todo add pictures 
+        public ICollection<TextReview> Reviews { get; set; }
+
+        public ICollection<Scorereview> Scores { get; set; }
+
+        public int ScoreValue { get; set; }
+
+
+        public Picture ThumbnailPicture { get; set; }
+
+        public ICollection<Picture> Pictures { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using ProductRating.Bll.Dtos.Product;
-using ProductRating.Model.Entities.Product;
+using ProductRating.Model.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Text;

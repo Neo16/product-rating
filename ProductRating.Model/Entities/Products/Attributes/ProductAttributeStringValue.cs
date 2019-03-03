@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProductRating.Model.Entities.Product.Attributes
+namespace ProductRating.Model.Entities.Products.Attributes
 {
     public class ProductAttributeStringValue : ProductAttributeValue
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProductRating.Model.Entities.Product;
-using ProductRating.Model.Entities.Product.Attributes;
+using ProductRating.Model.Entities.Products;
+using ProductRating.Model.Entities.Products.Attributes;
 using ProductRating.Model.Identity;
 using System;
 using System.Linq;
