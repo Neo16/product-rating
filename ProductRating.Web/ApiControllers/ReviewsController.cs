@@ -36,9 +36,6 @@ namespace ProductRating.Web.ApiControllers
         {
             await reviewService.Delete(reviewId);
             return Ok();
-        }      
-        
-
-        //GetForUser() -  az összes review amit a user adott (bejelentkezés kell)
+        } 
     }
 }

@@ -40,5 +40,11 @@ namespace ProductRating.Web.ApiControllers
                 UserName = user.UserName
             });
         }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
+        {
+            return Ok();
+        }
     }
 }
