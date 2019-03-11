@@ -1,30 +1,50 @@
-﻿using ProductRating.Bll.Dtos.Category;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.Services
 {
     public class CategoryService : ServiceBase, ICategoryService
     {
-        public CategoryService(ApplicationDbContext context) : base(context)
+        private readonly IMapper mapper;
+        private readonly MapperConfiguration mapperConfiguration;
+
+        public CategoryService(
+            ApplicationDbContext context,
+            IMapper mapper,
+            MapperConfiguration mapperConfiguration
+            ) : base(context)
         {
+            this.mapperConfiguration = mapperConfiguration;
+            this.mapper = mapper;
         }
 
-        public Task<List<CategoryHeaderDto>> GetMainCategories()
+        public async Task<List<CategoryHeaderDto>> GetMainCategories()
         {
-            throw new NotImplementedException();
+            return await context.Categories
+                .Include(e => e.Children)
+                .ProjectTo<CategoryHeaderDto>(mapperConfiguration)
+                .ToListAsync();                           
         }
-        public Task<List<CategoryHeaderDto>> GetChildCategoriesOf(Guid categoryId)
+        public async Task<List<CategoryHeaderDto>> GetChildCategoriesOf(Guid categoryId)
         {
-            throw new NotImplementedException();
+            return await context.Categories
+                .Include(e => e.Children)
+                .Where(e => e.ParentId == categoryId)
+                .ProjectTo<CategoryHeaderDto>(mapperConfiguration)
+                .ToListAsync();
         }
 
         public Task CreateCategory(CreateCategoryDto category)
         {
+            //Todo: 
             throw new NotImplementedException();
         }
     }

@@ -8,13 +8,15 @@ namespace ProductRating.Bll.ServiceInterfaces
 {
     public interface IReviewService
     {
-        Task Add(CreateEditTextReviewDto textReview);
+        Task AddScore(Guid userId, ScoreDto scoreDto);
 
-        Task Update(Guid reviewId, CreateEditTextReviewDto textReview);
+        Task AddReview(Guid userId, CreateEditTextReviewDto textReview);
 
-        Task Delete(Guid reviewId);
+        Task UpdateReview(Guid userId, Guid reviewId, CreateEditTextReviewDto textReview);
 
-        Task<List<TextReviewDto>> GetReviewsOfProduct(Guid productId);
+        Task DeleteReview(Guid userId, Guid reviewId);
+
+        Task<List<TextReviewDto>> GetReviewsOfProduct(Guid? userId, Guid productId);
 
         Task<List<TextReviewWithProductInfoDto>> GetReviewsMadeByUser(Guid userId);
     }

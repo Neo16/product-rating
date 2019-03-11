@@ -2,6 +2,7 @@
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Web.WebServices;
 using System;
 using System.Threading.Tasks;
 
@@ -13,13 +14,16 @@ namespace ProductRating.Web.ApiControllers
     {
         private readonly IProductService productService;
         private readonly IReviewService reviewService;
+        private readonly CurrentUserService currentUserService;
 
         public ProductsController(
             IProductService productService,
-            IReviewService reviewService)
+            IReviewService reviewService,
+            CurrentUserService currentUserService)
         {
             this.productService = productService;
             this.reviewService = reviewService;
+            this.currentUserService = currentUserService;
         }
 
         [HttpGet("find")]
@@ -39,7 +43,14 @@ namespace ProductRating.Web.ApiControllers
         [HttpGet("{productId}/reviews")]
         public async Task<IActionResult> Reviews(Guid productId)
         {
-            var reviews = await reviewService.GetReviewsOfProduct(productId);
+            Guid? userId = null;
+
+            if (currentUserService.User != null)
+            {
+                userId = currentUserService.User.Id;
+            }
+
+            var reviews = await reviewService.GetReviewsOfProduct(userId, productId);
             return Ok(reviews);
         }
     }

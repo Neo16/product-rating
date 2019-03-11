@@ -10,6 +10,11 @@ namespace ProductRating.Bll.Dtos.Review
 
         public string Text { get; set; }
 
-        //Todo Product data... 
+        public string ProductName { get; set; }
+
+        public string ProductBrandName { get; set; }
+
+        public string ProductCategoryName { get; set; }
+
     }
 }

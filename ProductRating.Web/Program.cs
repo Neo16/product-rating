@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Autofac.Extensions.DependencyInjection;
 
-namespace ProductRating
+namespace ProductRating.Web
 {
     public class Program
     {

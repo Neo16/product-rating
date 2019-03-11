@@ -13,7 +13,7 @@ using ProductRating.Dal;
 using ProductRating.Model.Identity;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace ProductRating
+namespace ProductRating.Web
 {
     public class Startup
     {
@@ -53,6 +53,7 @@ namespace ProductRating
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new BllAutofacModule());
+            builder.RegisterModule(new WebAutofacModule());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
