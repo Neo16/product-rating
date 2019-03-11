@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
+using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.ServiceInterfaces;
@@ -13,10 +14,14 @@ namespace ProductRating.Controllers
     public class TestController : Controller
     {
         private readonly IProductService productService;
+        private readonly ICategoryService categoryService;
 
-        public TestController(IProductService productService)
+        public TestController(
+            IProductService productService,
+             ICategoryService categoryService)
         {
             this.productService = productService;
+            this.categoryService = categoryService;
         }
 
         [HttpGet("")]
@@ -30,6 +35,16 @@ namespace ProductRating.Controllers
                 }
             }, 
             new PaginationDto());
+
+           await categoryService.CreateCategory(new CreateCategoryDto()
+            {
+               Name = "Játékok",
+               Attributes = new List<AttributeBase>()
+               {
+                   new StringAttribute() {AttributeName = "Méret"}
+               }
+            });
+            
             return Ok();
         }
     }

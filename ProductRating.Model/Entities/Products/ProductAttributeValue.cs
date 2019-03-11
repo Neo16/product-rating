@@ -12,10 +12,8 @@ namespace ProductRating.Model.Entities.Products
 
         public Guid ProductId { get; set; }
 
-        public ProductAttribute ProductAttribute { get; set; }
+        public ProductAttribute Attribute { get; set; }
 
-        public Guid ProductAttributeId { get; set; }  
-
-        public string Type  { get; set; }
+        public Guid AttributeId { get; set; }      
     }
 }

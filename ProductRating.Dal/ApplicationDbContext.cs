@@ -20,11 +20,9 @@ namespace ProductRating.Dal
 
         public virtual DbSet<Category> Categories { get; set; }
 
-        public virtual DbSet<ProductAttribute> ProductProperty { get; set; }
+        public virtual DbSet<ProductAttribute> ProductAttribute { get; set; }    
 
-        public virtual DbSet<ProductAttributeStringValue> ProductAttributeStringValues { get; set; }
-
-        public virtual DbSet<ProductAttributeIntValue> ProductAttributeIntValues { get; set; }
+        public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }   
 
         public virtual DbSet<Scorereview> Scores { get; set; }
 
@@ -42,7 +40,12 @@ namespace ProductRating.Dal
         {
             base.OnModelCreating(builder);
 
-//            builder.Ignore<ProductAttributeValue>();
+            builder.Entity<ProductAttributeInt>();
+            builder.Entity<ProductAttributeString>();
+
+            builder.Entity<ProductAttributeIntValue>();
+            builder.Entity<ProductAttributeStringValue>();
+
 
             #region Identity_Table_Names
             builder.Entity<ApplicationUser>().ToTable("Users");

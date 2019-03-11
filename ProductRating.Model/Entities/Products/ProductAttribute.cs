@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ProductRating.Model.Entities.Products
 {
-    public class ProductAttribute : IEntity
+    public abstract class ProductAttribute : IEntity
     {
         public Guid Id { get; set; }
 

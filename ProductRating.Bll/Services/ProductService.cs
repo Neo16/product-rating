@@ -1,4 +1,5 @@
-﻿using AutoMapper.QueryableExtensions;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using ProductRating.Bll.Dtos;
@@ -18,16 +19,23 @@ namespace ProductRating.Bll.Services
 {
     public class ProductService : ServiceBase, IProductService
     {
-        public ProductService(ApplicationDbContext context) : base(context)
-        {
+        private readonly IMapper mapper;
+        private readonly MapperConfiguration mapperConfiguration;
 
+        public ProductService(
+            ApplicationDbContext context,
+            IMapper mapper,
+            MapperConfiguration mapperConfiguration) : base(context)
+        {
+            this.mapperConfiguration = mapperConfiguration;
+            this.mapper = mapper;
         }
 
         public async Task<List<ProductHeaderDto>> Find(ProductFilterDto filter, PaginationDto pagination)
         {
             var attributeFilters = MapAttributeFilters(filter.Attributes);
 
-            var query = context.Products             
+            var query = context.Products               
              .AsQueryable();
           
             query = FilterForAttributes(attributeFilters, query);
@@ -35,7 +43,7 @@ namespace ProductRating.Bll.Services
             //Todo filter for: category, brand etc 
 
             var result = await query
-                .ProjectTo<ProductHeaderDto>()
+                .ProjectTo<ProductHeaderDto>(mapperConfiguration)
                 .ToListAsync();
             return result;
         }
@@ -52,7 +60,7 @@ namespace ProductRating.Bll.Services
             var stringFilterAttributes = filterDtoAttributes.OfType<StringAttribute>();
             foreach (var stringFilterAttr in stringFilterAttributes)
             {
-                filters.Add(e => e.Type == "ProductAttributeStringValue" && e.ProductAttribute.Name == stringFilterAttr.AttributeName
+                filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Name == stringFilterAttr.AttributeName
                         && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value);
             }
 

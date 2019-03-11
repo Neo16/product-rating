@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
+using ProductRating.Model.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +43,12 @@ namespace ProductRating.Bll.Services
                 .ToListAsync();
         }
 
-        public Task CreateCategory(CreateCategoryDto category)
+        public async Task CreateCategory(CreateCategoryDto category)
         {
-            //Todo: 
-            throw new NotImplementedException();
+            var dbCategory = mapper.Map<Category>(category);
+
+            context.Categories.Add(dbCategory);
+            await context.SaveChangesAsync();
         }
     }
 }

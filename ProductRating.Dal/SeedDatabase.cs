@@ -83,7 +83,7 @@ namespace ProductRating.Dal
                     new ProductAttributeStringValue()
                     {
                         StringValue = "Ez az érték",
-                        ProductAttribute = new ProductAttribute()
+                        Attribute = new ProductAttributeString()
                         {
                             Name = "asd",
                             CategoryId = context.Categories.First().Id
