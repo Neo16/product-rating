@@ -40,7 +40,7 @@ namespace ProductRating.Bll.Services
         {
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Issuer = "https://localhost:44381/",
+                Issuer = "productraing.example",
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfiguration.SigningKey)), SecurityAlgorithms.HmacSha256),
                 Subject = new ClaimsIdentity((await signInManager.CreateUserPrincipalAsync(user)).Claims),
             };

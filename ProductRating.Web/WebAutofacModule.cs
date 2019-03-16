@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Http;
 using ProductRating.Web.WebServices;
 
 namespace ProductRating.Web
@@ -9,6 +10,8 @@ namespace ProductRating.Web
         {
             builder.RegisterType<CurrentUserService>()
                   .AsSelf();
+            builder.RegisterType<HttpContextAccessor>()
+                  .As<IHttpContextAccessor>();
         }
     }
 }

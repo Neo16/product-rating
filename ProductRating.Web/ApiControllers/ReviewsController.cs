@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos.Review;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
@@ -9,6 +11,7 @@ namespace ProductRating.Web.ApiControllers
 {
     [ApiController]
     [Route("reviews")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ReviewsController : Controller
     {
         private readonly IReviewService reviewService;
