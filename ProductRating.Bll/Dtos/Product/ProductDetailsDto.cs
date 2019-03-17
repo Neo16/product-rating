@@ -6,6 +6,7 @@ namespace ProductRating.Bll.Dtos.Product
 {
     public class ProductDetailsDto
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
         public string BrandName { get; set; }
@@ -17,9 +18,9 @@ namespace ProductRating.Bll.Dtos.Product
         public Guid CategoryId { get; set; }
 
         public ICollection<AttributeBase> Attributes { get; set; }
+        
+        public List<string> Pictures { get; set; }
 
-        //Todo pictures
-
-        // stb... 
+        
     }
 }

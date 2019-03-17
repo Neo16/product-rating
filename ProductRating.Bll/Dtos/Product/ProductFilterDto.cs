@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductRating.Bll.Dtos.Product.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace ProductRating.Bll.Dtos.Product
@@ -11,8 +12,10 @@ namespace ProductRating.Bll.Dtos.Product
 
         public string TextSearch { get; set; }
 
-        public List<AttributeBase> Attributes { get; set; }
+        public List<IntAttribute> IntAttributes { get; set; }
 
-        public ProductOrder OrderBy { get; set; }
+        public List<StringAttribute> StringAttributes { get; set; }
+
+        public ProductOrder? OrderBy { get; set; }
     }
 }

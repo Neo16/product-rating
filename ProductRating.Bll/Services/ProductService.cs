@@ -33,14 +33,42 @@ namespace ProductRating.Bll.Services
 
         public async Task<List<ProductHeaderDto>> Find(ProductFilterDto filter, PaginationDto pagination)
         {
-            var attributeFilters = MapAttributeFilters(filter.Attributes);
+            var attributeFilters = MapAttributeFilters(filter);
 
             var query = context.Products               
              .AsQueryable();
           
+            //filter
             query = FilterForAttributes(attributeFilters, query);
 
-            //Todo filter for: category, brand etc 
+            if (filter.BrandId != null)
+            {
+                query = query.Where(e => e.BrandId == filter.BrandId.Value);
+            }
+            if (filter.CategoryId != null)
+            {
+                query = query.Where(e => e.CategoryId == filter.CategoryId.Value);
+            }
+            
+            //ordering 
+            if (filter.OrderBy != null)
+            {
+                switch (filter.OrderBy.Value)
+                {
+                    case ProductOrder.BestScore:
+                        query = query.OrderByDescending(e => e.ScoreValue);
+                        break;
+                    case ProductOrder.MostScore:
+                        query = query.OrderByDescending(e => e.Scores.Count);
+                        break;
+                    case ProductOrder.MostTextReview:
+                        query = query.OrderByDescending(e => e.Reviews.Count);
+                        break;
+                    case ProductOrder.Newest:
+                        query = query.OrderByDescending(e => e.CreatedAt);
+                        break;
+                }
+            }
 
             var result = await query
                 .ProjectTo<ProductHeaderDto>(mapperConfiguration)
@@ -48,23 +76,39 @@ namespace ProductRating.Bll.Services
             return result;
         }
 
-        public Task<ProductDetailsDto> GetDetails(Guid productId)
+        public async Task<ProductDetailsDto> GetDetails(Guid productId)
         {
-            throw new NotImplementedException();
+            var product =  await context.Products
+                .Include(e => e.Category)
+                .Include(e => e.Brand)
+                .Include(e => e.PropertyValues)
+                .ThenInclude(e => e.Attribute)
+                .Where(e => e.Id == productId)             
+                .FirstOrDefaultAsync();
+
+            return mapper.Map<ProductDetailsDto>(product);
         }
 
-        private List<Expression<Func<ProductAttributeValue, bool>>> MapAttributeFilters(List<AttributeBase> filterDtoAttributes)
+        private List<Expression<Func<ProductAttributeValue, bool>>> MapAttributeFilters(ProductFilterDto filter)
         {
             List<Expression<Func<ProductAttributeValue, bool>>> filters = new List<Expression<Func<ProductAttributeValue, bool>>>();
 
-            var stringFilterAttributes = filterDtoAttributes.OfType<StringAttribute>();
-            foreach (var stringFilterAttr in stringFilterAttributes)
+            if (filter.StringAttributes != null)
             {
-                filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Name == stringFilterAttr.AttributeName
-                        && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value);
+                foreach (StringAttribute stringFilterAttr in filter.StringAttributes)
+                {
+                    filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Name == stringFilterAttr.AttributeName
+                            && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value);
+                }
             }
-
-            //Todo int... 
+            if (filter.IntAttributes != null)
+            {
+                foreach (IntAttribute intFilterAttr in filter.IntAttributes)
+                {
+                    filters.Add(e => e is ProductAttributeIntValue && e.Attribute.Name == intFilterAttr.AttributeName
+                            && (e as ProductAttributeIntValue).IntValue == intFilterAttr.Value);
+                }
+            }          
 
             return filters;
         }

@@ -100,14 +100,14 @@ namespace ProductRating.Bll.Services
                .Select(e => new TextReviewDto()
                {
                    Id = e.Id,
-                   IsMine = (e.AuthorId == userId),
+                   IsMine = userId != null ? (Guid?)e.AuthorId == userId : false,
                    Text = e.Text,
                    WasDownvotedByMe =  userId != null 
-                            ? e.Votes.Any(v => v.VoteType == VoteType.Down && v.UserId == userId.Value)
+                            ? e.Votes != null && e.Votes.Any(v => v.VoteType == VoteType.Down && (Guid?)v.UserId == userId)
                             : false,
                    WasUpvotedByMe = userId != null
-                             ? e.Votes.Any(v => v.VoteType == VoteType.Up && v.UserId == userId)
-                             : false
+                            ? e.Votes != null && e.Votes.Any(v => v.VoteType == VoteType.Up && (Guid?)v.UserId == userId)
+                            : false
                })
                .ToListAsync();
         }

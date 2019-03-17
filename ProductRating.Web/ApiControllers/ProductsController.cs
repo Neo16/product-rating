@@ -26,7 +26,7 @@ namespace ProductRating.Web.ApiControllers
             this.currentUserService = currentUserService;
         }
 
-        [HttpGet("find")]
+        [HttpPost("find")]
         public async Task<IActionResult> Find([FromBody] ProductFilterDto filter, [FromQuery] PaginationDto pagination)
         {
             var productsResult = await productService.Find(filter, pagination);
