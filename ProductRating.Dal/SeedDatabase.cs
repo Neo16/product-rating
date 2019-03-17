@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ProductRating.Model.Entities.Products;
 using ProductRating.Model.Entities.Products.Attributes;
+using ProductRating.Model.Entities.Reviews;
 using ProductRating.Model.Identity;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,8 @@ namespace ProductRating.Dal
                     .CreateUsers()
                     .CreateCategories()
                     .CreateBrands()
-                    .CreateProducts();
+                    .CreateProducts()
+                    .CreateReviews(20);
             }
         }
 
@@ -121,6 +123,31 @@ namespace ProductRating.Dal
             context.Add(computer1);
             context.SaveChanges();
             return context;
+        }
+
+        private static ApplicationDbContext CreateReviews(this ApplicationDbContext context, int numberOfReviews)
+        {
+            var users = context.Users.ToList();
+            var products = context.Products.ToList();
+            var r = new Random();            
+
+            var reviews = Enumerable.Range(1, numberOfReviews)
+               .Select(e => new TextReview()
+               {
+                   AuthorId = users[r.Next(0,users.Count)].Id,
+                   ProductId = products[r.Next(0, products.Count)].Id,
+                   Mood = (ReviewMood)r.Next(1,2),
+                   CreatedAt = DateTime.Now.AddSeconds(1 - r.Next(50000)),
+                   Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
+                   "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
+                   " Eu turpis egestas pretium aenean pharetra magna ac placerat."                   
+               })
+               .ToList();
+
+            context.Reviews.AddRange(reviews);
+            context.SaveChanges();
+
+            return context;   
         }
     }
 }

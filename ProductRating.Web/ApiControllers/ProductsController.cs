@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers
@@ -39,11 +42,11 @@ namespace ProductRating.Web.ApiControllers
             var productResult = await productService.GetDetails(productId);
             return Ok(productResult);
         }
-
-        [HttpGet("{productId}/reviews")]
+        
+        [HttpGet("{productId}/reviews")]      
         public async Task<IActionResult> Reviews(Guid productId)
         {
-            Guid? userId = null;
+            Guid? userId = null;           
 
             if (currentUserService.User != null)
             {
