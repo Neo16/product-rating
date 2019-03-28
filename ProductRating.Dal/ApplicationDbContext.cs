@@ -31,6 +31,8 @@ namespace ProductRating.Dal
 
         public virtual DbSet<Picture> Pictures { get; set; }
 
+        public virtual DbSet<ReviewVote> ReviewVotes { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

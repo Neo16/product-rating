@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers

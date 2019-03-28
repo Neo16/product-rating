@@ -19,5 +19,9 @@ namespace ProductRating.Bll.ServiceInterfaces
         Task<List<TextReviewDto>> GetReviewsOfProduct(Guid? userId, Guid productId);
 
         Task<List<TextReviewWithProductInfoDto>> GetReviewsMadeByUser(Guid userId);
+
+        Task UpvoteReview(Guid userId, Guid reviewId);
+
+        Task DownVoteReview(Guid userId, Guid reviewId);
     }
 }

@@ -102,7 +102,7 @@ namespace ProductRating.Bll.Services
                    Id = e.Id,
                    IsMine = userId != null ? (Guid?)e.AuthorId == userId : false,
                    Text = e.Text,
-                   WasDownvotedByMe =  userId != null 
+                   WasDownvotedByMe = userId != null
                             ? e.Votes != null && e.Votes.Any(v => v.VoteType == VoteType.Down && (Guid?)v.UserId == userId)
                             : false,
                    WasUpvotedByMe = userId != null
@@ -110,6 +110,46 @@ namespace ProductRating.Bll.Services
                             : false
                })
                .ToListAsync();
+        }
+
+        public async Task UpvoteReview(Guid userId, Guid reviewId)
+        {
+            var dbReview = await context.Reviews
+             .Where(e => e.Id == reviewId)
+             .FirstOrDefaultAsync();
+
+            if (dbReview == null)
+                return;
+
+            var vote = new ReviewVote()
+            {
+                UserId = userId,
+                TextReviewId = dbReview.Id,
+                VoteType = VoteType.Up
+            };
+
+            context.ReviewVotes.Add(vote);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DownVoteReview(Guid userId, Guid reviewId)
+        {
+            var dbReview = await context.Reviews
+                .Where(e => e.Id == reviewId)
+                .FirstOrDefaultAsync();
+
+            if (dbReview == null)
+                return;
+
+            var vote = new ReviewVote()
+            {
+                UserId = userId,
+                TextReviewId = dbReview.Id,
+                VoteType = VoteType.Down
+            };
+
+            context.ReviewVotes.Add(vote);
+            await context.SaveChangesAsync();
         }
     }
 }

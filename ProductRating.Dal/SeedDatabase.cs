@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ProductRating.Common;
 using ProductRating.Model.Entities.Products;
 using ProductRating.Model.Entities.Products.Attributes;
 using ProductRating.Model.Entities.Reviews;
@@ -18,12 +19,45 @@ namespace ProductRating.Dal
             if (!context.Users.Any())
             {
                 context
+                    .CreateRoles()
                     .CreateUsers()
                     .CreateCategories()
                     .CreateBrands()
                     .CreateProducts()
                     .CreateReviews(20);
             }
+        }
+
+        private static ApplicationDbContext CreateRoles(this ApplicationDbContext context)
+        {
+            var r = new Random();
+            var adminRole = new ApplicationRole()
+            {
+                Name = RoleNames.ADMIN_ROLE,
+                NormalizedName = RoleNames.ADMIN_ROLE,
+                ConcurrencyStamp = r.Next().ToString(),                
+            };
+
+            var userRole = new ApplicationRole()
+            {
+                Name = RoleNames.USER_ROLE,
+                NormalizedName = RoleNames.USER_ROLE,
+                ConcurrencyStamp = r.Next().ToString(),
+            };
+
+            var ownerRole = new ApplicationRole()
+            {
+                Name = RoleNames.SHOP_OWNER_ROLE,
+                NormalizedName = RoleNames.SHOP_OWNER_ROLE,
+                ConcurrencyStamp = r.Next().ToString(),
+            };
+
+            context.Roles.Add(userRole);
+            context.Roles.Add(adminRole);
+            context.Roles.Add(ownerRole);
+
+            context.SaveChanges();
+            return context;
         }
 
         private static ApplicationDbContext CreateUsers(this ApplicationDbContext context)
@@ -33,14 +67,22 @@ namespace ProductRating.Dal
             {
                 Email = "user@productrating.com",
                 NormalizedEmail = "USER@PRODUCTRATING.COM",
-                UserName = "user@planny.com",
+                UserName = "user@productrating.com",
                 NormalizedUserName = "USER@PRODUCTRATING.COM",
                 EmailConfirmed = true,
                 SecurityStamp = "3543545345",
                 PhoneNumber = "+311124211",
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
+            
             context.Users.Add(user);
+            context.SaveChanges();
+
+            context.UserRoles.Add(new IdentityUserRole<Guid>() {
+                RoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id,
+                UserId = user.Id
+            });
+
             context.SaveChanges();
             return context;
         }

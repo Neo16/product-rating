@@ -51,6 +51,20 @@ namespace ProductRating.Web.ApiControllers
         {
             await reviewService.DeleteReview(currentUserService.User.Id, reviewId);
             return Ok();
-        } 
+        }
+
+        [HttpPost("upvote-review")]
+        public async Task<IActionResult> UpVoteTextReview(Guid reviewId)
+        {
+            await reviewService.UpvoteReview(currentUserService.User.Id, reviewId);
+            return Ok();
+        }
+
+        [HttpPost("downvote-review")]
+        public async Task<IActionResult> DownVoteTextReview(Guid reviewId)
+        {
+            await reviewService.DownVoteReview(currentUserService.User.Id, reviewId);
+            return Ok();
+        }
     }
 }

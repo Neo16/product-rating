@@ -12,5 +12,9 @@ namespace ProductRating.Model.Entities.Reviews
         public Guid UserId { get; set; }
 
         public VoteType VoteType { get; set; }
+
+        public TextReview TextReview { get; set; }
+
+        public Guid TextReviewId { get; set; }
     }
 }
