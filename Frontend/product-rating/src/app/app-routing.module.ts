@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from './core/components/layout/layout.component';
 import { CoreModule } from './core/core.module';
-import { ProfileModule } from './profile/profile.module';
+import { ProfileModule } from './features/profile/profile.module';
 
 const routes: Routes = [
   {

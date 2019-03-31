@@ -48,7 +48,7 @@ namespace ProductRating.Web
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();                
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -65,7 +65,10 @@ namespace ProductRating.Web
                     };
                 });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddCors();
+            services
+                .AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
@@ -85,7 +88,7 @@ namespace ProductRating.Web
                 c.AddSecurityRequirement(security);
             });
 
-           
+
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -99,7 +102,7 @@ namespace ProductRating.Web
             IApplicationBuilder app,
             IHostingEnvironment env,
             ApplicationDbContext context)
-        {        
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -122,6 +125,13 @@ namespace ProductRating.Web
                 c.RoutePrefix = string.Empty;
             });
             app.UseHttpsRedirection();
+
+            app.UseCors(builder =>
+            builder.AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials()
+                   .WithOrigins("http://localhost:4200")
+            );
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
