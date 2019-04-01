@@ -7,8 +7,8 @@ const routes: Routes = [
     { path: '', component: MyProfilePageComponent, canActivate: [AuthGuard] },   
   ];
   
-  @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
-  })
-  export class ProfileRoutingModule { }
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class ProfileRoutingModule { }

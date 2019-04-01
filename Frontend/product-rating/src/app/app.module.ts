@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { AcccountEffects } from './store/account-store/account.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchModule } from './features/search/search.module';
+import { ProductsModule } from './features/products/products.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     AppRoutingModule,
     CoreModule,
-    HttpClientModule
+    SearchModule,
+    HttpClientModule,
+    ProductsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

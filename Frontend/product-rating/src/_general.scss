@@ -1,0 +1,10 @@
+@import 'variables';
+
+body{
+    background-color: $app-background-color;    
+}
+%container-base{
+    background-color: $container-color;   
+    padding: 1rem;
+    margin-top: 0.8rem;    
+}
