@@ -26,7 +26,7 @@ import { TokenInterceptor } from './services/token.service';
     CoreRoutingModule,
     FormsModule,
     StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AcccountEffects]),
+    EffectsModule.forRoot([AcccountEffects]),    
   ],
   providers: [   
     AuthGuard,

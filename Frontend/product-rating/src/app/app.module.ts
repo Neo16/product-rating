@@ -10,6 +10,8 @@ import { AcccountEffects } from './store/account-store/account.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchModule } from './features/search/search.module';
 import { ProductsModule } from './features/products/products.module';
+import { RootStoreModule } from './store/root-store.module';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +24,7 @@ import { ProductsModule } from './features/products/products.module';
     CoreModule,
     SearchModule,
     HttpClientModule,
-    ProductsModule
+    ProductsModule   
   ],
   providers: [],
   bootstrap: [AppComponent]
