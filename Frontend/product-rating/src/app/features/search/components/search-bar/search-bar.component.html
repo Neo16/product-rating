@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label for="orderBy">Order by</label> 
                 <select class="form-control" id="orderBy" required>
-                    <option *ngFor="let type of productOrders | enumToArray" [value]="type">
+                    <option *ngFor="let type of productOrder | enumToArray" [value]="type">
                         {{productOrderDisplay[type]}}
                     </option>                   
                 </select>
@@ -27,7 +27,9 @@
             <div class="form-group">
                 <label for="order">Ordering</label> 
                 <select class="form-control" id="order" required>
-                    <!-- <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option> -->
+                    <option *ngFor="let type of order | enumToArray" [value]="type">
+                        {{orderDisplay[type]}}
+                    </option>  
                 </select>
             </div> 
         </div>

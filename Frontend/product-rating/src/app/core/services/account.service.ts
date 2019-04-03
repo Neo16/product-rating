@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/User';
 import { Observable } from 'rxjs';
-import { tap, map} from 'rxjs/operators';
-
 
 @Injectable()
 export class AccountService {

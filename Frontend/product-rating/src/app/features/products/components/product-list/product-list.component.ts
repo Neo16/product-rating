@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductCellData } from 'src/app/models/ProductCellData';
+import { ProductService } from '../../services/product.service';
+import { Store } from '@ngrx/store';
+import { SearchState } from 'src/app/store/search-store/search.state';
 
 @Component({
   selector: 'app-product-list',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductListComponent implements OnInit {
 
-  constructor() { }
+  productCells: ProductCellData[] = []; 
 
-  ngOnInit() {
+  constructor(
+    private productService: ProductService,
+    private store: Store<SearchState>
+  ) { }
+
+  ngOnInit() {  
+    this.productService.searchProducts({})
+      .subscribe(result => {       
+        console.log(result)
+        this.productCells = result;      
+      }); 
   }
-
 }
