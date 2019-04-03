@@ -1,19 +1,29 @@
+import { Order } from 'src/app/models/Order';
+import { ProductOrder } from 'src/app/models/ProductOrder';
+import { IntAttribute } from 'src/app/models/IntAttribute';
+import { StringAttribute } from 'src/app/models/StringAttribute';
+
 export interface SearchState {  
    categoryId: string | null;
    brandId: string | null;
-   price: {
-       minimum: number | null,
-       maximum: number | null
-   };
-   orderBy: 'BEST_SCORE' | 'MOST_REVIEW' | 'PRICE';
+   minimumPrice: number | null,
+   maximumPrice: number | null,   
+   orderBy: ProductOrder | null
+   order: Order | null,  
+   intAttributes: IntAttribute[];
+   stringAttributes: StringAttribute[];
 }
 
 export const initialState: SearchState = {
    categoryId: null,
    brandId: null,
-   price: {
-       minimum: 0,
-       maximum: null
-   },
-   orderBy: 'BEST_SCORE'
+   minimumPrice: 0,
+   maximumPrice: null,
+   orderBy: ProductOrder.BestScore, 
+   order: Order.Desc,
+   intAttributes: [],
+   stringAttributes : []
 };
+
+
+

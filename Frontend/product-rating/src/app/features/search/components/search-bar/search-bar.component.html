@@ -1,5 +1,37 @@
 <div class="search-bar-container">
 
-search bar
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label for="minimumPrice">Minimum price</label> 
+                <input id="minimumPrice" name="minimumPrice" type="text" class="form-control">
+              </div> 
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="maximumPrice">Maximum price</label> 
+                <input id="maximumPrice" name="maximumPrice" type="text" class="form-control">
+              </div> 
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="orderBy">Order by</label> 
+                <select class="form-control" id="orderBy" required>
+                    <option *ngFor="let type of productOrders | enumToArray" [value]="type">
+                        {{productOrderDisplay[type]}}
+                    </option>                   
+                </select>
+            </div> 
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label for="order">Ordering</label> 
+                <select class="form-control" id="order" required>
+                    <!-- <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option> -->
+                </select>
+            </div> 
+        </div>
+    </div>
 
 </div>
+

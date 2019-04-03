@@ -4,5 +4,12 @@ $container-color:  white;
 $app-background-color: #f8f8f8;
 $brand-blue: #0f2845;
 
-
-$container-large-desktop: 2000px;
+// override bootstrap variables 
+$grid-columns: 24;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1300px
+);
+$grid-gutter-width: 20px;

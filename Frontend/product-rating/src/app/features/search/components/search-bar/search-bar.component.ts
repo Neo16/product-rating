@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductOrder, ProductOrderDisplay } from 'src/app/models/ProductOrder';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchBarComponent implements OnInit {
 
+  productOrders = ProductOrder;
+  productOrderDisplay = ProductOrderDisplay;
   constructor() { }
 
   ngOnInit() {
-  }
+  } 
 
 }
