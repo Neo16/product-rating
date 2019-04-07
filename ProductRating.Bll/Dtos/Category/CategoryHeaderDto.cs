@@ -8,7 +8,6 @@ namespace ProductRating.Bll.Dtos.Category
     {
         public Guid Id { get; set; }
         public string Name { get; set; }        
-        public List<CategoryHeaderDto> ChildCategories { get; set; }
         public int NumOfProducts { get; set; }
     }
 }

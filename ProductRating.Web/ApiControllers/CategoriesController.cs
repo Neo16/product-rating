@@ -33,5 +33,13 @@ namespace ProductRating.Web.ApiControllers
             var categories = await categoryService.GetChildCategoriesOf(categoryId);
             return Ok(categories);
         }
+
+        [HttpGet("{categoryId}/attributes")]
+        [ProducesResponseType(typeof(List<CategoryHeaderDto>), 200)]
+        public async Task<IActionResult> GetAttributesOf(Guid categoryId)
+        {
+            var attributes = await categoryService.GetAttributesOf(categoryId);
+            return Ok(attributes);
+        }
     }
 }

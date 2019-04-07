@@ -21,7 +21,7 @@ namespace ProductRating.Dal
 
         public virtual DbSet<Category> Categories { get; set; }
 
-        public virtual DbSet<ProductAttribute> ProductAttribute { get; set; }    
+        public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }    
 
         public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }   
 

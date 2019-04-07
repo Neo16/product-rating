@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Model.Entities.Products
 {
@@ -13,5 +12,9 @@ namespace ProductRating.Model.Entities.Products
         public Guid CategoryId { get; set; }
 
         public string Name  { get; set; }
+
+        public bool HasFixedValues  { get; set; }
+
+        public ICollection<ProductAttributeValue> Values { get; set; }
     }
 }

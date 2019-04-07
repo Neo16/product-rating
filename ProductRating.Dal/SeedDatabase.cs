@@ -114,7 +114,7 @@ namespace ProductRating.Dal
                             Name = "Laptops",
                             Attributes = new List<ProductAttribute>()
                             {
-                                new ProductAttributeString() {Name = "Processor" }
+                                new ProductAttributeString() {Name = "Processor", HasFixedValues = true }
                             }
                         },
                         new Category()
@@ -176,7 +176,7 @@ namespace ProductRating.Dal
                     new ProductAttributeStringValue()
                     {
                         StringValue = "Intel Core™ i5-5350U",
-                        Attribute = context.ProductAttribute.Where(e => e.Name == "Processor").Single()
+                        Attribute = context.ProductAttributes.Where(e => e.Name == "Processor").Single()
                     }
                 }
             };
@@ -192,7 +192,7 @@ namespace ProductRating.Dal
                     new ProductAttributeStringValue()
                     {
                         StringValue = "Intel i7-4510U",
-                        Attribute = context.ProductAttribute.Where(e => e.Name == "Processor").Single()
+                        Attribute = context.ProductAttributes.Where(e => e.Name == "Processor").Single()
                     }
                 }
             };
@@ -208,7 +208,7 @@ namespace ProductRating.Dal
                     new ProductAttributeStringValue()
                     {
                         StringValue = "40 MP + 20 MP + 8 MP",
-                        Attribute = context.ProductAttribute.Where(e => e.Name == "Back camera").Single()
+                        Attribute = context.ProductAttributes.Where(e => e.Name == "Back camera").Single()
                     }
                 }
             };
@@ -223,12 +223,12 @@ namespace ProductRating.Dal
                     new ProductAttributeStringValue()
                     {
                         StringValue = "J. K. Rowling",
-                        Attribute = context.ProductAttribute.Where(e => e.Name == "Author").Single()
+                        Attribute = context.ProductAttributes.Where(e => e.Name == "Author").Single()
                     },
                     new ProductAttributeIntValue()
                     {
                         IntValue = 2003,
-                        Attribute = context.ProductAttribute.Where(e => e.Name == "Publication date").Single()
+                        Attribute = context.ProductAttributes.Where(e => e.Name == "Publication date").Single()
                     }
                 }
             };

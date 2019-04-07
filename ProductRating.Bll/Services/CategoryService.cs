@@ -2,6 +2,8 @@
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using ProductRating.Bll.Dtos.Category;
+using ProductRating.Bll.Dtos.Category.CategoryAttributes;
+using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Products;
@@ -49,6 +51,28 @@ namespace ProductRating.Bll.Services
 
             context.Categories.Add(dbCategory);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<CategoryAttributeDto>> GetAttributesOf(Guid categoryId)
+        {
+            var attributes = await context.ProductAttributes              
+                .Where(e => e.CategoryId == categoryId)
+                .ProjectTo<CategoryAttributeDto>(mapperConfiguration)
+                .ToListAsync();
+
+            foreach(var attr in attributes)
+            {
+                if (attr.HasFixedValues)
+                {
+                    var values = await context.ProductAttributeValues
+                        .Where(e => e.AttributeId == attr.AttributeId)
+                        .ProjectTo<CategoryAttributeValueDto>(mapperConfiguration)
+                        .ToListAsync();
+                    attr.Values = values;
+                }
+            }
+            
+            return attributes;
         }
     }
 }

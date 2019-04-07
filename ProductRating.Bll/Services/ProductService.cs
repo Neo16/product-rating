@@ -97,16 +97,18 @@ namespace ProductRating.Bll.Services
             {
                 foreach (StringAttribute stringFilterAttr in filter.StringAttributes)
                 {
-                    filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Name == stringFilterAttr.AttributeName
-                            && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value);
+                    filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Id == stringFilterAttr.AttributeId
+                            && ((e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value
+                            || e.AttributeId == stringFilterAttr.ValueId));
                 }
             }
             if (filter.IntAttributes != null)
             {
                 foreach (IntAttribute intFilterAttr in filter.IntAttributes)
                 {
-                    filters.Add(e => e is ProductAttributeIntValue && e.Attribute.Name == intFilterAttr.AttributeName
-                            && (e as ProductAttributeIntValue).IntValue == intFilterAttr.Value);
+                    filters.Add(e => e is ProductAttributeIntValue && e.Attribute.Id == intFilterAttr.AttributeId
+                            && ((e as ProductAttributeIntValue).IntValue == intFilterAttr.Value      
+                            || e.AttributeId == intFilterAttr.ValueId));
                 }
             }          
 
