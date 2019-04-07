@@ -11,7 +11,7 @@ namespace ProductRating.Bll.Dtos.Profile
 
         public string Email { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public Guid PictureId { get; set; }
 
         public string Natinality { get; set; }
 

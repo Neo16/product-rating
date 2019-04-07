@@ -14,6 +14,7 @@ using ProductRating.Bll;
 using ProductRating.Common;
 using ProductRating.Dal;
 using ProductRating.Model.Identity;
+using ProductRating.Web.MiddleWare;
 using Swashbuckle.AspNetCore.Swagger;
 using System.Collections.Generic;
 using System.Text;
@@ -133,6 +134,7 @@ namespace ProductRating.Web
                    .WithOrigins("http://localhost:4200")
             );
             app.UseStaticFiles();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseCookiePolicy();
             app.UseAuthentication();
 
