@@ -13,7 +13,7 @@ namespace ProductRating.Model.Entities.Products
    
         public Brand Brand { get; set; }
 
-        public Guid BrandId { get; set; }
+        public Guid? BrandId { get; set; }
 
         public DateTime StartOfProduction { get; set; }
         public DateTime EndOfProduction { get; set; }
@@ -29,7 +29,7 @@ namespace ProductRating.Model.Entities.Products
 
         public ICollection<Scorereview> Scores { get; set; }
 
-        public int ScoreValue { get; set; }
+        public double ScoreValue { get; set; }
 
         public Picture ThumbnailPicture { get; set; }
 

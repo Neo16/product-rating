@@ -10,6 +10,10 @@ namespace ProductRating.Bll.Dtos.Product
 
         public Guid? BrandId { get; set; }
 
+        public decimal? MaximumPrice { get; set; }
+
+        public decimal? MinimimPrice { get; set; }
+
         public string TextSearch { get; set; }
 
         public List<IntAttribute> IntAttributes { get; set; }
@@ -17,5 +21,7 @@ namespace ProductRating.Bll.Dtos.Product
         public List<StringAttribute> StringAttributes { get; set; }
 
         public ProductOrder? OrderBy { get; set; }
+
+        public Order? Order { get; set; }
     }
 }

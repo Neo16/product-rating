@@ -24,7 +24,8 @@ namespace ProductRating.Dal
                     .CreateCategories()
                     .CreateBrands()
                     .CreateProducts()
-                    .CreateReviews(20);
+                    .CreateReviews(20)
+                    .CreateScrores(10);
             }
         }
 
@@ -35,7 +36,7 @@ namespace ProductRating.Dal
             {
                 Name = RoleNames.ADMIN_ROLE,
                 NormalizedName = RoleNames.ADMIN_ROLE,
-                ConcurrencyStamp = r.Next().ToString(),                
+                ConcurrencyStamp = r.Next().ToString(),
             };
 
             var userRole = new ApplicationRole()
@@ -74,11 +75,12 @@ namespace ProductRating.Dal
                 PhoneNumber = "+311124211",
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
-            
+
             context.Users.Add(user);
             context.SaveChanges();
 
-            context.UserRoles.Add(new IdentityUserRole<Guid>() {
+            context.UserRoles.Add(new IdentityUserRole<Guid>()
+            {
                 RoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id,
                 UserId = user.Id
             });
@@ -112,7 +114,15 @@ namespace ProductRating.Dal
                             Name = "Laptops",
                             Attributes = new List<ProductAttribute>()
                             {
-                                new ProductAttributeString() {Name = "Processor" }                               
+                                new ProductAttributeString() {Name = "Processor" }
+                            }
+                        },
+                        new Category()
+                        {
+                            Name = "Phones",
+                            Attributes = new List<ProductAttribute>()
+                            {
+                                new ProductAttributeString() {Name = "Back camera" }
                             }
                         }
                     }
@@ -122,7 +132,8 @@ namespace ProductRating.Dal
                     Name = "Books",
                     Attributes = new List<ProductAttribute>()
                     {
-                        new ProductAttributeString() {Name = "Author" }
+                        new ProductAttributeString() {Name = "Author" },
+                        new ProductAttributeInt() { Name ="Publication date" }
                     }
                 },
             };
@@ -137,7 +148,14 @@ namespace ProductRating.Dal
         {
             var brands = new List<Brand>()
             {
-                new Brand(){ Name = "Lenovo" }                
+                new Brand(){ Name = "Lenovo" },
+                new Brand(){ Name = "Apple" },
+                new Brand(){ Name = "Asus" },
+                new Brand(){ Name = "LG" },
+                new Brand(){ Name = "Samsung" },
+                new Brand(){ Name = "Sony" },
+                new Brand(){ Name = "JBL" },
+                new Brand(){ Name = "Huawei" },
             };
 
             context.Brands.AddRange(brands);
@@ -150,19 +168,72 @@ namespace ProductRating.Dal
         {
             var computer1 = new Product()
             {
-                BrandId = context.Brands.Where(e => e.Name == "Lenovo").First().Id,
-                CategoryId = context.Categories.Where(e => e.Name == "Laptops").First().Id,
-                Name = "IdeaPad Z50-75",
+                BrandId = context.Brands.Where(e => e.Name == "Apple").Single().Id,
+                CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
+                Name = "MacBook Air 13\"",
+                PropertyValues = new List<ProductAttributeValue>()
+                {
+                    new ProductAttributeStringValue()
+                    {
+                        StringValue = "Intel Core™ i5-5350U",
+                        Attribute = context.ProductAttribute.Where(e => e.Name == "Processor").Single()
+                    }
+                }
+            };
+            context.Products.Add(computer1);
+
+            var computer2 = new Product()
+            {
+                BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
+                CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
+                Name = "MacBook Air 13",
                 PropertyValues = new List<ProductAttributeValue>()
                 {
                     new ProductAttributeStringValue()
                     {
                         StringValue = "Intel i7-4510U",
-                        Attribute = context.ProductAttribute.Where(e => e.Name == "Processor").First()
+                        Attribute = context.ProductAttribute.Where(e => e.Name == "Processor").Single()
                     }
                 }
             };
-            context.Add(computer1);
+            context.Products.Add(computer2);
+
+            var mobilePhone1 = new Product()
+            {
+                BrandId = context.Brands.Where(e => e.Name == "Huawei").Single().Id,
+                CategoryId = context.Categories.Where(e => e.Name == "Phones").Single().Id,
+                Name = "",
+                PropertyValues = new List<ProductAttributeValue>()
+                {
+                    new ProductAttributeStringValue()
+                    {
+                        StringValue = "40 MP + 20 MP + 8 MP",
+                        Attribute = context.ProductAttribute.Where(e => e.Name == "Back camera").Single()
+                    }
+                }
+            };
+            context.Products.Add(mobilePhone1);
+
+            var book1 = new Product()
+            {
+                CategoryId = context.Categories.Where(e => e.Name == "Books").Single().Id,
+                Name = "The Order of the Phoenix",
+                PropertyValues = new List<ProductAttributeValue>()
+                {
+                    new ProductAttributeStringValue()
+                    {
+                        StringValue = "J. K. Rowling",
+                        Attribute = context.ProductAttribute.Where(e => e.Name == "Author").Single()
+                    },
+                    new ProductAttributeIntValue()
+                    {
+                        IntValue = 2003,
+                        Attribute = context.ProductAttribute.Where(e => e.Name == "Publication date").Single()
+                    }
+                }
+            };
+            context.Products.Add(book1);
+
             context.SaveChanges();
             return context;
         }
@@ -171,25 +242,54 @@ namespace ProductRating.Dal
         {
             var users = context.Users.ToList();
             var products = context.Products.ToList();
-            var r = new Random();            
+            var r = new Random();
 
             var reviews = Enumerable.Range(1, numberOfReviews)
                .Select(e => new TextReview()
                {
-                   AuthorId = users[r.Next(0,users.Count)].Id,
+                   AuthorId = users[r.Next(0, users.Count)].Id,
                    ProductId = products[r.Next(0, products.Count)].Id,
-                   Mood = (ReviewMood)r.Next(1,2),
+                   Mood = (ReviewMood)r.Next(1, 2),
                    CreatedAt = DateTime.Now.AddSeconds(1 - r.Next(50000)),
                    Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
-                   " Eu turpis egestas pretium aenean pharetra magna ac placerat."                   
+                   " Eu turpis egestas pretium aenean pharetra magna ac placerat."
                })
                .ToList();
 
             context.Reviews.AddRange(reviews);
             context.SaveChanges();
 
-            return context;   
+            return context;
+        }
+
+        private static ApplicationDbContext CreateScrores(this ApplicationDbContext context, int numOfScoresPerProduct)
+        {
+            var r = new Random();
+
+            var products = context.Products.ToList();
+            foreach (var p in products)
+            {
+                p.Scores = new List<Scorereview>();
+                for (int i = 0; i < numOfScoresPerProduct; i++)
+                {
+                    var score = r.Next(1, 6);
+                    p.Scores.Add(new Scorereview()
+                    {
+                        Value = score,
+                        CreatedAt = DateTime.Now.AddDays(-score),
+                        AuthorId = context.Users.First().Id
+                    });
+                }
+            }
+
+            foreach (var p in products)
+            {
+                p.ScoreValue = p.Scores.Average(e => e.Value);                
+            }
+
+            context.SaveChanges();
+            return context;
         }
     }
 }
