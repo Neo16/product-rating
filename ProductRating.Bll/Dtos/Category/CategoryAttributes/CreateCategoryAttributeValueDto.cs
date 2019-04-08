@@ -1,9 +1,13 @@
-﻿namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
+﻿using System;
+
+namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
 {
-    public class CreateCategoryAttributeValueDto
+    public class CreateEditCategoryAttributeValueDto
     {
         public string StringValue { get; set; }
 
         public int IntValue { get; set; }
+
+        public Guid? ValueId { get; set; }
     }
 }

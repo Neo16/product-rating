@@ -38,25 +38,25 @@ namespace ProductRating.Controllers
             //}, 
             //new PaginationDto());
 
-           await categoryService.CreateCategory(new CreateCategoryDto()
+           await categoryService.CreateCategory(new CreateEditCategoryDto()
             {
                Name = "Játékok",
-               Attributes = new List<CreateCategoryAttributeDto>()
+               Attributes = new List<CreateEditCategoryAttributeDto>()
                {
-                   new CreateCategoryAttributeDto()
+                   new CreateEditCategoryAttributeDto()
                    {
                        AttributeName = "Méret",
                        Type = AttributeType.Int,
                        HasFixedValues = false
                    },
-                   new CreateCategoryAttributeDto()
+                   new CreateEditCategoryAttributeDto()
                    {
                        AttributeName = "Izé",
                        Type = AttributeType.String,
                        HasFixedValues = true,
-                       Values = new List<CreateCategoryAttributeValueDto>()
+                       Values = new List<CreateEditCategoryAttributeValueDto>()
                        {
-                           new CreateCategoryAttributeValueDto()
+                           new CreateEditCategoryAttributeValueDto()
                            {
                                StringValue = "Kettő"
                            }

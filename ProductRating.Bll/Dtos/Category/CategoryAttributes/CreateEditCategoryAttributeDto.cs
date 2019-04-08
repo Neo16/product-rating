@@ -8,7 +8,7 @@ namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
     /// Used for:
     /// - Create Category with attributes 
     /// </summary>
-    public class CreateCategoryAttributeDto
+    public class CreateEditCategoryAttributeDto
     {      
         public string AttributeName { get; set; }
 
@@ -16,6 +16,8 @@ namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
 
         public AttributeType Type { get; set; }
 
-        public List<CreateCategoryAttributeValueDto> Values { get; set; }
+        public Guid? AttributeId { get; set; }
+
+        public List<CreateEditCategoryAttributeValueDto> Values { get; set; }
     }
 }

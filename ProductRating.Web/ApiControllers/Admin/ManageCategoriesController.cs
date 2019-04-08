@@ -25,14 +25,14 @@ namespace ProductRating.Web.ApiControllers.Admin
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateCategory(CreateCategoryDto category)
+        public async Task<IActionResult> CreateCategory(CreateEditCategoryDto category)
         {
             await categoryService.CreateCategory(category);
             return Ok();
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateCategory(Guid categoryId, CreateCategoryDto category)
+        public async Task<IActionResult> UpdateCategory(Guid categoryId, CreateEditCategoryDto category)
         {
             await categoryService.UpdateCategory(categoryId, category);
             return Ok();

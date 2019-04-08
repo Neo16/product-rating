@@ -68,7 +68,7 @@ namespace ProductRating.Bll.Services
             return attributes;
         }
 
-        public async Task CreateCategory(CreateCategoryDto category)
+        public async Task<Guid> CreateCategory(CreateEditCategoryDto category)
         {
             var dbCategory = MapToDbCategory(category);
 
@@ -85,9 +85,11 @@ namespace ProductRating.Bll.Services
 
             context.Categories.Add(dbCategory);
             await context.SaveChangesAsync();
+
+            return dbCategory.Id;
         }
 
-        public async Task UpdateCategory(Guid categoryId, CreateCategoryDto category)
+        public async Task UpdateCategory(Guid categoryId, CreateEditCategoryDto category)
         {
             var oldDbCategory = await context.Categories
                 .SingleOrDefaultAsync(e => e.Id == categoryId);
@@ -130,9 +132,7 @@ namespace ProductRating.Bll.Services
                 {
                     //3.1 Attribútum név frisítése
                     oldAttr.Name = attr.Name;
-
-                    //3.2 Attribútum értékek frissítése (itt csak törlés, vagy hozzáadás van)
-                    // Todo !!! 
+                    UpdateAttributeValues(oldAttr, attr);
                 }
             }
 
@@ -143,6 +143,26 @@ namespace ProductRating.Bll.Services
 
 
             await context.SaveChangesAsync();
+        }
+
+        private void UpdateAttributeValues(ProductAttribute oldAttr, ProductAttribute newAttr)
+        {
+            //3.2 Attribútum értékek frissítése (itt csak törlés, vagy hozzáadás van)   
+            var newValues = newAttr.Values
+                .Where(e => !oldAttr.Values.Select(f => f.Id).Contains(e.Id))
+                .ToList();
+            foreach (var newVal in newValues)
+            {
+                oldAttr.Values.Add(newVal);
+            }
+            var removableValues = oldAttr.Values
+                .Where(e => !newAttr.Values.Select(f => f.Id).Contains(e.Id))
+                .ToList();
+
+            foreach (var val in removableValues)
+            {
+                oldAttr.Values.Remove(val);
+            }
         }
 
         public async Task DeleteCategory(Guid categoryId)
@@ -186,7 +206,7 @@ namespace ProductRating.Bll.Services
             await context.SaveChangesAsync();
         }
 
-        private Category MapToDbCategory(CreateCategoryDto category)
+        private Category MapToDbCategory(CreateEditCategoryDto category)
         {
             var dbCategory = mapper.Map<Category>(category);
 
@@ -202,7 +222,8 @@ namespace ProductRating.Bll.Services
                         {
                             cAttrString.Values = catAttrDto.Values.Select(e => new ProductAttributeStringValue()
                             {
-                                StringValue = e.StringValue
+                                StringValue = e.StringValue,
+                                Id = e.ValueId != null ? e.ValueId.Value : new Guid()
                             } as ProductAttributeValue).ToList();
                         }
 
@@ -214,7 +235,9 @@ namespace ProductRating.Bll.Services
                         {
                             cAttrInt.Values = catAttrDto.Values.Select(e => new ProductAttributeIntValue()
                             {
-                                IntValue = e.IntValue
+                                IntValue = e.IntValue,
+                                Id = e.ValueId != null ? e.ValueId.Value : new Guid()
+
                             } as ProductAttributeValue).ToList();
                         }
 
@@ -224,6 +247,17 @@ namespace ProductRating.Bll.Services
             }
 
             return dbCategory;
+        }
+
+        public async Task<CreateEditCategoryDto> GetCategoryForUpdate(Guid categoryId)
+        {
+            var dbCategory = await context.Categories
+                .Include(e => e.Attributes)
+                .ThenInclude(e => e.Values)
+                .FirstOrDefaultAsync();
+
+            return mapper.Map<CreateEditCategoryDto>(dbCategory);              
+              
         }
     }
 }

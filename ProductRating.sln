@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Web", "ProductRating.Web\ProductRating.Web.csproj", "{55306153-0DC0-49D1-8D82-10996D2E720C}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Dal", "Produc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Model", "ProductRating.Model\ProductRating.Model.csproj", "{6E756154-6D7D-470E-AFCD-013DF7E053F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductRating.Common", "ProductRating.Common\ProductRating.Common.csproj", "{9948716D-09B0-4902-A061-2FB7AABD8193}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Common", "ProductRating.Common\ProductRating.Common.csproj", "{9948716D-09B0-4902-A061-2FB7AABD8193}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductRating.UnitTest", "ProductRating.UnitTest\ProductRating.UnitTest.csproj", "{4E1E3881-3831-41CC-ABC9-A517658D4897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9948716D-09B0-4902-A061-2FB7AABD8193}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9948716D-09B0-4902-A061-2FB7AABD8193}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9948716D-09B0-4902-A061-2FB7AABD8193}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1E3881-3831-41CC-ABC9-A517658D4897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1E3881-3831-41CC-ABC9-A517658D4897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1E3881-3831-41CC-ABC9-A517658D4897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1E3881-3831-41CC-ABC9-A517658D4897}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
