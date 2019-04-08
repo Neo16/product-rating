@@ -11,6 +11,22 @@ namespace ProductRating.Bll.Mappings
     {
         public ProductsMappingProfile()
         {
+            this.CreateMap<Product, CreateEditProductDto>()
+               .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
+               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
+               .ForMember(e => e.BrandId, e => e.MapFrom(f => f.BrandId))
+               .ForMember(e => e.CategoryId, e => e.MapFrom(f => f.CategoryId))
+               .ForMember(e => e.StartOfProduction, e => e.MapFrom(f => f.StartOfProduction))
+               .ForMember(e => e.EndOfProduction, e => e.MapFrom(f => f.EndOfProduction))
+               .ForMember(e => e.PictureIds, e => e.MapFrom(f => f.Pictures.Select(g => g.PictureId)))
+               .ForMember(e => e.ThumbnailPictureId, e => e.MapFrom(f => f.ThumbnailPictureId))
+               .ForMember(e => e.ThumbnailPictureString, e => e.Ignore())
+               .ReverseMap()
+               .ForMember(e => e.PropertyValueConnections, e => e.Ignore())
+               .ForMember(e => e.ScoreValue, e => e.Ignore())
+               .ForMember(e => e.Reviews, e => e.Ignore())
+               .ForMember(e => e.Scores, e => e.Ignore());  
+
             this.CreateMap<Product, ProductDetailsDto>()
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))

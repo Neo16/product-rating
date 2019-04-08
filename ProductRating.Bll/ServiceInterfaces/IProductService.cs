@@ -1,9 +1,7 @@
 ﻿using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
-using ProductRating.Model.Entities.Products;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.ServiceInterfaces
@@ -14,5 +12,12 @@ namespace ProductRating.Bll.ServiceInterfaces
 
         Task<ProductDetailsDto> GetDetails(Guid productId);
 
+        Task<CreateEditProductDto> GetProductForUpdate(Guid productId);
+
+        Task<Guid> CreateProduct(CreateEditProductDto product);
+
+        Task UpdateProduct(Guid productId, CreateEditProductDto product);
+
+        Task DeleteProduct(Guid productId);
     }
 }

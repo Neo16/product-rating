@@ -254,7 +254,7 @@ namespace ProductRating.Bll.Services
             var dbCategory = await context.Categories
                 .Include(e => e.Attributes)
                 .ThenInclude(e => e.Values)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(e => e.Id == categoryId);
 
             return mapper.Map<CreateEditCategoryDto>(dbCategory);              
               

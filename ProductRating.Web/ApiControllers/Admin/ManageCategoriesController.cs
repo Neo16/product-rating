@@ -31,6 +31,13 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok();
         }
 
+        [HttpGet("get-for-update")]
+        public async Task<IActionResult> UpdateCategory(Guid categoryId)
+        {
+            var category = await categoryService.GetCategoryForUpdate(categoryId);
+            return Ok(category);
+        }
+
         [HttpPut("update")]
         public async Task<IActionResult> UpdateCategory(Guid categoryId, CreateEditCategoryDto category)
         {

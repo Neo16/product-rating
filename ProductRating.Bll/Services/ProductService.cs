@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Internal;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
+using ProductRating.Bll.Exceptions;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Products;
@@ -122,6 +123,93 @@ namespace ProductRating.Bll.Services
                 query = query.Where(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue).AsQueryable().Any(filter));
             }
             return query;
+        }
+
+        public async Task<CreateEditProductDto> GetProductForUpdate(Guid productId)
+        {
+            var dbProduct = await context.Products
+                .Include(e => e.PropertyValueConnections)      
+                .Include(e => e.ThumbnailPicture)
+                .FirstOrDefaultAsync(e =>e.Id == productId);
+
+            //Todo: Map atttributes 
+            return mapper.Map<CreateEditProductDto>(dbProduct);            
+        }
+
+        public async Task<Guid> CreateProduct(CreateEditProductDto product)
+        {            
+            var dbProduct = mapper.Map<Product>(product);
+
+            dbProduct.PropertyValueConnections = new List<ProductAttributeValueConnection>();
+
+            foreach(var attr in product.IntAttributes)
+            {
+                dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                {
+                    ProductAttributeValue = new ProductAttributeIntValue()
+                    {
+                        AttributeId = attr.AttributeId,
+                        IntValue  = attr.Value,
+                        Id = attr.ValueId
+                    }                    
+                });
+            }
+
+            foreach (var attr in product.StringAttributes)
+            {
+                dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                {
+                    ProductAttributeValue = new ProductAttributeStringValue()
+                    {
+                        AttributeId = attr.AttributeId,
+                        StringValue = attr.Value,
+                        Id = attr.ValueId
+                    }
+                });
+            }
+
+            bool isProductNameTaken = await context.Products
+                .AnyAsync(e => e.Name.ToUpper() == dbProduct.Name.ToUpper());
+
+            if (isProductNameTaken)
+            {
+                throw new BusinessLogicException("A product with the same name already exists.")
+                {
+                    ErrorCode = ErrorCode.InvalidArgument
+                };
+            }
+
+            context.Products.Add(dbProduct);
+            await context.SaveChangesAsync();
+            return dbProduct.Id;
+        }
+
+        public Task UpdateProduct(Guid productId, CreateEditProductDto product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task DeleteProduct(Guid productId)
+        {
+            var product = await context.Products
+             .Include(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue))
+             .ThenInclude(e => e.ProductConnctions)
+             .Include(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue))
+             .ThenInclude(e => e.Attribute)
+             .SingleOrDefaultAsync(e => e.Id == productId);
+
+            foreach (var attrValue in product.PropertyValueConnections.Select(e => e.ProductAttributeValue))
+            {                
+                // If the value is not connected to more products 
+                // and is not a value of a fixed value attribute, it can be deleted  
+                if (attrValue.ProductConnctions.Count == 1 && !attrValue.Attribute.HasFixedValues)
+                {
+                    context.Entry(attrValue).State = EntityState.Deleted;
+                }               
+            }
+
+            context.Products.Remove(product);
+            await context.SaveChangesAsync();
         }
     }
 }

@@ -188,6 +188,17 @@ namespace ProductRating.UnitTest
             var changedFixedValueAttr = changed.Attributes.Where(e => e.HasFixedValues).First();
 
             Assert.Empty(changedFixedValueAttr.Values);
-        }     
+        }
+
+        [Fact]
+        public async Task DeleteCategory()
+        {
+            context.Database.EnsureDeleted();
+            var insertedCategoryId = await categoryService.CreateCategory(categoryToBeInserted);
+
+            await categoryService.DeleteCategory(insertedCategoryId);
+
+            Assert.DoesNotContain(insertedCategoryId, context.Categories.Select(e => e.Id));
+        }
     }
 }
