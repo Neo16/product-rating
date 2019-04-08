@@ -15,10 +15,9 @@ namespace ProductRating.Dal.Configure
                 .HasDiscriminator<string>("Type");
 
             builder
-              .HasOne(e => e.Product)
-              .WithMany(e => e.PropertyValues)
-              .HasForeignKey(e => e.ProductId)
-              .OnDelete(DeleteBehavior.Restrict);
+              .HasMany(e => e.ProductConnctions)
+              .WithOne(e => e.ProductAttributeValue)
+              .HasForeignKey(e => e.ProductAttributeValueId);          
         }
     }
 }

@@ -35,9 +35,9 @@ namespace ProductRating.Bll.Services
         {
             var attributeFilters = MapAttributeFilters(filter);
 
-            var query = context.Products               
+            var query = context.Products
              .AsQueryable();
-          
+
             //filter
             query = FilterForAttributes(attributeFilters, query);
 
@@ -49,7 +49,7 @@ namespace ProductRating.Bll.Services
             {
                 query = query.Where(e => e.CategoryId == filter.CategoryId.Value);
             }
-            
+
             //ordering 
             if (filter.OrderBy != null)
             {
@@ -78,12 +78,12 @@ namespace ProductRating.Bll.Services
 
         public async Task<ProductDetailsDto> GetDetails(Guid productId)
         {
-            var product =  await context.Products
+            var product = await context.Products
                 .Include(e => e.Category)
                 .Include(e => e.Brand)
-                .Include(e => e.PropertyValues)
+                .Include(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue))
                 .ThenInclude(e => e.Attribute)
-                .Where(e => e.Id == productId)             
+                .Where(e => e.Id == productId)
                 .FirstOrDefaultAsync();
 
             return mapper.Map<ProductDetailsDto>(product);
@@ -107,10 +107,10 @@ namespace ProductRating.Bll.Services
                 foreach (IntAttribute intFilterAttr in filter.IntAttributes)
                 {
                     filters.Add(e => e is ProductAttributeIntValue && e.Attribute.Id == intFilterAttr.AttributeId
-                            && ((e as ProductAttributeIntValue).IntValue == intFilterAttr.Value      
+                            && ((e as ProductAttributeIntValue).IntValue == intFilterAttr.Value
                             || e.AttributeId == intFilterAttr.ValueId));
                 }
-            }          
+            }
 
             return filters;
         }
@@ -119,7 +119,7 @@ namespace ProductRating.Bll.Services
         {
             foreach (var filter in filters)
             {
-                query = query.Where(e => e.PropertyValues.AsQueryable().Any(filter));
+                query = query.Where(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue).AsQueryable().Any(filter));
             }
             return query;
         }

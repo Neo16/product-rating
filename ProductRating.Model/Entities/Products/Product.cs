@@ -23,7 +23,7 @@ namespace ProductRating.Model.Entities.Products
 
         public Guid CategoryId { get; set; }
 
-        public ICollection<ProductAttributeValue> PropertyValues { get; set; }
+        public ICollection<ProductAttributeValueConnection> PropertyValueConnections { get; set; }
 
         public ICollection<TextReview> Reviews { get; set; }
 

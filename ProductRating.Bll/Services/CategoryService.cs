@@ -7,6 +7,7 @@ using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Products;
+using ProductRating.Model.Entities.Products.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace ProductRating.Bll.Services
             return await context.Categories
                 .Include(e => e.Children)
                 .ProjectTo<CategoryHeaderDto>(mapperConfiguration)
-                .ToListAsync();                           
+                .ToListAsync();
         }
         public async Task<List<CategoryHeaderDto>> GetChildCategoriesOf(Guid categoryId)
         {
@@ -49,18 +50,51 @@ namespace ProductRating.Bll.Services
         {
             var dbCategory = mapper.Map<Category>(category);
 
+            dbCategory.Attributes = new List<ProductAttribute>();
+
+            foreach (var catAttrDto in category.Attributes)
+            {
+                switch (catAttrDto.Type)
+                {
+                    case AttributeType.String:
+                        var cAttrString = mapper.Map<ProductAttributeString>(catAttrDto);
+                        if (cAttrString.HasFixedValues || catAttrDto.Values != null)
+                        {
+                            cAttrString.Values = catAttrDto.Values.Select(e => new ProductAttributeStringValue()
+                            {
+                                StringValue = e.StringValue
+                            } as ProductAttributeValue).ToList();
+                        }
+
+                        dbCategory.Attributes.Add(cAttrString);
+                        break;
+                    case AttributeType.Int:
+                        var cAttrInt = mapper.Map<ProductAttributeInt>(catAttrDto);
+                        if (cAttrInt.HasFixedValues || catAttrDto.Values != null)
+                        {
+                            cAttrInt.Values = catAttrDto.Values.Select(e => new ProductAttributeIntValue()
+                            {
+                                IntValue = e.IntValue
+                            } as ProductAttributeValue).ToList();
+                        }
+
+                        dbCategory.Attributes.Add(cAttrInt);
+                        break;
+                }
+            }
+
             context.Categories.Add(dbCategory);
             await context.SaveChangesAsync();
         }
 
         public async Task<List<CategoryAttributeDto>> GetAttributesOf(Guid categoryId)
         {
-            var attributes = await context.ProductAttributes              
+            var attributes = await context.ProductAttributes
                 .Where(e => e.CategoryId == categoryId)
                 .ProjectTo<CategoryAttributeDto>(mapperConfiguration)
                 .ToListAsync();
 
-            foreach(var attr in attributes)
+            foreach (var attr in attributes)
             {
                 if (attr.HasFixedValues)
                 {
@@ -71,7 +105,7 @@ namespace ProductRating.Bll.Services
                     attr.Values = values;
                 }
             }
-            
+
             return attributes;
         }
     }

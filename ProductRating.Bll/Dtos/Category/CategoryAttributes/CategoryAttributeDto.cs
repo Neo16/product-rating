@@ -5,7 +5,7 @@ namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
 {
     /// <summary>
     /// Used for:
-    /// - Telling the frontend what kind of attributes can be given to filter a category 
+    /// - Telling the frontend what kind of attributes can be given to filter a category   
     /// </summary>
     public class CategoryAttributeDto
     {

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Category;
+using ProductRating.Bll.Dtos.Category.CategoryAttributes;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.ServiceInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,21 +29,39 @@ namespace ProductRating.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Index()
         {
-            var result = await productService.Find(new ProductFilterDto()
-            {
-                StringAttributes = new List<StringAttribute>()
-                {
-                    new StringAttribute(){AttributeName = "asd", Value = "Ez az érték" }
-                }
-            }, 
-            new PaginationDto());
+            //var result = await productService.Find(new ProductFilterDto()
+            //{
+            //    StringAttributes = new List<StringAttribute>()
+            //    {
+            //        new StringAttribute(){AttributeName = "asd", Value = "Ez az érték" }
+            //    }
+            //}, 
+            //new PaginationDto());
 
            await categoryService.CreateCategory(new CreateCategoryDto()
             {
                Name = "Játékok",
-               Attributes = new List<AttributeBase>()
+               Attributes = new List<CreateCategoryAttributeDto>()
                {
-                   new StringAttribute() {AttributeName = "Méret"}
+                   new CreateCategoryAttributeDto()
+                   {
+                       AttributeName = "Méret",
+                       Type = AttributeType.Int,
+                       HasFixedValues = false
+                   },
+                   new CreateCategoryAttributeDto()
+                   {
+                       AttributeName = "Izé",
+                       Type = AttributeType.String,
+                       HasFixedValues = true,
+                       Values = new List<CreateCategoryAttributeValueDto>()
+                       {
+                           new CreateCategoryAttributeValueDto()
+                           {
+                               StringValue = "Kettő"
+                           }
+                       }
+                   }
                }
             });
             

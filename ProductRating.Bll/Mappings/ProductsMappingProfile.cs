@@ -3,9 +3,7 @@ using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Model.Entities.Products;
 using ProductRating.Model.Entities.Products.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace ProductRating.Bll.Mappings
 {
@@ -16,7 +14,7 @@ namespace ProductRating.Bll.Mappings
             this.CreateMap<Product, ProductDetailsDto>()
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
-                .ForMember(e => e.Attributes, e => e.MapFrom(f => f.PropertyValues))
+                .ForMember(e => e.Attributes, e => e.MapFrom(f => f.PropertyValueConnections.Select(g => g.ProductAttributeValue)))
                 .ForMember(e => e.BrandName, e => e.MapFrom(f => f.Brand.Name))
                 .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name));
             

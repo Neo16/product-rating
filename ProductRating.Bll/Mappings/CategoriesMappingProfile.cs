@@ -16,13 +16,13 @@ namespace ProductRating.Bll.Mappings
             this.CreateMap<Category, CategoryHeaderDto>()
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
-                .ForMember(e => e.NumOfProducts, e => e.MapFrom(f => f.Products.Count));                
+                .ForMember(e => e.NumOfProducts, e => e.MapFrom(f => f.Products.Count));
 
             this.CreateMap<CreateCategoryDto, Category>()
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
                 .ForMember(e => e.ParentId, e => e.MapFrom(f => f.ParentCategoryId))
                 .ForMember(e => e.ThumbnailPictureId, e => e.MapFrom(f => f.ThumbnailPictureId))
-                .ForMember(e => e.Attributes, e => e.MapFrom(f => f.Attributes));
+                .ForMember(e => e.Attributes, e => e.Ignore());
 
             this.CreateMap<AttributeBase, ProductAttribute>()
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.AttributeName))
@@ -45,14 +45,25 @@ namespace ProductRating.Bll.Mappings
                  .ForMember(e => e.Values, e => e.Ignore()) // non fixed values could mean huge datasets 
                  .ForMember(e => e.Type, e => e.MapFrom(f => f is ProductAttributeInt
                         ? AttributeType.Int
-                        : AttributeType.String));                
+                        : AttributeType.String));
 
             this.CreateMap<ProductAttributeValue, CategoryAttributeValueDto>()
                  .ForMember(e => e.ValueId, e => e.MapFrom(f => f.Id))
                  .ForMember(e => e.DisplayValue, e => e.MapFrom(f =>
-                        f is ProductAttributeIntValue 
-                        ? (f as ProductAttributeIntValue).IntValue.ToString() 
+                        f is ProductAttributeIntValue
+                        ? (f as ProductAttributeIntValue).IntValue.ToString()
                         : (f as ProductAttributeStringValue).StringValue));
+            
+            this.CreateMap<CreateCategoryAttributeDto, ProductAttribute>()
+                 .ForMember(e => e.Name, e => e.MapFrom(f => f.AttributeName))                
+                 .ForMember(e => e.HasFixedValues, e => e.MapFrom(f => f.HasFixedValues))
+                 .ForMember(e => e.Values, e => e.Ignore());
+
+            this.CreateMap<CreateCategoryAttributeDto, ProductAttributeString>()
+                .IncludeBase<CreateCategoryAttributeDto, ProductAttribute>();
+
+            this.CreateMap<CreateCategoryAttributeDto, ProductAttributeInt>()
+               .IncludeBase<CreateCategoryAttributeDto, ProductAttribute>();      
         }
     }
 }

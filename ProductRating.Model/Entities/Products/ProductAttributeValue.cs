@@ -8,9 +8,7 @@ namespace ProductRating.Model.Entities.Products
     {
         public Guid Id  { get; set; }
 
-        public Product Product { get; set; }
-
-        public Guid ProductId { get; set; }
+        public List<ProductAttributeValueConnection> ProductConnctions { get; set; }
 
         public ProductAttribute Attribute { get; set; }
 

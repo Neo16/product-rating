@@ -1,7 +1,6 @@
-﻿using ProductRating.Bll.Dtos.Product;
+﻿using ProductRating.Bll.Dtos.Category.CategoryAttributes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Bll.Dtos.Category
 {
@@ -11,7 +10,7 @@ namespace ProductRating.Bll.Dtos.Category
 
         public Guid? ParentCategoryId { get; set; }
 
-        public ICollection<AttributeBase> Attributes { get; set; }
+        public ICollection<CreateCategoryAttributeDto> Attributes { get; set; }
 
         public Guid? ThumbnailPictureId { get; set; }
     }
