@@ -16,20 +16,16 @@ using Xunit.Frameworks.Autofac;
 namespace ProductRating.UnitTest
 {
     [UseAutofacTestFramework]
-    public class ManageProductsTest
+    public class ManageProductsTest : DatabaseFixture
     {
-        private readonly IProductService productService;
-        private readonly ApplicationDbContext context;
-        private readonly ICategoryService categoryService;
+        private readonly IProductService productService;    
+ 
 
         public ManageProductsTest(
             ApplicationDbContext context,
-            IProductService productService,
-            ICategoryService categoryService)
-        {
-            this.context = context;
-            this.productService = productService;
-            this.categoryService = categoryService;
+            IProductService productService ) :base(context)
+        {        
+            this.productService = productService;          
         }
 
         private CreateEditProductDto MakeDtoForInsert()
@@ -56,11 +52,13 @@ namespace ProductRating.UnitTest
                 Name = "ExampleProduct",
                 StringAttributes = new List<StringAttribute>() {
                     new StringAttribute() {
-                        Value = "ASD"
+                        Value = "ASD",
+                        AttributeId = category.Attributes.Where(e => e.Name == "Author").Single().Id
                     }},
                 IntAttributes = new List<IntAttribute>() {
                     new IntAttribute() {
-                        Value = 55
+                        Value = 55,
+                        AttributeId = category.Attributes.Where(e => e.Name == "Publication date").Single().Id
                     }},
             };
         }
@@ -80,6 +78,17 @@ namespace ProductRating.UnitTest
 
             Assert.NotNull(dbProduct);
             Assert.Equal("ExampleProduct", dbProduct.Name);
+            Assert.Contains("ASD",
+                dbProduct.PropertyValueConnections
+                    .Select(e => e.ProductAttributeValue)
+                    .OfType<ProductAttributeStringValue>()
+                    .Select(e => e.StringValue));
+
+            Assert.Contains("Author",
+             dbProduct.PropertyValueConnections
+                 .Select(e => e.ProductAttributeValue)
+                 .OfType<ProductAttributeStringValue>()
+                 .Select(e => e.Attribute.Name));
 
             //Todo more checks 
         }
@@ -90,6 +99,16 @@ namespace ProductRating.UnitTest
             context.Database.EnsureDeleted();
             var insertedProductId = await productService.CreateProduct(MakeDtoForInsert());
             var productToChangeDto = await productService.GetProductForUpdate(insertedProductId);           
+        }
+
+        [Fact]
+        public async Task DeleteProduct()
+        {
+            context.Database.EnsureDeleted();
+            var insertedProductId = await productService.CreateProduct(MakeDtoForInsert());
+
+            await productService.DeleteProduct(insertedProductId);
+            Assert.DoesNotContain(insertedProductId, context.Products.Select(e => e.Id));
         }
     }
 }

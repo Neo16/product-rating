@@ -127,17 +127,31 @@ namespace ProductRating.Bll.Services
 
         public async Task<CreateEditProductDto> GetProductForUpdate(Guid productId)
         {
-            var dbProduct = await context.Products
-                .Include(e => e.PropertyValueConnections)      
+            var dbProduct = await context.Products              
                 .Include(e => e.ThumbnailPicture)
+                .Include(e => e.PropertyValueConnections)
+                .ThenInclude(e => e.ProductAttributeValue)
+                .ThenInclude(e => e.Attribute)
                 .FirstOrDefaultAsync(e =>e.Id == productId);
-
-            //Todo: Map atttributes 
+          
             return mapper.Map<CreateEditProductDto>(dbProduct);            
         }
 
         public async Task<Guid> CreateProduct(CreateEditProductDto product)
-        {            
+        {
+            //Todo: more validation 
+
+            bool isProductNameTaken = await context.Products
+               .AnyAsync(e => e.Name.ToUpper() == product.Name.ToUpper());
+
+            if (isProductNameTaken)
+            {
+                throw new BusinessLogicException("A product with the same name already exists.")
+                {
+                    ErrorCode = ErrorCode.InvalidArgument
+                };
+            }
+
             var dbProduct = mapper.Map<Product>(product);
 
             dbProduct.PropertyValueConnections = new List<ProductAttributeValueConnection>();
@@ -166,18 +180,7 @@ namespace ProductRating.Bll.Services
                         Id = attr.ValueId
                     }
                 });
-            }
-
-            bool isProductNameTaken = await context.Products
-                .AnyAsync(e => e.Name.ToUpper() == dbProduct.Name.ToUpper());
-
-            if (isProductNameTaken)
-            {
-                throw new BusinessLogicException("A product with the same name already exists.")
-                {
-                    ErrorCode = ErrorCode.InvalidArgument
-                };
-            }
+            }           
 
             context.Products.Add(dbProduct);
             await context.SaveChangesAsync();
@@ -192,9 +195,11 @@ namespace ProductRating.Bll.Services
         public async Task DeleteProduct(Guid productId)
         {
             var product = await context.Products
-             .Include(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue))
+             .Include(e => e.PropertyValueConnections)
+             .ThenInclude(e => e.ProductAttributeValue)
              .ThenInclude(e => e.ProductConnctions)
-             .Include(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue))
+             .Include(e => e.PropertyValueConnections)
+             .ThenInclude(e => e.ProductAttributeValue)
              .ThenInclude(e => e.Attribute)
              .SingleOrDefaultAsync(e => e.Id == productId);
 
@@ -207,6 +212,7 @@ namespace ProductRating.Bll.Services
                     context.Entry(attrValue).State = EntityState.Deleted;
                 }               
             }
+            await context.SaveChangesAsync();
 
             context.Products.Remove(product);
             await context.SaveChangesAsync();

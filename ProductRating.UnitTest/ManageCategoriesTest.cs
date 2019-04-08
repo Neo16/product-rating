@@ -15,10 +15,9 @@ using Xunit.Frameworks.Autofac;
 namespace ProductRating.UnitTest
 {
     [UseAutofacTestFramework]
-    public class ManageCategoriesTest
+    public class ManageCategoriesTest : DatabaseFixture
     {
         private readonly ICategoryService categoryService;
-        private readonly ApplicationDbContext context;
 
         private CreateEditCategoryDto categoryToBeInserted = new CreateEditCategoryDto()
         {
@@ -49,9 +48,8 @@ namespace ProductRating.UnitTest
 
         public ManageCategoriesTest(
             ApplicationDbContext context,
-            ICategoryService categoryService)
-        {
-            this.context = context;
+            ICategoryService categoryService): base(context)
+        {            
             this.categoryService = categoryService;
         }
 

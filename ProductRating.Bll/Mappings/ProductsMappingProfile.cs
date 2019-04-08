@@ -21,11 +21,20 @@ namespace ProductRating.Bll.Mappings
                .ForMember(e => e.PictureIds, e => e.MapFrom(f => f.Pictures.Select(g => g.PictureId)))
                .ForMember(e => e.ThumbnailPictureId, e => e.MapFrom(f => f.ThumbnailPictureId))
                .ForMember(e => e.ThumbnailPictureString, e => e.Ignore())
+               .ForMember(e => e.IntAttributes,
+                    e => e.MapFrom(f => f.PropertyValueConnections
+                        .Select(g => g.ProductAttributeValue)
+                        .OfType<ProductAttributeIntValue>()))
+                .ForMember(e => e.StringAttributes,
+                    e => e.MapFrom(f => f.PropertyValueConnections
+                        .Select(g => g.ProductAttributeValue)
+                        .OfType<ProductAttributeStringValue>()))
                .ReverseMap()
                .ForMember(e => e.PropertyValueConnections, e => e.Ignore())
                .ForMember(e => e.ScoreValue, e => e.Ignore())
                .ForMember(e => e.Reviews, e => e.Ignore())
-               .ForMember(e => e.Scores, e => e.Ignore());  
+               .ForMember(e => e.Scores, e => e.Ignore());   
+
 
             this.CreateMap<Product, ProductDetailsDto>()
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
@@ -35,7 +44,9 @@ namespace ProductRating.Bll.Mappings
                 .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name));
             
              this.CreateMap<ProductAttributeValue, AttributeBase>()
-                 .ForMember(e => e.AttributeName, e => e.MapFrom(f => f.Attribute.Name));
+                 .ForMember(e => e.AttributeName, e => e.MapFrom(f => f.Attribute.Name))
+                 .ForMember(e => e.AttributeId, e => e.MapFrom(f => f.Attribute.Id))
+                 .ForMember(e => e.ValueId, e => e.MapFrom(f => f.Id));
 
             this.CreateMap<ProductAttributeIntValue, IntAttribute>()
                .IncludeBase<ProductAttributeValue, AttributeBase>()
