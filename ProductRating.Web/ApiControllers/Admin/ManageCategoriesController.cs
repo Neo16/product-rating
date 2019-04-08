@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
+using System;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers.Admin
 {
     [ApiController]
+    [Authorize]
     [Route("manage-categories")]
     public class ManageCategoriesController : Controller
     {
@@ -23,10 +25,23 @@ namespace ProductRating.Web.ApiControllers.Admin
         }
 
         [HttpPost("create")]
-        [Authorize]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto category)
         {
             await categoryService.CreateCategory(category);
+            return Ok();
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateCategory(Guid categoryId, CreateCategoryDto category)
+        {
+            await categoryService.UpdateCategory(categoryId, category);
+            return Ok();
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteCategory(Guid categoryId)
+        {
+            await categoryService.DeleteCategory(categoryId);
             return Ok();
         }
     }

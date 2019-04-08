@@ -10,10 +10,14 @@ namespace ProductRating.Bll.ServiceInterfaces
     {
         Task<List<CategoryHeaderDto>> GetMainCategories();
 
-        Task<List<CategoryHeaderDto>> GetChildCategoriesOf(Guid categoryId);
+        Task<List<CategoryHeaderDto>> GetChildCategoriesOf(Guid categoryId);       
+
+        Task<List<CategoryAttributeDto>> GetAttributesOf(Guid categoryId);
 
         Task CreateCategory(CreateCategoryDto category);
 
-        Task<List<CategoryAttributeDto>> GetAttributesOf(Guid categoryId);
+        Task UpdateCategory(Guid categoryId, CreateCategoryDto category);
+
+        Task DeleteCategory(Guid categoryId);
     }
 }
