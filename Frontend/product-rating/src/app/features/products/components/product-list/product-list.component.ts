@@ -7,6 +7,7 @@ import { SearchParams } from 'src/app/models/SearchParams';
 import { store } from '@angular/core/src/render3';
 import { Observable } from 'rxjs';
 import { selectSearchState } from 'src/app/store/root-state';
+import { FireSearchAction } from 'src/app/store/search-store/search.actions';
 
 @Component({
   selector: 'app-product-list',
@@ -21,24 +22,15 @@ export class ProductListComponent implements OnInit {
   getSearchState: Observable<SearchState>;
 
   constructor(
-    private productService: ProductService,
     private store: Store<SearchState>
   ){
       this.getSearchState = this.store.select(selectSearchState);
   }
 
-  ngOnInit() {  
-    this.getProducts({});    
-    this.getSearchState.subscribe((searchState) => {
-      this.getProducts(searchState as SearchParams)
-   }); 
-  }
-
-  getProducts(params: SearchParams | {}){
-    this.productService.searchProducts(params)
-      .subscribe(result => {       
-        console.log(result)
-        this.productCells = result;      
-      }); 
-  }
+  ngOnInit() {      
+    this.getSearchState.subscribe((searchState) => {     
+      this.productCells = searchState.products;   
+      console.log(searchState.filter);
+    }); 
+  } 
 }

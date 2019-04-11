@@ -1,30 +1,20 @@
-import { Order } from 'src/app/models/Order';
-import { ProductOrder } from 'src/app/models/ProductOrder';
-import { IntAttribute } from 'src/app/models/IntAttribute';
-import { StringAttribute } from 'src/app/models/StringAttribute';
+import { SearchParams } from 'src/app/models/SearchParams';
+import { ProductCellData } from 'src/app/models/ProductCellData';
+import { CategoryHeader } from 'src/app/models/CategoryHeader';
+import { BrandHeader } from 'src/app/models/BrandHeader';
 
 export interface SearchState { 
-   textFilter: string | null; 
-   categoryId: string | null;
-   brandId: string | null;
-   minimumPrice: number | null,
-   maximumPrice: number | null,   
-   orderBy: ProductOrder | null
-   order: Order | null,  
-   intAttributes: IntAttribute[];
-   stringAttributes: StringAttribute[];  
+   filter: SearchParams,
+   products: ProductCellData[],
+   categories: CategoryHeader[],
+   brands: BrandHeader[] 
 }
 
 export const initialState: SearchState = {
-   textFilter: null,
-   categoryId: null,
-   brandId: null,
-   minimumPrice: 0,
-   maximumPrice: null,
-   orderBy: ProductOrder.BestScore, 
-   order: Order.Desc,
-   intAttributes: [],
-   stringAttributes : []
+   filter: new SearchParams(),
+   products: [],
+   categories: [],
+   brands: [] 
 };
 
 

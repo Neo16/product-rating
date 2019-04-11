@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductCellData } from 'src/app/models/ProductCellData';
 import { Observable } from 'rxjs';
 import { SearchParams } from 'src/app/models/SearchParams';
+import { SearchResult } from 'src/app/models/SearchResult';
 
 @Injectable()
 export class ProductService {
@@ -10,8 +11,11 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  searchProducts(params: SearchParams | {} ): Observable<ProductCellData[]> {
+  searchProducts(params: SearchParams | {} ): Observable<SearchResult> {
     const url = `${this.BASE_URL}/products/find`;
-    return this.http.post<ProductCellData[]>(url, params);
+    if (params == null){
+      params = {}
+    }
+    return this.http.post<SearchResult>(url, params);
   }
 }

@@ -14,6 +14,7 @@ import { reducers } from '../store/root-state';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/token.service';
 import { SharedModule } from '../shared/shared.module';
+import { SearchEffects } from '../store/search-store/search.effects';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { SharedModule } from '../shared/shared.module';
     CoreRoutingModule,  
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AcccountEffects]),    
+    EffectsModule.forRoot([SearchEffects]),  
   ],
   providers: [   
     AuthGuard,
