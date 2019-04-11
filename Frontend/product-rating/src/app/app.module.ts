@@ -9,7 +9,7 @@ import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchModule } from './features/search/search.module';
 import { ProductsModule } from './features/products/products.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { ProductsModule } from './features/products/products.module';
     CoreModule,
     SearchModule,
     HttpClientModule,
-    ProductsModule    
+    ProductsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

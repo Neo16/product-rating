@@ -56,6 +56,16 @@ namespace ProductRating.Bll.Mappings
                 .IncludeBase<ProductAttributeValue, AttributeBase>()
                 .ForMember(e => e.Value, e => e.MapFrom(f => f.StringValue));
 
+            this.CreateMap<Product, ProductHeaderDto>()
+               .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
+               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
+               .ForMember(e => e.BrandName, e => e.MapFrom(f => f.Brand.Name))
+               .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name))
+               .ForMember(e => e.ThumbnailImage, e => e.MapFrom(f => f.ThumbnailPicture));
+
+            this.CreateMap<Brand, BrandHeaderDto>()
+               .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
+               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name));              
         }
     }
 }

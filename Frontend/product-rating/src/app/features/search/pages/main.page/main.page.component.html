@@ -1,8 +1,8 @@
 <div class="row">
-   <div class="col-sm-6">
+   <div *ngIf="foundProducts" class="col-sm-6">
         <app-property-search></app-property-search>
    </div> 
-  <div class="col-18">
+  <div [ngClass]="{'col-18': foundProducts === true, 'col-24': foundProducts === false}">
     <app-search-bar></app-search-bar>
     <app-product-list></app-product-list>
   </div>

@@ -1,3 +1,23 @@
 <div class="property-search-container">
-  property-search
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+          <label for="minimumPrice">Minimum price</label> 
+          <input id="minimumPrice" name="minimumPrice" type="text" class="form-control">
+        </div> 
+  </div>
+  <div class="col-12">
+      <div class="form-group">
+          <label for="maximumPrice">Maximum price</label> 
+          <input id="maximumPrice" name="maximumPrice" type="text" class="form-control">
+        </div> 
+  </div>
+  </div>
+
+  <div class="row">
+    <div class="col-24" *ngFor="let category of categories">
+       <p>{{category.name}}</p>
+    </div>
+  </div>
+
 </div>

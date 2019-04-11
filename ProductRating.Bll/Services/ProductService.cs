@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using ProductRating.Bll.Dtos;
+using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.Exceptions;
@@ -32,16 +33,23 @@ namespace ProductRating.Bll.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<ProductHeaderDto>> Find(ProductFilterDto filter, PaginationDto pagination)
+        public async Task<SearchResultDto> Find(ProductFilterDto filter, PaginationDto pagination)
         {
             var attributeFilters = MapAttributeFilters(filter);
 
             var query = context.Products
-             .AsQueryable();
+                .Include(e => e.Brand)
+                .Include(e => e.Category)
+                .AsQueryable();
 
             //filter
             query = FilterForAttributes(attributeFilters, query);
 
+            if (!string.IsNullOrEmpty(filter.TextFilter))
+            {
+                query = query.Where(e => e.Name.ToUpper().Contains(filter.TextFilter.ToUpper())
+                 || e.Category.Name.ToUpper().Contains(filter.TextFilter.ToUpper()));
+            }
             if (filter.BrandId != null)
             {
                 query = query.Where(e => e.BrandId == filter.BrandId.Value);
@@ -49,7 +57,7 @@ namespace ProductRating.Bll.Services
             if (filter.CategoryId != null)
             {
                 query = query.Where(e => e.CategoryId == filter.CategoryId.Value);
-            }
+            }           
 
             //ordering 
             if (filter.OrderBy != null)
@@ -71,9 +79,15 @@ namespace ProductRating.Bll.Services
                 }
             }
 
-            var result = await query
-                .ProjectTo<ProductHeaderDto>(mapperConfiguration)
+            var products = await query                
                 .ToListAsync();
+
+            var result = new SearchResultDto() {
+                Products = products.Select(e => mapper.Map<ProductHeaderDto>(e)).ToList(),
+                Brands = products.Select(e => e.Brand).Distinct().Select(e => mapper.Map<BrandHeaderDto>(e)).ToList(),
+                Categories = products.Select(e => e.Category).Distinct().Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),           
+            };
+
             return result;
         }
 

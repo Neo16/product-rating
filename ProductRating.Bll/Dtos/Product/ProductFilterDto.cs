@@ -14,7 +14,7 @@ namespace ProductRating.Bll.Dtos.Product
 
         public decimal? MinimimPrice { get; set; }
 
-        public string TextSearch { get; set; }
+        public string TextFilter { get; set; }
 
         public List<IntAttribute> IntAttributes { get; set; }
 

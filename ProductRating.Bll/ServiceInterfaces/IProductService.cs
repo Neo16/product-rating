@@ -8,7 +8,7 @@ namespace ProductRating.Bll.ServiceInterfaces
 {
     public interface IProductService
     {
-        Task<List<ProductHeaderDto>> Find(ProductFilterDto filter, PaginationDto pagination);
+        Task<SearchResultDto> Find(ProductFilterDto filter, PaginationDto pagination);
 
         Task<ProductDetailsDto> GetDetails(Guid productId);
 

@@ -189,7 +189,7 @@ namespace ProductRating.Dal
             {
                 BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
-                Name = "MacBook Air 13",
+                Name = "Lenovo Z50",
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                      new ProductAttributeValueConnection()
@@ -208,7 +208,7 @@ namespace ProductRating.Dal
             {
                 BrandId = context.Brands.Where(e => e.Name == "Huawei").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Phones").Single().Id,
-                Name = "",
+                Name = "Huawei P30 pro",
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()

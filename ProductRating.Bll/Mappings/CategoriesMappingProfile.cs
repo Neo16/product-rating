@@ -12,7 +12,7 @@ namespace ProductRating.Bll.Mappings
     public class CategoriesMappingProfile : Profile
     {
         public CategoriesMappingProfile()
-        {
+        {    
             this.CreateMap<Category, CategoryHeaderDto>()
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))

@@ -14,6 +14,6 @@ namespace ProductRating.Bll.Dtos.Product
 
         public string CategoryName { get; set; }
 
-        public string ThumbnailImageUrl { get; set; }
+        public string ThumbnailImage { get; set; }
     }
 }

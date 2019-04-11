@@ -24,14 +24,14 @@ export class SearchBarComponent implements OnInit {
   filterModel = new SearchParams();
 
   //sate
-  getSearchState: Observable<SearchState>;
+  getSearchState: Observable<SearchState>; 
 
   constructor(private store: Store<SearchState>) {
       this.getSearchState = this.store.select(selectSearchState);     
   }
 
   ngOnInit() {
-    this.store.dispatch(new FireSearchAction());    
+    this.store.dispatch(new FireSearchAction());          
   } 
 
   changeFilter(){       
