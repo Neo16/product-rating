@@ -1,6 +1,18 @@
 <div class="search-bar-container">
 
     <div class="row">
+        <div class="col-19">
+            <div class="form-group">               
+                <input [(ngModel)] ="filterModel.textFilter" id="textFilter" name="textFilter" type="text" class="form-control">
+            </div> 
+        </div>
+        <div class="col-5">
+            <button type="button" class="btn btn-outline-secondary search-btn"
+             (click)="changeFilter()">Search {{clickMessage}}</button>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-6">
             <div class="form-group">
                 <label for="minimumPrice">Minimum price</label> 

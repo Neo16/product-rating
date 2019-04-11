@@ -14,6 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     PropertySearchComponent
   ],
   imports: [
+    SharedModule,
     CommonModule,
     SearchRoutingModule,
     ProductsModule,

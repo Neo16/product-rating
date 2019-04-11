@@ -3,7 +3,8 @@ import { ProductOrder } from 'src/app/models/ProductOrder';
 import { IntAttribute } from 'src/app/models/IntAttribute';
 import { StringAttribute } from 'src/app/models/StringAttribute';
 
-export interface SearchState {  
+export interface SearchState { 
+   textFilter: string | null; 
    categoryId: string | null;
    brandId: string | null;
    minimumPrice: number | null,
@@ -11,10 +12,11 @@ export interface SearchState {
    orderBy: ProductOrder | null
    order: Order | null,  
    intAttributes: IntAttribute[];
-   stringAttributes: StringAttribute[];
+   stringAttributes: StringAttribute[];  
 }
 
 export const initialState: SearchState = {
+   textFilter: null,
    categoryId: null,
    brandId: null,
    minimumPrice: 0,

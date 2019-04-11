@@ -6,7 +6,6 @@ import { AuthGuard } from './guards/auth.guard';
 import { RouterModule } from '@angular/router';
 import { CoreRoutingModule } from './core-routing.module';
 import { LoginPageComponent } from './pages/login/login.page.component';
-import { FormsModule } from '@angular/forms';
 import { AccountService } from './services/account.service';
 import { AcccountEffects } from '../store/account-store/account.effects';
 import { EffectsModule } from '@ngrx/effects';
@@ -14,6 +13,8 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../store/root-state';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/token.service';
+import { SharedModule } from '../shared/shared.module';
+
 
 @NgModule({
   declarations: [
@@ -21,10 +22,10 @@ import { TokenInterceptor } from './services/token.service';
     MenuComponent,
     LayoutComponent    
   ],
-  imports: [
+  imports: [    
+    SharedModule,
     CommonModule,
-    CoreRoutingModule,
-    FormsModule,
+    CoreRoutingModule,  
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AcccountEffects]),    
   ],
