@@ -6,12 +6,17 @@ import { SearchRoutingModule } from './search-routing.module';
 import { PropertySearchComponent } from './components/property-search/property-search.component';
 import { ProductsModule } from '../products/products.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SearchHelperService } from './services/search-helper.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from 'src/app/core/services/token.service';
+import { CategoryPickerComponent } from './components/category-picker/category-picker.component';
 
 @NgModule({
   declarations: [
     MainPageComponent,
     SearchBarComponent,
-    PropertySearchComponent
+    PropertySearchComponent,
+    CategoryPickerComponent
   ],
   imports: [
     SharedModule,
@@ -19,6 +24,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SearchRoutingModule,
     ProductsModule,
     SharedModule
+  ],
+  providers: [
+    SearchHelperService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
   ]
 })
 export class SearchModule { }
