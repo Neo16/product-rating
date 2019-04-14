@@ -3,3 +3,10 @@
 .property-search-container{
     @extend %container-base;
 }
+
+.category-picker-row{
+    cursor: pointer;
+    span.selected{
+        font-weight: bold;
+    } 
+}

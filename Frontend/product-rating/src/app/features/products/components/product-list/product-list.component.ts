@@ -30,7 +30,7 @@ export class ProductListComponent implements OnInit {
   ngOnInit() {      
     this.getSearchState.subscribe((searchState) => {     
       this.productCells = searchState.products;   
-      console.log(searchState.filter);
+      console.log(searchState);
     }); 
   } 
 }

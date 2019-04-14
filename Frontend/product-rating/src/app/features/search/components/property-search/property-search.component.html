@@ -16,7 +16,14 @@
 
   <div class="row">
     <div class="col-24" *ngFor="let category of categories">
-       <p>{{category.name}}</p>
+       <div class="category-picker-row">
+         <span (click)="selectCategory(category.id)" [ngClass]="{'selected': category.id === filter.categoryId}">
+           {{category.name}}
+          </span> 
+         <span (click)="unSelectCategory()">
+            <fa-icon icon="times"></fa-icon>
+          </span>
+        </div>
     </div>
   </div>
 

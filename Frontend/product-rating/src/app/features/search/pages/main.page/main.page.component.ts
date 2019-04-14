@@ -24,7 +24,7 @@ export class MainPageComponent implements OnInit {
 
   //sate
   getSearchState: Observable<SearchState>; 
-  foundProducts: boolean = false;
+  showPropertySearch: boolean = false;
 
    constructor(private store: Store<SearchState>) {
       this.getSearchState = this.store.select(selectSearchState);     
@@ -32,7 +32,8 @@ export class MainPageComponent implements OnInit {
   
   ngOnInit() {
     this.getSearchState.subscribe((searchState) => {
-      this.foundProducts = searchState.products && searchState.products.length > 0;      
+      this.showPropertySearch = searchState.filter.categoryId != null ||
+         (searchState.products && searchState.products.length > 0);      
     });   
   }
 

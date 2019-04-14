@@ -30,8 +30,7 @@ export class SearchEffects {
       map((actionAndState) => actionAndState[1].filter),
       switchMap(payload => {
         return this.productService.searchProducts(payload)
-          .map((result: SearchResult) => {  
-            console.log('asd');         
+          .map((result: SearchResult) => { 
             return new SearchSuccessAction(result);
           })
           .catch((error) => { 

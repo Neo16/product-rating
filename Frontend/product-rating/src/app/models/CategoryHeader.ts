@@ -1,6 +1,6 @@
 export interface CategoryHeader
 {
-    Id: string;
-    Name: string;        
-    NumOfProducts: number;
+    id: string;
+    name: string;        
+    numOfProducts: number;   
 }
