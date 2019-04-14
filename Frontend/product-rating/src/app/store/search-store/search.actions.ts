@@ -18,6 +18,7 @@ export class AddCategoryFilterAction implements Action {
 
 export class RemoveCategoryFilterAction implements Action {
   readonly type = SearchActionTypes.REMOVE_CATEGORY_FILTER; 
+  constructor(public payload: string) {}
 }
 
 export class ChangeFilterAction implements Action {

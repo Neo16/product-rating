@@ -15,54 +15,46 @@ import { SearchHelperService } from '../../services/search-helper.service';
   styleUrls: ['./property-search.component.scss']
 })
 export class PropertySearchComponent implements OnInit {
-  
+
   //sate
   getSearchState: Observable<SearchState>;
   categories: CategoryHeader[] = [];
   subcategories: CategoryHeader[] = [];
   brands: BrandHeader[] = [];
-  filter = new SearchParams();  
+  filter = new SearchParams();
 
   constructor(
     private store: Store<SearchState>,
     private helperService: SearchHelperService) {
-    this.getSearchState = this.store.select(selectSearchState);     
+    this.getSearchState = this.store.select(selectSearchState);
   }
 
   ngOnInit() {
     this.getSearchState.subscribe((searchState) => {
-      this.filter = searchState.filter;
-      // If there is no selected category, 
-      //load the options given by thetext based search 
-      if (this.filter.categoryId == null){
+      this.filter = searchState.filter;  
+      if (this.filter.categoryId == null) {
         this.categories = searchState.categories;
-      }    
-    }); 
+      }
+    });
   }
 
-  selectCategory(categoryId: string){     
-    //create effect from this maybe  
+  selectCategory(categoryId: string) {    
+    //load subcategories 
+    //Todo: create effect from this 
     this.helperService.getSubCategoriesOf(categoryId)
-      .subscribe(result => {       
-         var cat = this.categories
-            .find(x => x.id === categoryId);
-            if (cat){
-              cat.subcategories = result;
-            }
+      .subscribe(result => {
+        var cat = this.categories
+          .find(x => x.id === categoryId);
+        if (cat) {
+          cat.subcategories = result;
+        }
       });
     this.store.dispatch(new AddCategoryFilterAction(categoryId));
-    this.store.dispatch(new FireSearchAction());  
+    this.store.dispatch(new FireSearchAction());
   }
 
-  unSelectCategory(categoryId: string){   
-   var cat = this.categories
-      .find(x => x.id === categoryId);
-   if (cat){
-     cat.subcategories = [];
-   }
-
-    //Todo: change category filter to parent if any 
-    this.store.dispatch(new RemoveCategoryFilterAction());   
-    this.store.dispatch(new FireSearchAction()); 
-  }
+  unSelectCategory(categoryId: string) {  
+      this.store.dispatch(new RemoveCategoryFilterAction(categoryId));
+      this.store.dispatch(new FireSearchAction());
+  } 
 }

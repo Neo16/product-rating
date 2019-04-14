@@ -12,17 +12,13 @@ export class CategoryPickerComponent implements OnInit {
   @Output() select: EventEmitter<string> = new EventEmitter();
   @Output() unSelect: EventEmitter<any> = new EventEmitter();
 
-  active:boolean = false;
-
   constructor() { }
 
   selectCategory(categoryId: string){   
-    this.active = true;
     this.select.emit(categoryId);
   }
 
   unSelectCategory(categoryId: string){ 
-    this.active = false;
     this.unSelect.emit(categoryId);
   }
 

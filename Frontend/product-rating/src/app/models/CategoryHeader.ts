@@ -4,4 +4,5 @@ export interface CategoryHeader
     name: string;        
     numOfProducts: number;   
     subcategories: CategoryHeader[];
+    isActive: boolean;
 }

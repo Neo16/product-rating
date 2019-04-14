@@ -1,9 +1,9 @@
 
 <div class="category-picker-row">
-  <span (click)="selectCategory(category.id)" [ngClass]="{'selected': active === true}"> 
+  <span (click)="selectCategory(category.id)" [ngClass]="{'selected': category.isActive == true}"> 
     {{category.name}}     
   </span> 
-  <span (click)="unSelectCategory(category.id)">
+  <span *ngIf="category.isActive" (click)="unSelectCategory(category.id)">
       <fa-icon icon="times"></fa-icon>
     </span>
   </div>
@@ -12,10 +12,10 @@
   -->
 
   <div>
-    <div *ngFor="let category of category.subcategories">
+    <div class="subcategories-container" *ngFor="let category of category.subcategories">
       <app-category-picker 
         (select) = "selectCategory($event)"
-        (unSelect) = "selectCategory($event)"
+        (unSelect) = "unSelectCategory($event)"
         [category]="category">
      </app-category-picker>     
     </div>  
