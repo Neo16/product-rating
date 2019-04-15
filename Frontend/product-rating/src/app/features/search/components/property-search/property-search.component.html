@@ -14,14 +14,31 @@
   </div>
   </div>
 
-  <div class="row">
-    <div class="col-24" *ngFor="let category of categories">
-      <app-category-picker        
-                [category]="category"
-                (select)="selectCategory($event)"
-                (unSelect) = "unSelectCategory($event)">
-      </app-category-picker>     
-    </div>  
+  <div class="row search-group-container">
+    <div class="col-24 search-group-header">
+      Categories
+    </div>
+    <div class="col-24 search-group-content">
+        <div *ngFor="let category of categories">
+            <app-category-picker        
+                      [category]="category"
+                      (select)="selectCategory($event)"
+                      (unSelect) = "unSelectCategory($event)">
+            </app-category-picker>     
+          </div>  
+    </div>
+   
+  </div>
+
+  <div class="row search-group-container">
+    <div class="col-24 search-group-header">
+      Brands
+    </div>
+    <div class="col-24 search-group-content">
+        <div *ngFor="let brand of brands">
+            <div>{{brand.name}}</div>
+        </div>  
+    </div> 
   </div>
 
 </div>

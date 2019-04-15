@@ -1,8 +1,14 @@
+@import "~src/variables"; 
+
 .category-picker-row{
     cursor: pointer;
     span.selected{
-        font-weight: bold;
+        font-weight: 600;
     } 
+    span.unselect-cat{
+        float: right;
+        color: $app-light-gray;
+    }
 }
 
 .subcategories-container{

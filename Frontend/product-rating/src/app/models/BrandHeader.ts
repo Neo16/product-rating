@@ -1,5 +1,5 @@
 export interface BrandHeader
 {
-    Id: string;
-    Name: string;          
+    id: string;
+    name: string;          
 }

@@ -32,8 +32,9 @@ export class PropertySearchComponent implements OnInit {
   ngOnInit() {
     this.getSearchState.subscribe((searchState) => {
       this.filter = searchState.filter;  
+      this.brands = searchState.brands;
       if (this.filter.categoryId == null) {
-        this.categories = searchState.categories;
+        this.categories = searchState.categories;        
       }
     });
   }

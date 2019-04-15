@@ -3,9 +3,9 @@
   <span (click)="selectCategory(category.id)" [ngClass]="{'selected': category.isActive == true}"> 
     {{category.name}}     
   </span> 
-  <span *ngIf="category.isActive" (click)="unSelectCategory(category.id)">
+  <span class="unselect-cat" *ngIf="category.isActive" (click)="unSelectCategory(category.id)">
       <fa-icon icon="times"></fa-icon>
-    </span>
+  </span>
   </div>
   <!-- subcategories:  
     -- ide is category komponensek listája, a select action kimegy a gyökérig 
