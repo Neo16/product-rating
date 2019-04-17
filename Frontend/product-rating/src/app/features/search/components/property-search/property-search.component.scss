@@ -15,10 +15,57 @@
         border-top: 1px solid $app-light-gray;
         background: $app-background-color;
         font-weight: 600;
-        color: $brand-blue;      
+        color: $brand-blue-light;      
     }
     .search-group-content{
         padding: 0px 20px;
     }
 }
 
+
+::ng-deep {
+    
+    .price-slider .ng5-slider .ng5-slider-bar {
+      background: $brand-blue-lighter;
+      height: 3px;
+    }
+    .price-slider .ng5-slider .ng5-slider-selection {
+      background: $brand-blue-light;
+      height: 4px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-pointer {
+      width: 12px;
+      height: 12px;
+      top: auto; /* to remove the default positioning */
+      bottom: -3px;
+      background-color: $brand-blue-light;
+      border-radius: 6px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-pointer:after {
+      display: none;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-bubble {
+      bottom: 14px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-limit {
+      font-weight: bold;
+      color:  $brand-blue-light;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-tick {
+      width: 1px;
+      height: 10px;
+      margin-left: 4px;
+      border-radius: 0;
+      background:  $brand-blue-lighter;
+      top: -1px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+      background:  $brand-blue-light;
+    }
+  }

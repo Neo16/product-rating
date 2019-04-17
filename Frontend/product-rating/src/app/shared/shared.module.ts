@@ -5,15 +5,18 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Ng5SliderModule } from 'ng5-slider';
 
 @NgModule({
   declarations: [EnumToArrayPipe],
   imports: [
+    Ng5SliderModule,
     FontAwesomeModule,
     FormsModule,
     CommonModule
   ],
   exports: [
+    Ng5SliderModule,
     FontAwesomeModule,
     FormsModule,
     EnumToArrayPipe

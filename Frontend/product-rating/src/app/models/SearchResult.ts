@@ -9,4 +9,6 @@ export interface SearchResult
     categories: CategoryHeader[];
 
     brands: BrandHeader[];
+
+    maxPriceOption: number;
 }

@@ -1,17 +1,13 @@
 <div class="property-search-container">
-  <div class="row">
-    <div class="col-12">
-      <div class="form-group">
-          <label for="minimumPrice">Minimum price</label> 
-          <input id="minimumPrice" name="minimumPrice" type="text" class="form-control">
-        </div> 
-  </div>
-  <div class="col-12">
-      <div class="form-group">
-          <label for="maximumPrice">Maximum price</label> 
-          <input id="maximumPrice" name="maximumPrice" type="text" class="form-control">
-        </div> 
-  </div>
+  <div class="row search-group-container">
+    <div class="col-24 search-group-header">
+        Price
+    </div>
+    <div class="col-24 search-group-content price-slider">
+        <ng5-slider [(value)]="filter.minimumPrice" [(highValue)]="filter.maximumPrice"
+         (userChange)="onUserPriceSliderChange($event)"
+         [options]="sliderOptions"></ng5-slider>
+    </div>    
   </div>
 
   <div class="row search-group-container">
@@ -36,7 +32,7 @@
     </div>
     <div class="col-24 search-group-content">
         <div *ngFor="let brand of brands">
-            <div>{{brand.name}}</div>
+            <div *ngIf="brand != null">{{brand.name}}</div>
         </div>  
     </div> 
   </div>

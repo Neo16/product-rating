@@ -8,6 +8,7 @@ import { BrandHeader } from 'src/app/models/BrandHeader';
 import { ChangeFilterAction, FireSearchAction, AddCategoryFilterAction, RemoveCategoryFilterAction } from 'src/app/store/search-store/search.actions';
 import { SearchParams } from 'src/app/models/SearchParams';
 import { SearchHelperService } from '../../services/search-helper.service';
+import { Options, ChangeContext } from 'ng5-slider';
 
 @Component({
   selector: 'app-property-search',
@@ -23,19 +24,37 @@ export class PropertySearchComponent implements OnInit {
   brands: BrandHeader[] = [];
   filter = new SearchParams();
 
+  //price range slider
+  sliderOptions: Options = {
+    floor: 0,
+    ceil: 10000000,
+    step: 5,
+    minRange: 10,
+  };
+
   constructor(
     private store: Store<SearchState>,
     private helperService: SearchHelperService) {
-    this.getSearchState = this.store.select(selectSearchState);
+       this.getSearchState = this.store.select(selectSearchState);
+  }
+
+  changeSliderMax(max: number){
+    const newOptions: Options = Object.assign({}, this.sliderOptions);
+    newOptions.ceil = max;    
+    this.sliderOptions = newOptions;
+  }
+
+  onUserPriceSliderChange(changeContext: ChangeContext): void {
+     this.store.dispatch(new ChangeFilterAction(this.filter));
+     this.store.dispatch(new FireSearchAction());
   }
 
   ngOnInit() {
     this.getSearchState.subscribe((searchState) => {
       this.filter = searchState.filter;  
       this.brands = searchState.brands;
-      if (this.filter.categoryId == null) {
-        this.categories = searchState.categories;        
-      }
+      this.categories = searchState.categories;      
+      this.changeSliderMax(searchState.maxPrice);      
     });
   }
 

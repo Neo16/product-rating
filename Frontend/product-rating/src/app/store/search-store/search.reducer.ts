@@ -74,13 +74,15 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       var newState = {
         ...state,
         products: result.products,
-        brands: result.brands
+        brands: result.brands,
+        maxPrice: result.maxPriceOption
       };
       // If there is no selected category, 
       //load the options given by thetext based search 
       if (newState.filter.categoryId == null) {
         newState.categories = result.categories;
-      }
+      }  
+
       return newState;
     }
     default: {
