@@ -36,5 +36,7 @@ namespace ProductRating.Model.Entities.Products
         public Guid? ThumbnailPictureId { get; set; }
 
         public ICollection<ProductPicture> Pictures { get; set; }
+
+        public long Price { get; set; }
     }
 }

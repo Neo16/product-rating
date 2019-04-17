@@ -171,6 +171,7 @@ namespace ProductRating.Dal
                 BrandId = context.Brands.Where(e => e.Name == "Apple").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Name = "MacBook Air 13\"",
+                Price = 800,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -189,6 +190,7 @@ namespace ProductRating.Dal
             {
                 BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
+                Price = 600,
                 Name = "Lenovo Z50",
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
@@ -209,6 +211,7 @@ namespace ProductRating.Dal
                 BrandId = context.Brands.Where(e => e.Name == "Huawei").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Phones").Single().Id,
                 Name = "Huawei P30 pro",
+                Price = 1100,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -227,6 +230,7 @@ namespace ProductRating.Dal
             {
                 CategoryId = context.Categories.Where(e => e.Name == "Books").Single().Id,
                 Name = "The Order of the Phoenix",
+                Price = 5,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()

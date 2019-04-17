@@ -12,7 +12,7 @@ namespace ProductRating.Bll.Dtos.Product
 
         public decimal? MaximumPrice { get; set; }
 
-        public decimal? MinimimPrice { get; set; }
+        public decimal? MinimumPrice { get; set; }
 
         public string TextFilter { get; set; }
 

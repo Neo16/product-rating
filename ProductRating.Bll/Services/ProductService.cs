@@ -40,6 +40,8 @@ namespace ProductRating.Bll.Services
             var query = context.Products
                 .Include(e => e.Brand)
                 .Include(e => e.Category)
+                .ThenInclude(e => e.Parent)
+                .ThenInclude(e => e.Parent)
                 .AsQueryable();
 
             //filter
@@ -56,8 +58,22 @@ namespace ProductRating.Bll.Services
             }
             if (filter.CategoryId != null)
             {
-                query = query.Where(e => e.CategoryId == filter.CategoryId.Value);
-            }           
+                // three lvl deep
+                query = query.Where(e =>
+                      e.CategoryId == filter.CategoryId.Value
+                   || e.Category.Parent.Id == filter.CategoryId.Value
+                   || e.Category.Parent.Parent.Id == filter.CategoryId.Value);
+            }
+
+            var maxPriceOption = (await query.MaxAsync(e => e.Price) + 100);
+            if (maxPriceOption == 0)
+            {
+                maxPriceOption = 1000;
+            }
+            if (filter.MinimumPrice!= null && filter.MaximumPrice!= null)
+            {
+                query = query.Where(e => e.Price >= filter.MinimumPrice && e.Price <= filter.MaximumPrice);
+            }
 
             //ordering 
             if (filter.OrderBy != null)
@@ -85,10 +101,28 @@ namespace ProductRating.Bll.Services
             var result = new SearchResultDto() {
                 Products = products.Select(e => mapper.Map<ProductHeaderDto>(e)).ToList(),
                 Brands = products.Select(e => e.Brand).Distinct().Select(e => mapper.Map<BrandHeaderDto>(e)).ToList(),
-                Categories = products.Select(e => e.Category).Distinct().Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),           
+                Categories = GetRootCategories(products.Select(e => e.Category)).Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),
+                MaxPriceOption = maxPriceOption
             };
 
             return result;
+        }
+
+        private List<Category> GetRootCategories(IEnumerable<Category> caegories)
+        {
+            List<Category> result = new List<Category>();
+
+            foreach (var category in caegories)
+            {
+                var currentCategory = category;              
+                while (currentCategory.Parent != null)
+                {                  
+                    context.Entry(currentCategory).Reference(e => e.Parent).Load();
+                    currentCategory = currentCategory.Parent;                    
+                }
+                result.Add(currentCategory);
+            }
+            return result.Distinct().ToList();
         }
 
         public async Task<ProductDetailsDto> GetDetails(Guid productId)
