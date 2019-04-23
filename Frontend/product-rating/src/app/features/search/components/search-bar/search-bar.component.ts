@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { SearchState } from 'src/app/store/search-store/search.state';
 import { selectSearchState } from 'src/app/store/root-state';
 import { Observable } from 'rxjs';
-import { ChangeFilterAction, FireSearchAction } from 'src/app/store/search-store/search.actions';
+import { ChangeFilterAction, FireSearchAction, ChangeProductOrderAction, ChangeOrderAction } from 'src/app/store/search-store/search.actions';
 
 @Component({
   selector: 'app-search-bar',
@@ -31,11 +31,24 @@ export class SearchBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(new FireSearchAction());          
+    this.store.dispatch(new FireSearchAction());   
+    this.getSearchState.subscribe((searchState) => {
+      this.filterModel = searchState.filter;       
+    });       
   } 
 
   changeFilter(){       
     this.store.dispatch(new ChangeFilterAction(this.filterModel));    
+    this.store.dispatch(new FireSearchAction());    
+  }
+
+  onProductOrderChange(newOrder){
+    this.store.dispatch(new ChangeProductOrderAction(newOrder));    
+    this.store.dispatch(new FireSearchAction());    
+  }
+
+  onOrderChange(newOrder){
+    this.store.dispatch(new ChangeOrderAction(newOrder));    
     this.store.dispatch(new FireSearchAction());    
   }
 }

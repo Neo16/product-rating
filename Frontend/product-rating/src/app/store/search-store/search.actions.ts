@@ -11,6 +11,8 @@ export enum SearchActionTypes {
     SEARCH_FAILURE = '[Search] Failure',
     REMOVE_BRAND_FILTER = '[Search] Add brand filter',
     ADD_BRAND_FILTER = '[Search] Remove brand filter',
+    CHANGE_PRODUCT_ORDER = '[Search] Change Product Order',
+    CHANGE_ORDER =  '[Search] Change Order',
 }
 
 export class AddCategoryFilterAction implements Action {
@@ -52,3 +54,12 @@ export class SearchFailureAction implements Action {
   constructor(public payload: any) {}
 }
 
+export class ChangeProductOrderAction implements Action {
+  readonly type = SearchActionTypes.CHANGE_PRODUCT_ORDER;
+  constructor(public payload: number) {}
+}
+
+export class ChangeOrderAction implements Action {
+  readonly type = SearchActionTypes.CHANGE_ORDER;
+  constructor(public payload: number) {}
+}

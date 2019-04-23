@@ -3,6 +3,7 @@ import { ProductCellData } from 'src/app/models/ProductCellData';
 import { CategoryHeader } from 'src/app/models/CategoryHeader';
 import { BrandHeader } from 'src/app/models/BrandHeader';
 import { ProductOrder } from 'src/app/models/ProductOrder';
+import { Order } from 'src/app/models/Order';
 
 export interface SearchState { 
    filter: SearchParams,
@@ -20,7 +21,7 @@ export const initialState: SearchState = {
       minimumPrice: 0,
       maximumPrice:  1000,
       orderBy: ProductOrder.BestScore,
-      order: null,
+      order: Order.Desc,
       intAttributes: [],
       stringAttributes: [],
    } as SearchParams,

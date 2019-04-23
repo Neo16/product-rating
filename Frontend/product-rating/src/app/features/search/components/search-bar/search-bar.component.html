@@ -15,14 +15,14 @@
 <div class="row">
     <div class="col-24 order-select-container">
         <div>               
-            <select>
+            <select [ngModel]="filterModel.orderBy" (ngModelChange)="onProductOrderChange($event)">
                 <option *ngFor="let type of productOrder | enumToArray" [value]="type">
                     {{productOrderDisplay[type]}}
                 </option>       
             </select>
         </div> 
         <div>               
-            <select>
+            <select [ngModel]="filterModel.order" (ngModelChange)="onOrderChange($event)">
                 <option *ngFor="let type of order | enumToArray" [value]="type">
                     {{orderDisplay[type]}}
                 </option>  

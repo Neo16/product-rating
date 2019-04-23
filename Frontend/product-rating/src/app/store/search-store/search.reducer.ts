@@ -1,7 +1,7 @@
 import { initialState, SearchState } from './search.state';
 import {
   SearchActionTypes, ChangeFilterAction, SearchSuccessAction,
-  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction
+  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, ChangeOrderAction, ChangeProductOrderAction
 } from './search.actions';
 import { filter } from 'rxjs/operators';
 import { CategoryHeader } from 'src/app/models/CategoryHeader';
@@ -88,6 +88,22 @@ export function searchReducer(state: SearchState = initialState, action: any): S
         filter: Object.assign(state.filter, newFilter)
       };  
     }
+    case SearchActionTypes.CHANGE_PRODUCT_ORDER: {
+      var newProductOrder: number = (action as ChangeProductOrderAction).payload;
+      var newState = {
+        ...state,
+      };
+      newState.filter.orderBy = newProductOrder;
+      return newState;
+    }
+    case SearchActionTypes.CHANGE_ORDER: {
+      var newOrder: number = (action as ChangeOrderAction).payload;
+      var newState = {
+        ...state,
+      };
+      newState.filter.order = newOrder;
+      return newState;
+    }    
     case SearchActionTypes.SEARCH_SUCCESS: {
       var result = (action as SearchSuccessAction).payload;
 

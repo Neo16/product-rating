@@ -53,8 +53,7 @@ export class PropertySearchComponent implements OnInit {
       this.filter = searchState.filter;  
       this.brands = searchState.brands;
       this.categories = searchState.categories;   
-      this.changeSliderMax(searchState.maxPrice);     
-      console.log(this.filter); 
+      this.changeSliderMax(searchState.maxPrice);          
     });
   }
 

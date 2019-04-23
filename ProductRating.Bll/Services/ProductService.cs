@@ -61,24 +61,31 @@ namespace ProductRating.Bll.Services
             query = FilterForAttributes(attributeFilters, query);
 
             //ordering 
+            Expression<Func<Product, ValueType>> orderByExpression = null; 
             if (filter.OrderBy != null)
             {
                 switch (filter.OrderBy.Value)
                 {
                     case ProductOrder.BestScore:
-                        query = query.OrderByDescending(e => e.ScoreValue);
+                        orderByExpression = e => e.ScoreValue;
                         break;
                     case ProductOrder.MostScore:
-                        query = query.OrderByDescending(e => e.Scores.Count);
+                        orderByExpression = e => e.Scores.Count;
                         break;
                     case ProductOrder.MostTextReview:
-                        query = query.OrderByDescending(e => e.Reviews.Count);
+                        orderByExpression = e => e.Reviews.Count;
                         break;
                     case ProductOrder.Newest:
-                        query = query.OrderByDescending(e => e.CreatedAt);
+                        orderByExpression = e => e.CreatedAt;
+                        break;
+                    default:
+                        orderByExpression = e => e.ScoreValue;
                         break;
                 }
             }
+            query = filter.Order == Order.Asc
+                ? query.OrderBy(orderByExpression)
+                : query.OrderByDescending(orderByExpression);
 
             var products = await query
                 .ToListAsync();
