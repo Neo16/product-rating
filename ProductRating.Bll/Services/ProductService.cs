@@ -35,45 +35,30 @@ namespace ProductRating.Bll.Services
 
         public async Task<SearchResultDto> Find(ProductFilterDto filter, PaginationDto pagination)
         {
-            var attributeFilters = MapAttributeFilters(filter);
-
-            var query = context.Products
+            var baseQuery = context.Products
                 .Include(e => e.Brand)
                 .Include(e => e.Category)
                 .ThenInclude(e => e.Parent)
                 .ThenInclude(e => e.Parent)
                 .AsQueryable();
 
-            //filter
-            query = FilterForAttributes(attributeFilters, query);
-
+            //Text search filter
             if (!string.IsNullOrEmpty(filter.TextFilter))
             {
-                query = query.Where(e => e.Name.ToUpper().Contains(filter.TextFilter.ToUpper())
+                baseQuery = baseQuery.Where(e => e.Name.ToUpper().Contains(filter.TextFilter.ToUpper())
                  || e.Category.Name.ToUpper().Contains(filter.TextFilter.ToUpper()));
             }
-            if (filter.BrandId != null)
-            {
-                query = query.Where(e => e.BrandId == filter.BrandId.Value);
-            }
-            if (filter.CategoryId != null)
-            {
-                // three lvl deep
-                query = query.Where(e =>
-                      e.CategoryId == filter.CategoryId.Value
-                   || e.Category.Parent.Id == filter.CategoryId.Value
-                   || e.Category.Parent.Parent.Id == filter.CategoryId.Value);
-            }
 
-            var maxPriceOption = (await query.MaxAsync(e => e.Price) + 100);
-            if (maxPriceOption == 0)
-            {
-                maxPriceOption = 1000;
-            }
-            if (filter.MinimumPrice!= null && filter.MaximumPrice!= null)
-            {
-                query = query.Where(e => e.Price >= filter.MinimumPrice && e.Price <= filter.MaximumPrice);
-            }
+            // Add category brand and Price filters 
+            var query = AddCategoryBrandPriceFilters(filter, baseQuery);
+
+            var notFilteredForCategoryQuery = AddCategoryBrandPriceFilters(filter, baseQuery, true);
+            var notFilteredForBrandQuery = AddCategoryBrandPriceFilters(filter, baseQuery, false, true, false);
+            var notFilteredForPriceQuery = AddCategoryBrandPriceFilters(filter, baseQuery, false, false, true);
+
+            //filter for attributes
+            var attributeFilters = MapAttributeFilters(filter);
+            query = FilterForAttributes(attributeFilters, query);
 
             //ordering 
             if (filter.OrderBy != null)
@@ -95,13 +80,20 @@ namespace ProductRating.Bll.Services
                 }
             }
 
-            var products = await query                
+            var products = await query
                 .ToListAsync();
 
-            var result = new SearchResultDto() {
+            var maxPriceOption = (await notFilteredForPriceQuery.AnyAsync()) ? (await notFilteredForPriceQuery.MaxAsync(e => e.Price) + 100) : 1000;
+            if (maxPriceOption == 0)
+            {
+                maxPriceOption = 1000;
+            }
+
+            var result = new SearchResultDto()
+            {
                 Products = products.Select(e => mapper.Map<ProductHeaderDto>(e)).ToList(),
-                Brands = products.Select(e => e.Brand).Distinct().Select(e => mapper.Map<BrandHeaderDto>(e)).ToList(),
-                Categories = GetRootCategories(products.Select(e => e.Category)).Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),
+                Brands = notFilteredForBrandQuery.Where(e => e.Brand != null).Select(e => e.Brand).Distinct().Select(e => mapper.Map<BrandHeaderDto>(e)).ToList(),
+                Categories = GetRootCategories(notFilteredForCategoryQuery.Select(e => e.Category)).Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),
                 MaxPriceOption = maxPriceOption
             };
 
@@ -114,11 +106,11 @@ namespace ProductRating.Bll.Services
 
             foreach (var category in caegories)
             {
-                var currentCategory = category;              
+                var currentCategory = category;
                 while (currentCategory.Parent != null)
-                {                  
+                {
                     context.Entry(currentCategory).Reference(e => e.Parent).Load();
-                    currentCategory = currentCategory.Parent;                    
+                    currentCategory = currentCategory.Parent;
                 }
                 result.Add(currentCategory);
             }
@@ -172,17 +164,72 @@ namespace ProductRating.Bll.Services
             }
             return query;
         }
+        private static IQueryable<Product> FilterForBrands(ProductFilterDto filter, IQueryable<Product> query)
+        {
+            if (filter.BrandIds != null && filter.BrandIds.Count > 0)
+            {
+                query = query.Where(e => e.Brand == null || !filter.BrandIds.Contains(e.BrandId.Value));
+            }
+            return query;
+        }
+
+        private static IQueryable<Product> FilterForPrice(ProductFilterDto filter, IQueryable<Product> query)
+        {
+
+            if (filter.MinimumPrice != null && filter.MaximumPrice != null)
+            {
+                query = query.Where(e => e.Price >= filter.MinimumPrice && e.Price <= filter.MaximumPrice);
+            }
+            return query;
+        }
+
+        private static IQueryable<Product> AddCategoryBrandPriceFilters(
+            ProductFilterDto filter,
+            IQueryable<Product> query,
+            bool skipCategory = false,
+            bool skipBrand = false,
+            bool skipPrice = false)
+        {
+            if (!skipCategory)
+            {
+                query = FilterForCategory(filter, query);
+            }
+            if (!skipBrand)
+            {
+                query = FilterForBrands(filter, query);
+            }
+            if (!skipPrice)
+            {
+                query = FilterForPrice(filter, query);
+            }
+            return query;
+        }
+
+
+        private static IQueryable<Product> FilterForCategory(ProductFilterDto filter, IQueryable<Product> query)
+        {
+            if (filter.CategoryId != null)
+            {
+                // three lvl deep
+                query = query.Where(e =>
+                      e.CategoryId == filter.CategoryId.Value
+                   || e.Category.Parent.Id == filter.CategoryId.Value
+                   || e.Category.Parent.Parent.Id == filter.CategoryId.Value);
+            }
+            return query;
+        }
+
 
         public async Task<CreateEditProductDto> GetProductForUpdate(Guid productId)
         {
-            var dbProduct = await context.Products              
+            var dbProduct = await context.Products
                 .Include(e => e.ThumbnailPicture)
                 .Include(e => e.PropertyValueConnections)
                 .ThenInclude(e => e.ProductAttributeValue)
                 .ThenInclude(e => e.Attribute)
-                .FirstOrDefaultAsync(e =>e.Id == productId);
-          
-            return mapper.Map<CreateEditProductDto>(dbProduct);            
+                .FirstOrDefaultAsync(e => e.Id == productId);
+
+            return mapper.Map<CreateEditProductDto>(dbProduct);
         }
 
         public async Task<Guid> CreateProduct(CreateEditProductDto product)
@@ -204,16 +251,16 @@ namespace ProductRating.Bll.Services
 
             dbProduct.PropertyValueConnections = new List<ProductAttributeValueConnection>();
 
-            foreach(var attr in product.IntAttributes)
+            foreach (var attr in product.IntAttributes)
             {
                 dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
                 {
                     ProductAttributeValue = new ProductAttributeIntValue()
                     {
                         AttributeId = attr.AttributeId,
-                        IntValue  = attr.Value,
+                        IntValue = attr.Value,
                         Id = attr.ValueId
-                    }                    
+                    }
                 });
             }
 
@@ -228,7 +275,7 @@ namespace ProductRating.Bll.Services
                         Id = attr.ValueId
                     }
                 });
-            }           
+            }
 
             context.Products.Add(dbProduct);
             await context.SaveChangesAsync();
@@ -252,13 +299,13 @@ namespace ProductRating.Bll.Services
              .SingleOrDefaultAsync(e => e.Id == productId);
 
             foreach (var attrValue in product.PropertyValueConnections.Select(e => e.ProductAttributeValue))
-            {                
+            {
                 // If the value is not connected to more products 
                 // and is not a value of a fixed value attribute, it can be deleted  
                 if (attrValue.ProductConnctions.Count == 1 && !attrValue.Attribute.HasFixedValues)
                 {
                     context.Entry(attrValue).State = EntityState.Deleted;
-                }               
+                }
             }
             await context.SaveChangesAsync();
 

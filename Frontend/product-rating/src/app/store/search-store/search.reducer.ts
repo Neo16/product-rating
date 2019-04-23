@@ -1,7 +1,7 @@
 import { initialState, SearchState } from './search.state';
 import {
   SearchActionTypes, ChangeFilterAction, SearchSuccessAction,
-  AddCategoryFilterAction, RemoveCategoryFilterAction
+  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction
 } from './search.actions';
 import { filter } from 'rxjs/operators';
 import { CategoryHeader } from 'src/app/models/CategoryHeader';
@@ -17,6 +17,28 @@ function forAllCategoryInTree(categories: CategoryHeader[], func: (x: CategoryHe
 
 export function searchReducer(state: SearchState = initialState, action: any): SearchState {
   switch (action.type) {
+    case SearchActionTypes.ADD_BRAND_FILTER: {
+      var brandId = (action as AddBrandFilterAction).payload;
+      var newState = {
+        ...state,
+        filter: {
+          ...state.filter,
+          brandIds: state.filter.brandIds.concat(brandId)
+        }
+      }    
+      return newState;
+    }
+    case SearchActionTypes.REMOVE_BRAND_FILTER: {
+      var brandId = (action as RemoveBrandFilterAction).payload;
+      var newState = {
+        ...state,
+        filter: {
+          ...state.filter,
+          brandIds: state.filter.brandIds.filter(e => e != brandId)
+        }
+      }     
+      return newState;
+    }
     case SearchActionTypes.ADD_CATEGORY_FILTER: {
       var categoryId = (action as AddCategoryFilterAction).payload;
       var newState = {
@@ -37,7 +59,6 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       var newState = {
         ...state,
       };
-
       //Remove subcategories and make it unselected 
       forAllCategoryInTree(newState.categories, (c: CategoryHeader) => {
         if (c.id === categoryId) {
@@ -45,7 +66,6 @@ export function searchReducer(state: SearchState = initialState, action: any): S
           c.isActive = false;
         }
       });
-
       //If has a parent, make parent selected   
       var parentCat = newState.categories
         .find(x => x.subcategories != undefined &&
@@ -66,7 +86,7 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       return {
         ...state,
         filter: Object.assign(state.filter, newFilter)
-      };
+      };  
     }
     case SearchActionTypes.SEARCH_SUCCESS: {
       var result = (action as SearchSuccessAction).payload;
@@ -77,12 +97,18 @@ export function searchReducer(state: SearchState = initialState, action: any): S
         brands: result.brands,
         maxPrice: result.maxPriceOption
       };
-      // If there is no selected category, 
-      //load the options given by thetext based search 
+
+      // Only reload categories if there is no selected category 
       if (newState.filter.categoryId == null) {
         newState.categories = result.categories;
-      }  
+      }          
 
+      // Check all brands on ui 
+      newState.brands.forEach(f => f.isChecked = true);   
+      // Make selected brand unchecked 
+      newState.brands.filter(e => newState.filter.brandIds.indexOf(e.id) != -1)
+         .forEach(f =>f.isChecked = false);
+         
       return newState;
     }
     default: {

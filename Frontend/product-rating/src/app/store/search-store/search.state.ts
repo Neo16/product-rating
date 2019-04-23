@@ -16,7 +16,7 @@ export const initialState: SearchState = {
    filter: {
       textFilter: null,
       categoryId:  null,
-      brandId: null,
+      brandIds: [],
       minimumPrice: 0,
       maximumPrice:  1000,
       orderBy: ProductOrder.BestScore,

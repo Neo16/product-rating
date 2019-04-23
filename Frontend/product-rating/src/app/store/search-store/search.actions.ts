@@ -8,7 +8,9 @@ export enum SearchActionTypes {
     CHANGE_FILTER = '[Search] Change Filter',
     FIRE_SERACH = '[Search] Fire Search',
     SEARCH_SUCCESS = '[Search] Success',
-    SEARCH_FAILURE = '[Search] Failure'
+    SEARCH_FAILURE = '[Search] Failure',
+    REMOVE_BRAND_FILTER = '[Search] Add brand filter',
+    ADD_BRAND_FILTER = '[Search] Remove brand filter',
 }
 
 export class AddCategoryFilterAction implements Action {
@@ -18,6 +20,16 @@ export class AddCategoryFilterAction implements Action {
 
 export class RemoveCategoryFilterAction implements Action {
   readonly type = SearchActionTypes.REMOVE_CATEGORY_FILTER; 
+  constructor(public payload: string) {}
+}
+
+export class AddBrandFilterAction implements Action {
+  readonly type = SearchActionTypes.ADD_BRAND_FILTER;
+  constructor(public payload: string) {}
+}
+
+export class RemoveBrandFilterAction implements Action {
+  readonly type = SearchActionTypes.REMOVE_BRAND_FILTER; 
   constructor(public payload: string) {}
 }
 

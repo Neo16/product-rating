@@ -5,7 +5,7 @@ import { selectSearchState } from 'src/app/store/root-state';
 import { Observable } from 'rxjs';
 import { CategoryHeader } from 'src/app/models/CategoryHeader';
 import { BrandHeader } from 'src/app/models/BrandHeader';
-import { ChangeFilterAction, FireSearchAction, AddCategoryFilterAction, RemoveCategoryFilterAction } from 'src/app/store/search-store/search.actions';
+import { ChangeFilterAction, FireSearchAction, AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction } from 'src/app/store/search-store/search.actions';
 import { SearchParams } from 'src/app/models/SearchParams';
 import { SearchHelperService } from '../../services/search-helper.service';
 import { Options, ChangeContext } from 'ng5-slider';
@@ -20,7 +20,6 @@ export class PropertySearchComponent implements OnInit {
   //sate
   getSearchState: Observable<SearchState>;
   categories: CategoryHeader[] = [];
-  subcategories: CategoryHeader[] = [];
   brands: BrandHeader[] = [];
   filter = new SearchParams();
 
@@ -29,7 +28,7 @@ export class PropertySearchComponent implements OnInit {
     floor: 0,
     ceil: 10000000,
     step: 5,
-    minRange: 10,
+    minRange: 10,    
   };
 
   constructor(
@@ -53,8 +52,9 @@ export class PropertySearchComponent implements OnInit {
     this.getSearchState.subscribe((searchState) => {
       this.filter = searchState.filter;  
       this.brands = searchState.brands;
-      this.categories = searchState.categories;      
-      this.changeSliderMax(searchState.maxPrice);      
+      this.categories = searchState.categories;   
+      this.changeSliderMax(searchState.maxPrice);     
+      console.log(this.filter); 
     });
   }
 
@@ -77,4 +77,14 @@ export class PropertySearchComponent implements OnInit {
       this.store.dispatch(new RemoveCategoryFilterAction(categoryId));
       this.store.dispatch(new FireSearchAction());
   } 
+
+  selectBrand(brandId, event) {   
+    if (event.target.checked){     
+      this.store.dispatch(new RemoveBrandFilterAction(brandId));
+    }
+    else {
+      this.store.dispatch(new AddBrandFilterAction(brandId));   
+    }  
+    this.store.dispatch(new FireSearchAction());
+  }
 }

@@ -8,7 +8,7 @@ namespace ProductRating.Bll.Dtos.Product
     {
         public Guid? CategoryId { get; set; }
 
-        public Guid? BrandId { get; set; }
+        public List<Guid> BrandIds { get; set; }
 
         public decimal? MaximumPrice { get; set; }
 

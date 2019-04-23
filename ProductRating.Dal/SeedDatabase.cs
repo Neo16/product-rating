@@ -191,7 +191,7 @@ namespace ProductRating.Dal
                 BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Price = 600,
-                Name = "Lenovo Z50",
+                Name = "Z50",
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                      new ProductAttributeValueConnection()

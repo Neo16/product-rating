@@ -6,7 +6,7 @@ import { StringAttribute } from './StringAttribute';
 export class SearchParams {  
     textFilter: string | null;
     categoryId: string | null;
-    brandId: string | null;
+    brandIds: string[];
     minimumPrice: number | null;
     maximumPrice: number | null;   
     orderBy: ProductOrder | null;
