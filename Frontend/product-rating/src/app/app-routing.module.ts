@@ -4,6 +4,7 @@ import { LayoutComponent } from './core/components/layout/layout.component';
 import { CoreModule } from './core/core.module';
 import { ProfileModule } from './features/profile/profile.module';
 import { SearchModule } from './features/search/search.module';
+import { ProductsModule } from './features/products/products.module';
 
 const routes: Routes = [
   {
@@ -20,6 +21,11 @@ const routes: Routes = [
     path: 'profile',
     component: LayoutComponent,
     loadChildren: () => ProfileModule    
+  },
+  {
+    path: 'products',
+    component: LayoutComponent,
+    loadChildren: () => ProductsModule    
   }
 ];
 

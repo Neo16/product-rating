@@ -5,14 +5,18 @@ import { ProductCellComponent } from './components/product-cell/product-cell.com
 import { ProductService } from './services/product.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/services/token.service';
+import { ProductDetailsComponent } from './pages/product-details/product-details.component';
+import { ProductRoutingModule } from './products-routing.module';
 
 @NgModule({
   declarations: [
     ProductListComponent,
-    ProductCellComponent    
+    ProductCellComponent,
+    ProductDetailsComponent    
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ProductRoutingModule
   ],
   exports: [ProductListComponent],
   providers: [
