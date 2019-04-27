@@ -253,8 +253,37 @@ namespace ProductRating.Dal
             };
             context.Products.Add(book1);
 
+            context.AddDummyLaptops(30);
+
             context.SaveChanges();
             return context;
+        }
+
+        private static void AddDummyLaptops(this ApplicationDbContext context, int count)
+        {
+            var r = new Random();
+            for (int i = 0; i < count; i++)
+            {
+                var computer = new Product()
+                {
+                    BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
+                    CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
+                    Price = r.Next(500, 1400),
+                    Name = "Dummy Laptop " + i,
+                    PropertyValueConnections = new List<ProductAttributeValueConnection>()
+                {
+                     new ProductAttributeValueConnection()
+                     {
+                        ProductAttributeValue =  new ProductAttributeStringValue()
+                         {
+                            StringValue = "Dummy Laptop Processor",
+                            Attribute = context.ProductAttributes.Where(e => e.Name == "Processor").Single()
+                        }
+                     }
+                }
+                };
+                context.Products.Add(computer);
+            }
         }
 
         private static ApplicationDbContext CreateReviews(this ApplicationDbContext context, int numberOfReviews)

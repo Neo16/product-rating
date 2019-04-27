@@ -7,6 +7,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { ProductDetailsComponent } from './pages/product-details/product-details.component';
 import { ProductRoutingModule } from './products-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,9 +16,10 @@ import { ProductRoutingModule } from './products-routing.module';
     ProductCellComponent,
     ProductDetailsComponent    
   ],
-  imports: [
+  imports: [    
     CommonModule,
-    ProductRoutingModule
+    ProductRoutingModule,
+    SharedModule
   ],
   exports: [ProductListComponent],
   providers: [

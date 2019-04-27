@@ -4,3 +4,8 @@
     @extend %container-base;
     margin-top: 0px;
 }
+.pagination-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

@@ -60,6 +60,8 @@ namespace ProductRating.Bll.Services
             var attributeFilters = MapAttributeFilters(filter);
             query = FilterForAttributes(attributeFilters, query);
 
+            var queryBeforeOrderAndPagination = query;
+
             //ordering 
             Expression<Func<Product, ValueType>> orderByExpression = null; 
             if (filter.OrderBy != null)
@@ -69,8 +71,8 @@ namespace ProductRating.Bll.Services
                     case ProductOrder.BestScore:
                         orderByExpression = e => e.ScoreValue;
                         break;
-                    case ProductOrder.MostScore:
-                        orderByExpression = e => e.Scores.Count;
+                    case ProductOrder.Price:
+                        orderByExpression = e => e.Price;
                         break;
                     case ProductOrder.MostTextReview:
                         orderByExpression = e => e.Reviews.Count;
@@ -87,6 +89,12 @@ namespace ProductRating.Bll.Services
                 ? query.OrderBy(orderByExpression)
                 : query.OrderByDescending(orderByExpression);
 
+            //pagination            
+            if (pagination.Start != null && pagination.Length != null)
+            {
+                query = query.Skip(pagination.Start.Value).Take(pagination.Length.Value);
+            }
+
             var products = await query
                 .ToListAsync();
 
@@ -101,7 +109,8 @@ namespace ProductRating.Bll.Services
                 Products = products.Select(e => mapper.Map<ProductHeaderDto>(e)).ToList(),
                 Brands = notFilteredForBrandQuery.Where(e => e.Brand != null).Select(e => e.Brand).Distinct().Select(e => mapper.Map<BrandHeaderDto>(e)).ToList(),
                 Categories = GetRootCategories(notFilteredForCategoryQuery.Select(e => e.Category)).Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),
-                MaxPriceOption = maxPriceOption
+                MaxPriceOption = maxPriceOption,
+                TotalNumOfResults = await queryBeforeOrderAndPagination.CountAsync()
             };
 
             return result;

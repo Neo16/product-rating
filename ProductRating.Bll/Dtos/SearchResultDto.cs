@@ -15,5 +15,7 @@ namespace ProductRating.Bll.Dtos
         public List<BrandHeaderDto> Brands { get; set; }
 
         public long MaxPriceOption { get; set; }
+
+        public int TotalNumOfResults  { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 import { SearchParams } from 'src/app/models/SearchParams';
 import { SearchResult } from 'src/app/models/SearchResult';
+import { PaginationParams } from 'src/app/models/PaginationParams';
 
 export enum SearchActionTypes {
     REMOVE_CATEGORY_FILTER = '[Search] Add category filter',
@@ -13,6 +14,7 @@ export enum SearchActionTypes {
     ADD_BRAND_FILTER = '[Search] Remove brand filter',
     CHANGE_PRODUCT_ORDER = '[Search] Change Product Order',
     CHANGE_ORDER =  '[Search] Change Order',
+    CHANGE_PAGINATION = '[SEARCH] Change pagination'
 }
 
 export class AddCategoryFilterAction implements Action {
@@ -62,4 +64,9 @@ export class ChangeProductOrderAction implements Action {
 export class ChangeOrderAction implements Action {
   readonly type = SearchActionTypes.CHANGE_ORDER;
   constructor(public payload: number) {}
+}
+
+export class ChangePaginationAction implements Action {
+  readonly type = SearchActionTypes.CHANGE_PAGINATION;
+  constructor(public payload: PaginationParams) {}
 }

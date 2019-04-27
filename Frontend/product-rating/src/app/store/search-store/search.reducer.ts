@@ -1,7 +1,7 @@
 import { initialState, SearchState } from './search.state';
 import {
   SearchActionTypes, ChangeFilterAction, SearchSuccessAction,
-  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, ChangeOrderAction, ChangeProductOrderAction
+  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, ChangeOrderAction, ChangeProductOrderAction, ChangePaginationAction
 } from './search.actions';
 import { filter } from 'rxjs/operators';
 import { CategoryHeader } from 'src/app/models/CategoryHeader';
@@ -86,6 +86,14 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       return {
         ...state,
         filter: Object.assign(state.filter, newFilter)
+      };    
+    }
+    case SearchActionTypes.CHANGE_PAGINATION: {
+      var newParams = (action as ChangePaginationAction).payload;
+      console.log(newParams);
+      return {
+        ...state,
+        pagination: Object.assign(state.pagination, newParams)
       };  
     }
     case SearchActionTypes.CHANGE_PRODUCT_ORDER: {
@@ -111,8 +119,12 @@ export function searchReducer(state: SearchState = initialState, action: any): S
         ...state,
         products: result.products,
         brands: result.brands,
-        maxPrice: result.maxPriceOption
-      };
+        maxPrice: result.maxPriceOption,
+        pagination: {
+          ... state.pagination,
+          totalNumOfResults: result.totalNumOfResults
+        }
+      } as SearchState;     
 
       // Only reload categories if there is no selected category 
       if (newState.filter.categoryId == null) {

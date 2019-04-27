@@ -27,9 +27,9 @@ export class SearchEffects {
     public FireSearch: Observable<any> = this.actions.pipe(
       ofType(SearchActionTypes.FIRE_SERACH),
       withLatestFrom(this.store.select(selectSearchState)),
-      map((actionAndState) => actionAndState[1].filter),
-      switchMap(payload => {
-        return this.productService.searchProducts(payload)
+      map((actionAndState) => actionAndState[1]),
+      switchMap((payload: SearchState) => {
+        return this.productService.searchProducts(payload.filter, payload.pagination)
           .map((result: SearchResult) => { 
             return new SearchSuccessAction(result);
           })

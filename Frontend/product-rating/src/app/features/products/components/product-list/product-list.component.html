@@ -2,6 +2,14 @@
   <div class="row">   
     <div *ngFor="let product of productCells" class="col-md-8">
         <app-product-cell [product]="product"></app-product-cell>
-    </div>
+    </div>  
+    <div *ngIf="totalNumOfResults > pageSize" class="col-24 pagination-container">
+      <ngb-pagination
+        [(page)]="pageNum"
+        [pageSize]="pageSize"
+        [collectionSize]="totalNumOfResults"
+        (pageChange) = pageChange($event)>
+      </ngb-pagination>
+    </div>   
   </div>
 </div>

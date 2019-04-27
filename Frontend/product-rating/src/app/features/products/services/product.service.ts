@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ProductCellData } from 'src/app/models/ProductCellData';
 import { Observable } from 'rxjs';
 import { SearchParams } from 'src/app/models/SearchParams';
 import { SearchResult } from 'src/app/models/SearchResult';
+import { PaginationParams } from 'src/app/models/PaginationParams';
 
 @Injectable()
 export class ProductService {
@@ -11,11 +12,17 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  searchProducts(params: SearchParams | {} ): Observable<SearchResult> {
+  searchProducts(searchParams: SearchParams | {}, paginationParams: PaginationParams): Observable<SearchResult> {
     const url = `${this.BASE_URL}/products/find`;
-    if (params == null){
-      params = {}
+    if (searchParams == null){
+      searchParams = {}
     }
-    return this.http.post<SearchResult>(url, params);
+
+    // pagination query parameters 
+    let queryParams = new HttpParams();   
+    queryParams = queryParams.append('length', paginationParams.length.toString());
+    queryParams = queryParams.append('start', paginationParams.start.toString());
+
+    return this.http.post<SearchResult>(url, searchParams, {params: queryParams});
   }
 }

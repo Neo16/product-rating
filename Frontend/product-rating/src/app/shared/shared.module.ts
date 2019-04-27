@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Ng5SliderModule } from 'ng5-slider';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [EnumToArrayPipe],
@@ -13,9 +14,11 @@ import { Ng5SliderModule } from 'ng5-slider';
     Ng5SliderModule,
     FontAwesomeModule,
     FormsModule,
+    NgbModule.forRoot(),
     CommonModule
   ],
   exports: [
+    NgbModule,
     Ng5SliderModule,
     FontAwesomeModule,
     FormsModule,

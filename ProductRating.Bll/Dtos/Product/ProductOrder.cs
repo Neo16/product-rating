@@ -9,6 +9,6 @@ namespace ProductRating.Bll.Dtos.Product
         BestScore = 1,
         Newest = 2,
         MostTextReview = 3,
-        MostScore = 4
+        Price = 4,         
     }
 }

@@ -11,4 +11,6 @@ export interface SearchResult
     brands: BrandHeader[];
 
     maxPriceOption: number;
+
+    totalNumOfResults: number;
 }

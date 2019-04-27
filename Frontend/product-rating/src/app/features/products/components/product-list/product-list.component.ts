@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductCellData } from 'src/app/models/ProductCellData';
-import { ProductService } from '../../services/product.service';
 import { Store } from '@ngrx/store';
 import { SearchState } from 'src/app/store/search-store/search.state';
-import { SearchParams } from 'src/app/models/SearchParams';
-import { store } from '@angular/core/src/render3';
 import { Observable } from 'rxjs';
 import { selectSearchState } from 'src/app/store/root-state';
-import { FireSearchAction } from 'src/app/store/search-store/search.actions';
+import { ChangePaginationAction, FireSearchAction } from 'src/app/store/search-store/search.actions';
+import { PaginationParams } from 'src/app/models/PaginationParams';
 
 @Component({
   selector: 'app-product-list',
@@ -17,7 +15,10 @@ import { FireSearchAction } from 'src/app/store/search-store/search.actions';
 export class ProductListComponent implements OnInit {
 
   productCells: ProductCellData[] = []; 
-  
+  pageNum: number;
+  pageSize: number = 21; 
+  totalNumOfResults: number = 0;
+
   //sate
   getSearchState: Observable<SearchState>;
 
@@ -29,8 +30,19 @@ export class ProductListComponent implements OnInit {
 
   ngOnInit() {      
     this.getSearchState.subscribe((searchState) => {     
-      this.productCells = searchState.products;   
-      console.log(searchState);
+      this.productCells = searchState.products;     
+      this.pageSize = searchState.pagination.length;  
+      this.totalNumOfResults = searchState.pagination.totalNumOfResults;
     }); 
   } 
+
+  pageChange(page){
+    if(page){     
+      this.store.dispatch(new ChangePaginationAction({
+        start: (page-1) * this.pageSize,
+        length: this.pageSize 
+      } as PaginationParams));    
+      this.store.dispatch(new FireSearchAction());    
+    }
+  }
 }
