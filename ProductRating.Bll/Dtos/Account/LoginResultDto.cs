@@ -9,5 +9,7 @@ namespace ProductRating.Bll.Dtos.Account
         public string UserToken { get; set; }
 
         public string UserName { get; set; }
+
+        public List<string> UserRoles { get; set; }
     }
 }

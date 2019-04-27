@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos.Account;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Model.Identity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers
@@ -34,10 +35,13 @@ namespace ProductRating.Web.ApiControllers
             }
             var token = await tokenService.GetTokenForUserAsync(user);
 
+            var roles = await userManager.GetRolesAsync(user);
+
             return Ok(new LoginResultDto()
             {
                 UserToken = token,
-                UserName = user.UserName
+                UserName = user.UserName,
+                UserRoles = roles.ToList()
             });
         }
 
