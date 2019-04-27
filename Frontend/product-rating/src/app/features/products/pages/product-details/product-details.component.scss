@@ -1,0 +1,17 @@
+@import "~src/variables"; 
+@import "~src/general"; 
+
+.product-detail-container{
+    @extend %container-base;
+}
+
+.product-attribute-table {
+
+    td{
+        padding: 8px;
+    }
+
+    tr:nth-child(odd){
+        background: $app-background-color;
+    }  
+}

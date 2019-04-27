@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductOrder, ProductOrderDisplay } from 'src/app/models/ProductOrder';
-import { Order, OrderDisplay } from 'src/app/models/Order';
-import { SearchParams } from 'src/app/models/SearchParams';
+import { ProductOrder, ProductOrderDisplay } from 'src/app/models/search/ProductOrder';
+import { Order, OrderDisplay } from 'src/app/models/search/Order';
+import { SearchParams } from 'src/app/models/search/SearchParams';
 import { Store } from '@ngrx/store';
 import { SearchState } from 'src/app/store/search-store/search.state';
 import { selectSearchState } from 'src/app/store/root-state';

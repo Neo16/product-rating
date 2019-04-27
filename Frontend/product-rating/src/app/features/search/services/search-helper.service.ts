@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CategoryHeader } from 'src/app/models/CategoryHeader';
+import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
 
 @Injectable()
 export class SearchHelperService {

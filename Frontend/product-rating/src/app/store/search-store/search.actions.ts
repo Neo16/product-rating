@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
-import { SearchParams } from 'src/app/models/SearchParams';
-import { SearchResult } from 'src/app/models/SearchResult';
-import { PaginationParams } from 'src/app/models/PaginationParams';
+import { SearchParams } from 'src/app/models/search/SearchParams';
+import { SearchResult } from 'src/app/models/search/SearchResult';
+import { PaginationParams } from 'src/app/models/search/PaginationParams';
 
 export enum SearchActionTypes {
     REMOVE_CATEGORY_FILTER = '[Search] Add category filter',

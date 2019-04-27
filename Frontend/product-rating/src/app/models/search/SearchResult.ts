@@ -1,6 +1,6 @@
-import { ProductCellData } from './products/ProductCellData';
-import { CategoryHeader } from './search/CategoryHeader';
-import { BrandHeader } from './search/BrandHeader';
+import { CategoryHeader } from './CategoryHeader';
+import { BrandHeader } from './BrandHeader';
+import { ProductCellData } from '../products/ProductCellData';
 
 export interface SearchResult
 {

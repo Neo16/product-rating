@@ -138,7 +138,8 @@ namespace ProductRating.Bll.Services
             var product = await context.Products
                 .Include(e => e.Category)
                 .Include(e => e.Brand)
-                .Include(e => e.PropertyValueConnections.Select(f => f.ProductAttributeValue))
+                .Include(e => e.PropertyValueConnections)
+                .ThenInclude(e => e.ProductAttributeValue)
                 .ThenInclude(e => e.Attribute)
                 .Where(e => e.Id == productId)
                 .FirstOrDefaultAsync();

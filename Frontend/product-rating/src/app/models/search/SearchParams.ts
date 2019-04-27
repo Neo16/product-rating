@@ -1,7 +1,7 @@
 import { ProductOrder } from './ProductOrder';
 import { Order } from './Order';
-import { IntAttribute } from './IntAttribute';
-import { StringAttribute } from './StringAttribute';
+import { IntAttribute } from '../IntAttribute';
+import { StringAttribute } from '../StringAttribute';
 
 export class SearchParams {  
     textFilter: string | null;

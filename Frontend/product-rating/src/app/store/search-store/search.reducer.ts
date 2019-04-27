@@ -4,7 +4,7 @@ import {
   AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, ChangeOrderAction, ChangeProductOrderAction, ChangePaginationAction
 } from './search.actions';
 import { filter } from 'rxjs/operators';
-import { CategoryHeader } from 'src/app/models/CategoryHeader';
+import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
 
 function forAllCategoryInTree(categories: CategoryHeader[], func: (x: CategoryHeader) => void) {
   if (categories == undefined)
@@ -104,7 +104,7 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       newState.filter.orderBy = newProductOrder;
       return newState;
     }
-    case SearchActionTypes.CHANGE_ORDER: {
+    case SearchActionTypes.CHANGE_ORDER: {      
       var newOrder: number = (action as ChangeOrderAction).payload;
       var newState = {
         ...state,

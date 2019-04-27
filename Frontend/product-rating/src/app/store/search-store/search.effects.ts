@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/features/products/services/product.service';
-import { SearchResult } from 'src/app/models/SearchResult';
+import { SearchResult } from 'src/app/models/search/SearchResult';
 import { SearchState } from './search.state';
 import { Store } from '@ngrx/store';
 import { selectSearchState } from '../root-state';

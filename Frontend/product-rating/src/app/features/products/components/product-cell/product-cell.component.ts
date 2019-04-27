@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductCellData } from 'src/app/models/ProductCellData';
+import { ProductCellData } from 'src/app/models/products/ProductCellData';
 
 @Component({
   selector: 'app-product-cell',

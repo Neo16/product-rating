@@ -3,10 +3,10 @@ import { SearchState } from 'src/app/store/search-store/search.state';
 import { Store } from '@ngrx/store';
 import { selectSearchState } from 'src/app/store/root-state';
 import { Observable } from 'rxjs';
-import { CategoryHeader } from 'src/app/models/CategoryHeader';
-import { BrandHeader } from 'src/app/models/BrandHeader';
+import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
+import { BrandHeader } from 'src/app/models/search/BrandHeader';
 import { ChangeFilterAction, FireSearchAction, AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction } from 'src/app/store/search-store/search.actions';
-import { SearchParams } from 'src/app/models/SearchParams';
+import { SearchParams } from 'src/app/models/search/SearchParams';
 import { SearchHelperService } from '../../services/search-helper.service';
 import { Options, ChangeContext } from 'ng5-slider';
 

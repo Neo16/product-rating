@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ProductCellData } from 'src/app/models/ProductCellData';
+import { ProductCellData } from 'src/app/models/products/ProductCellData';
 import { Observable } from 'rxjs';
-import { SearchParams } from 'src/app/models/SearchParams';
-import { SearchResult } from 'src/app/models/SearchResult';
-import { PaginationParams } from 'src/app/models/PaginationParams';
+import { SearchParams } from 'src/app/models/search/SearchParams';
+import { SearchResult } from 'src/app/models/search/SearchResult';
+import { PaginationParams } from 'src/app/models/search/PaginationParams';
+import { ProductDetailsData } from 'src/app/models/products/ProductDetailsData';
 
 @Injectable()
 export class ProductService {
@@ -12,7 +13,15 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  searchProducts(searchParams: SearchParams | {}, paginationParams: PaginationParams): Observable<SearchResult> {
+  getProductDetails(productId: string){    
+    const url = `${this.BASE_URL}/products/${productId}`;
+    return this.http.get<ProductDetailsData>(url);
+  }
+  
+  searchProducts(
+    searchParams: SearchParams | {},
+    paginationParams: PaginationParams
+    ): Observable<SearchResult> {      
     const url = `${this.BASE_URL}/products/find`;
     if (searchParams == null){
       searchParams = {}

@@ -1,10 +1,10 @@
-import { SearchParams } from 'src/app/models/SearchParams';
-import { ProductCellData } from 'src/app/models/ProductCellData';
-import { CategoryHeader } from 'src/app/models/CategoryHeader';
-import { BrandHeader } from 'src/app/models/BrandHeader';
-import { ProductOrder } from 'src/app/models/ProductOrder';
-import { Order } from 'src/app/models/Order';
-import { PaginationParams } from 'src/app/models/PaginationParams';
+import { SearchParams } from 'src/app/models/search/SearchParams';
+import { ProductCellData } from 'src/app/models/products/ProductCellData';
+import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
+import { BrandHeader } from 'src/app/models/search/BrandHeader';
+import { ProductOrder } from 'src/app/models/search/ProductOrder';
+import { Order } from 'src/app/models/search/Order';
+import { PaginationParams } from 'src/app/models/search/PaginationParams';
 
 export interface SearchState { 
    filter: SearchParams,

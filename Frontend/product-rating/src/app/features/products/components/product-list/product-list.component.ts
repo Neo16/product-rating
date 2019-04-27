@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductCellData } from 'src/app/models/ProductCellData';
+import { ProductCellData } from 'src/app/models/products/ProductCellData';
 import { Store } from '@ngrx/store';
 import { SearchState } from 'src/app/store/search-store/search.state';
 import { Observable } from 'rxjs';
 import { selectSearchState } from 'src/app/store/root-state';
 import { ChangePaginationAction, FireSearchAction } from 'src/app/store/search-store/search.actions';
-import { PaginationParams } from 'src/app/models/PaginationParams';
+import { PaginationParams } from 'src/app/models/search/PaginationParams';
 
 @Component({
   selector: 'app-product-list',
