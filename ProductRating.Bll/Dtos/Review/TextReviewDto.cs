@@ -7,6 +7,10 @@ namespace ProductRating.Bll.Dtos.Review
     {
         public Guid Id { get; set; }
 
+        public string AuthorName { get; set; }
+
+        public string CreatedAt { get; set; }
+
         public string Text { get; set; }
 
         public bool IsMine { get; set; }

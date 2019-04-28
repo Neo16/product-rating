@@ -1,10 +1,14 @@
 <div class="review-item-container">
-  <div class="review-text">
+  <div class="review-info">   
+    <div class="author-name">{{review.authorName}}</div>
+    <div class="created">{{review.createdAt}}</div>
+  </div>
+  <div class="review-body">    
     {{review.text}}
   </div>
   <div class="review-like-container">
-    <button (click)="upvote()">up</button>
+    <button [attr.disabled]="review.isMine ? '' : null" (click)="upvote()">up</button>
     {{review.points}}
-    <button (click)="downvote()">down</button>
+    <button [attr.disabled]="review.isMine ? '' : null" (click)="downvote()">down</button>
   </div>
 </div>

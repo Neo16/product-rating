@@ -2,8 +2,19 @@
     width: 100%;
     display: flex;
     justify-content: space-between; 
-    .review-text {
-        padding: 15px;
+    .review-info{
+        padding: 15px;      
+        .author-name{
+            font-weight: 600;
+            font-size: 18px;
+        }    
+        .created{
+            font-style: italic;
+            font-size: 13px;
+        }        
+    }
+    .review-body {
+        padding: 15px;       
         
     }
     .review-like-container{

@@ -96,6 +96,7 @@ namespace ProductRating.Bll.Services
             return await context.Reviews
                .Include(e => e.Product)
                .Include(e => e.Votes)
+               .Include(e => e.Author)
                .Where(e => e.ProductId == productId)
                .Select(e => new TextReviewDto()
                {
@@ -104,6 +105,8 @@ namespace ProductRating.Bll.Services
                    Text = e.Text,
                    Mood = e.Mood,
                    Points = e.Points,
+                   CreatedAt = e.CreatedAt.ToString("yyyy.MM.dd HH:mm"),
+                   AuthorName = e.Author.NickName,
                    WasDownvotedByMe = userId != null
                             ? e.Votes != null && e.Votes.Any(v => v.VoteType == VoteType.Down && (Guid?)v.UserId == userId)
                             : false,

@@ -9,4 +9,6 @@ export interface ReviewData
     wasDownvotedByMe: boolean;
     mood: ReviewMood;
     points: number;
+    authorName: string;
+    createdAt: string;
 }

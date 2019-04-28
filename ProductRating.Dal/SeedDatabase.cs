@@ -73,16 +73,42 @@ namespace ProductRating.Dal
                 EmailConfirmed = true,
                 SecurityStamp = "3543545345",
                 PhoneNumber = "+311124211",
+                NickName = "Péter"
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
-
             context.Users.Add(user);
+
+            var user2 = new ApplicationUser()
+            {
+                Email = "user2@productrating.com",
+                NormalizedEmail = "USER2@PRODUCTRATING.COM",
+                UserName = "user2@productrating.com",
+                NormalizedUserName = "USER2@PRODUCTRATING.COM",
+                EmailConfirmed = true,
+                SecurityStamp = "3543545345",
+                PhoneNumber = "+311124211",
+                NickName = "Dávid"
+            };
+            user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
+            context.Users.Add(user2);
+
             context.SaveChanges();
 
             context.UserRoles.Add(new IdentityUserRole<Guid>()
             {
                 RoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id,
                 UserId = user.Id
+            });
+            context.UserRoles.Add(new IdentityUserRole<Guid>()
+            {
+                RoleId = context.Roles.Where(e => e.Name == RoleNames.ADMIN_ROLE).Single().Id,
+                UserId = user.Id
+            });
+
+            context.UserRoles.Add(new IdentityUserRole<Guid>()
+            {
+                RoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id,
+                UserId = user2.Id
             });
 
             context.SaveChanges();
