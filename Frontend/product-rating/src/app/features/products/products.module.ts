@@ -9,12 +9,17 @@ import { ProductDetailsComponent } from './pages/product-details/product-details
 import { ProductRoutingModule } from './products-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReviewsComponent } from './components/reviews/reviews.component';
+import { ReviewItemComponent } from './components/review-item/review-item.component';
+import { ReviewService } from './services/review.service';
 
 @NgModule({
   declarations: [
     ProductListComponent,
     ProductCellComponent,
-    ProductDetailsComponent    
+    ProductDetailsComponent,
+    ReviewsComponent,
+    ReviewItemComponent    
   ],
   imports: [    
     CommonModule,
@@ -24,6 +29,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   exports: [ProductListComponent],
   providers: [
     ProductService,
+    ReviewService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -1,5 +1,5 @@
 <div class="product-detail-container" *ngIf="product != null">
-  <h2>{{product.name}}</h2> 
+  <h2>{{product.name}}</h2>
   <p>score: {{product.scoreValue}}</p>
   <!-- todo -->
   <p>price: {{product.price}}</p>
@@ -7,15 +7,16 @@
   <p>brand: {{product.brandName}}</p>
 
   <!-- dynamic attributes -->
-
   <table class="product-attribute-table">
     <ng-container *ngFor="let attribute of product.attributes">
       <tr>
         <td>{{attribute.attributeName}}:</td>
         <td>{{attribute.value}}</td>
-      </tr>    
+      </tr>
     </ng-container>
   </table>
- 
-  
+</div>
+
+<div class="basic-container">
+  <app-reviews [productId]="product.id"></app-reviews>
 </div>

@@ -102,6 +102,7 @@ namespace ProductRating.Bll.Services
                    Id = e.Id,
                    IsMine = userId != null ? (Guid?)e.AuthorId == userId : false,
                    Text = e.Text,
+                   Mood = e.Mood,
                    WasDownvotedByMe = userId != null
                             ? e.Votes != null && e.Votes.Any(v => v.VoteType == VoteType.Down && (Guid?)v.UserId == userId)
                             : false,

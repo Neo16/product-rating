@@ -1,7 +1,5 @@
 ﻿using ProductRating.Model.Entities.Reviews;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Bll.Dtos.Review
 {

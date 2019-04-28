@@ -1,0 +1,14 @@
+.review-item-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    .review-text {
+        padding: 15px;
+        
+    }
+    .review-like-container{
+        padding: 15px;
+        width: 150px;
+    }
+}
+

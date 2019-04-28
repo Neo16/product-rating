@@ -24,7 +24,7 @@ namespace ProductRating.Dal
                     .CreateCategories()
                     .CreateBrands()
                     .CreateProducts()
-                    .CreateReviews(20)
+                    .CreateReviews(200)
                     .CreateScrores(10);
             }
         }
@@ -297,7 +297,7 @@ namespace ProductRating.Dal
                {
                    AuthorId = users[r.Next(0, users.Count)].Id,
                    ProductId = products[r.Next(0, products.Count)].Id,
-                   Mood = (ReviewMood)r.Next(1, 2),
+                   Mood = (ReviewMood)r.Next(1, 3),
                    CreatedAt = DateTime.Now.AddSeconds(1 - r.Next(50000)),
                    Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +

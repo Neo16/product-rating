@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ProductRating.Model.Entities.Reviews;
+using System;
 
 namespace ProductRating.Bll.Dtos.Review
 {
@@ -15,5 +14,7 @@ namespace ProductRating.Bll.Dtos.Review
         public bool WasUpvotedByMe { get; set; }
 
         public bool WasDownvotedByMe { get; set; }
+
+        public ReviewMood Mood { get; set; }
     }
 }

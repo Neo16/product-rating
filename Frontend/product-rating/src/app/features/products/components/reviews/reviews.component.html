@@ -1,0 +1,22 @@
+<div class="review-component-container">
+   <div class="row">
+     <div class="col-12">
+       Positive reveiws:
+       <div class="review-item-list-container">
+          <app-review-item            
+            *ngFor="let review of positiveReviews"
+            [review]="review">
+          </app-review-item>
+       </div>
+     </div>
+     <div class="col-12">
+        Negative reveiws:
+        <div class="review-item-list-container">
+           <app-review-item            
+             *ngFor="let review of negativeReviews"
+             [review]="review">
+           </app-review-item>
+        </div>
+      </div>
+   </div>
+</div>

@@ -9,6 +9,10 @@ body{
     margin-top: 1rem;    
 }
 
+.basic-container{
+    @extend %container-base;
+}
+
 .no-padding{
     padding: 0px;
 }
