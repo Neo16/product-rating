@@ -7,6 +7,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { SearchModule } from './features/search/search.module';
 import { ProductsModule } from './features/products/products.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers } from './store/root-state';
+import { AcccountEffects } from './store/account-store/account.effects';
+import { SearchEffects } from './store/search-store/search.effects';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SearchModule,
     HttpClientModule,
     ProductsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StoreModule.forRoot(reducers, {}),
+    EffectsModule.forRoot([AcccountEffects, SearchEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

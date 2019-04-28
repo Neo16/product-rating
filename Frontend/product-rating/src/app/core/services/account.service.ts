@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../../models/User';
 import { Observable } from 'rxjs';
+import { LoginResultData } from 'src/app/models/LoginResultData';
 
 @Injectable()
 export class AccountService {
@@ -13,8 +14,8 @@ export class AccountService {
     return localStorage.getItem('token');
   }
 
-  logIn(username: string, password: string): Observable<any> {
+  logIn(username: string, password: string): Observable<LoginResultData> {  
     const url = `${this.BASE_URL}/account/login`;
-    return this.http.post<User>(url, JSON.stringify({username, password}));
+    return this.http.post<LoginResultData>(url, JSON.stringify({username, password}));
   }
 }

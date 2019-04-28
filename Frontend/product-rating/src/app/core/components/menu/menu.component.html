@@ -4,8 +4,21 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a routerLink='/profile' class="nav-item nav-link">Profile</a>     
+    <!-- lefz align navigation links -->
+    <div class="navbar-nav mr-auto">    
+        <a routerLink='' class="nav-item nav-link ml-auto">Main page</a>   
+        <ng-container *ngIf="isLoggedIn === true">
+            <a routerLink='/products/new' class="nav-item nav-link ml-auto">New product</a>   
+        </ng-container>
+    </div>
+    <!-- right align navigation links -->
+    <div class="navbar-nav">    
+      <ng-container *ngIf="isLoggedIn === true">
+        <a routerLink='/profile' class="nav-item nav-link">Profile</a>   
+      </ng-container>
+      <ng-container *ngIf="isLoggedIn === false">
+        <a routerLink='/account/login' class="nav-item nav-link">Login</a>   
+      </ng-container>
     </div>
   </div>
 </nav>

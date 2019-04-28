@@ -26,10 +26,7 @@ import { SearchEffects } from '../store/search-store/search.effects';
   imports: [    
     SharedModule,
     CommonModule,
-    CoreRoutingModule,  
-    StoreModule.forRoot(reducers, {}),
-    EffectsModule.forRoot([AcccountEffects]),    
-    EffectsModule.forRoot([SearchEffects]),  
+    CoreRoutingModule
   ],
   providers: [   
     AuthGuard,

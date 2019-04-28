@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LogInAction } from '../../../store/account-store/account.actions';
 import { Store } from '@ngrx/store';
-import { AppState, selectAccountState } from '../../../store/root-state';
+import { selectAccountState } from '../../../store/root-state';
 import { Observable } from 'rxjs';
 import { AccountState } from '../../../store/account-store/account.state';
 
@@ -16,21 +16,21 @@ export class LoginPageComponent implements OnInit {
   password: string = "Asdf123!";
   getState: Observable<AccountState>;
   
-  constructor(private store: Store<AppState>) { 
-    this.getState = this.store.select(selectAccountState);
+  constructor(private acountStore: Store<AccountState>) { 
+    this.getState = this.acountStore.select(selectAccountState);
   }
 
   ngOnInit() {
     this.getState.subscribe((state) => {
-       console.log(JSON.stringify(state));
+      console.log(state);
     });
   }
 
-  login(): void {   
+  login(): void {         
     const payload = {
       username: this.username,
       password: this.password
     };    
-    this.store.dispatch(new LogInAction(payload));
+    this.acountStore.dispatch(new LogInAction(payload));
   }
 }

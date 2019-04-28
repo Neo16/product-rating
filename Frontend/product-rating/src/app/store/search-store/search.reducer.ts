@@ -89,8 +89,7 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       };    
     }
     case SearchActionTypes.CHANGE_PAGINATION: {
-      var newParams = (action as ChangePaginationAction).payload;
-      console.log(newParams);
+      var newParams = (action as ChangePaginationAction).payload;     
       return {
         ...state,
         pagination: Object.assign(state.pagination, newParams)
@@ -139,7 +138,7 @@ export function searchReducer(state: SearchState = initialState, action: any): S
          
       return newState;
     }
-    default: {
+    default: {  
       return state;
     }
   }
