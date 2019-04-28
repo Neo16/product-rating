@@ -24,8 +24,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAccountState.subscribe((accountState) => {   
-       console.log(accountState);  
+    this.getAccountState.subscribe((accountState) => {        
        this.isLoggedIn = accountState.isAuthenticated;
        if (this.isLoggedIn){
           this.userName = accountState.user.username;

@@ -12,4 +12,16 @@ export class ReviewService {
     const url = `${this.BASE_URL}/products/${productId}/reviews`;
     return this.http.get<ReviewData[]>(url);
   }
+
+  upvoteReview(reviewId: string){    
+    const url = `${this.BASE_URL}/reviews/upvote-review`;
+    return this.http.post<any>(url, {id: reviewId});
+  }
+
+  downvoteReview(reviewId: string){    
+    const url = `${this.BASE_URL}/reviews/downvote-review`;
+    return this.http.post<any>(url, {id: reviewId});
+  }
+
+
 }

@@ -103,6 +103,7 @@ namespace ProductRating.Bll.Services
                    IsMine = userId != null ? (Guid?)e.AuthorId == userId : false,
                    Text = e.Text,
                    Mood = e.Mood,
+                   Points = e.Points,
                    WasDownvotedByMe = userId != null
                             ? e.Votes != null && e.Votes.Any(v => v.VoteType == VoteType.Down && (Guid?)v.UserId == userId)
                             : false,
@@ -129,6 +130,7 @@ namespace ProductRating.Bll.Services
                 VoteType = VoteType.Up
             };
 
+            dbReview.Points++;
             context.ReviewVotes.Add(vote);
             await context.SaveChangesAsync();
         }
@@ -149,6 +151,7 @@ namespace ProductRating.Bll.Services
                 VoteType = VoteType.Down
             };
 
+            dbReview.Points--;
             context.ReviewVotes.Add(vote);
             await context.SaveChangesAsync();
         }

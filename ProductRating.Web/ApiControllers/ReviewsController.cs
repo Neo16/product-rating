@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Review;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
@@ -54,16 +55,16 @@ namespace ProductRating.Web.ApiControllers
         }
 
         [HttpPost("upvote-review")]
-        public async Task<IActionResult> UpVoteTextReview(Guid reviewId)
+        public async Task<IActionResult> UpVoteTextReview([FromBody] IdDto reviewId)
         {
-            await reviewService.UpvoteReview(currentUserService.User.Id, reviewId);
+            await reviewService.UpvoteReview(currentUserService.User.Id, reviewId.Id);
             return Ok();
         }
 
         [HttpPost("downvote-review")]
-        public async Task<IActionResult> DownVoteTextReview(Guid reviewId)
+        public async Task<IActionResult> DownVoteTextReview([FromBody] IdDto reviewId)
         {
-            await reviewService.DownVoteReview(currentUserService.User.Id, reviewId);
+            await reviewService.DownVoteReview(currentUserService.User.Id, reviewId.Id);
             return Ok();
         }
     }

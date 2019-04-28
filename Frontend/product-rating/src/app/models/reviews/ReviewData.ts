@@ -8,4 +8,5 @@ export interface ReviewData
     wasUpvotedByMe: boolean;
     wasDownvotedByMe: boolean;
     mood: ReviewMood;
+    points: number;
 }

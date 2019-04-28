@@ -24,8 +24,7 @@ export class ReviewsComponent implements OnInit {
   ngOnInit() {
     this.reviewService.getReviewsOfProduct(this.productId)
       .subscribe((reviews: ReviewData[]) => {  
-        reviews.forEach(r => {
-          console.log(r.mood);
+        reviews.forEach(r => {        
           if (r.mood == ReviewMood.Positive){
             this.positiveReviews.push(r);
           }

@@ -16,5 +16,7 @@ namespace ProductRating.Bll.Dtos.Review
         public bool WasDownvotedByMe { get; set; }
 
         public ReviewMood Mood { get; set; }
+
+        public int Points { get; set; }
     }
 }

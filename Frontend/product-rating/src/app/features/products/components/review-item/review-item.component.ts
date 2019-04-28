@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ReviewData } from 'src/app/models/reviews/ReviewData';
+import { ReviewService } from '../../services/review.service';
 
 @Component({
   selector: 'app-review-item',
@@ -8,11 +9,21 @@ import { ReviewData } from 'src/app/models/reviews/ReviewData';
 })
 export class ReviewItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private reviewService: ReviewService) { }
 
   @Input() review: ReviewData; 
 
   ngOnInit() {
+  }
+
+  upvote(){
+     this.reviewService.upvoteReview(this.review.id)
+      .subscribe(e =>{ this.review.points++; })    
+  }
+
+  downvote(){
+    this.reviewService.upvoteReview(this.review.id)
+     .subscribe(e =>{ this.review.points--; })     
   }
 
 }

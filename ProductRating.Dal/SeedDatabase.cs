@@ -301,7 +301,8 @@ namespace ProductRating.Dal
                    CreatedAt = DateTime.Now.AddSeconds(1 - r.Next(50000)),
                    Text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." +
-                   " Eu turpis egestas pretium aenean pharetra magna ac placerat."
+                   " Eu turpis egestas pretium aenean pharetra magna ac placerat.",
+                   Points = r.Next(0, 61)
                })
                .ToList();
 

@@ -3,7 +3,8 @@
     {{review.text}}
   </div>
   <div class="review-like-container">
-    <button>up</button>
-    <button>down</button>
+    <button (click)="upvote()">up</button>
+    {{review.points}}
+    <button (click)="downvote()">down</button>
   </div>
 </div>

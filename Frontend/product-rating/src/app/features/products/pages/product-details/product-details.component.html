@@ -17,6 +17,6 @@
   </table>
 </div>
 
-<div class="basic-container">
+<div class="basic-container" *ngIf="product != null">
   <app-reviews [productId]="product.id"></app-reviews>
 </div>

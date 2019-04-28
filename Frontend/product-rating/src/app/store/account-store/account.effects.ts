@@ -9,6 +9,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
 import { LoginResultData } from 'src/app/models/LoginResultData';
+import { User } from 'src/app/models/User';
 
 
 @Injectable()
@@ -26,7 +27,7 @@ export class AcccountEffects {
       map((action: LogInAction) => action.payload),
       switchMap(payload => {     
         return this.accountService.logIn(payload.username, payload.password)
-          .map((loginResult: LoginResultData) => {           
+          .map((loginResult: LoginResultData) => {                                   
             return new LogInSuccessAction(loginResult);
           })
           .catch((error) => {
@@ -38,8 +39,9 @@ export class AcccountEffects {
       @Effect({ dispatch: false })
       LogInSuccess: Observable<any> = this.actions.pipe(
         ofType(AccountActionTypes.LOGIN_SUCCESS),
-        tap((user) => {
-          localStorage.setItem('token', user.payload.token);          
+        map((action: LogInSuccessAction) => action.payload),
+        tap((result: LoginResultData) => {  
+          localStorage.setItem('token', result.userToken);          
           this.router.navigateByUrl('');
         })
       );
