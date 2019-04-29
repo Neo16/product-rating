@@ -70,4 +70,27 @@ export class ReviewsComponent implements OnInit {
         })
      this.newReview.text = null;
   }
+
+  upvote(reviewId:string){
+    this.redirectIfNotLoggedIn();
+    this.reviewService.upvoteReview(reviewId)
+     .subscribe(e => {
+        this.positiveReviews.concat(this.negativeReviews)
+          .find(x => x.id === reviewId).points++;       
+      })    
+  }
+
+  downvote(reviewId:string){  
+    this.redirectIfNotLoggedIn();
+    this.reviewService.upvoteReview(reviewId)  
+      .subscribe(e =>{ this.positiveReviews.concat(this.negativeReviews)
+        .find(x => x.id === reviewId).points--;      
+       })     
+  } 
+  
+  redirectIfNotLoggedIn(){
+    if (!this.isLoggedIn){
+      this.router.navigate(['/account/login'], { queryParams: { return: this.router.url } });
+    }
+  }
 }

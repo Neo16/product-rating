@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ReviewData } from 'src/app/models/reviews/ReviewData';
 import { ReviewService } from '../../services/review.service';
 
@@ -12,18 +12,17 @@ export class ReviewItemComponent implements OnInit {
   constructor(private reviewService: ReviewService) { }
 
   @Input() review: ReviewData; 
+  @Output() upvote: EventEmitter<string> = new EventEmitter();
+  @Output() downvote: EventEmitter<string> = new EventEmitter();
 
   ngOnInit() {
   }
 
-  upvote(){
-     this.reviewService.upvoteReview(this.review.id)
-      .subscribe(e =>{ this.review.points++; })    
+  callUpvote(reviewId: string){
+    this.upvote.emit(reviewId);
   }
-
-  downvote(){
-    this.reviewService.upvoteReview(this.review.id)
-     .subscribe(e =>{ this.review.points--; })     
+  callDownvote(reviewId: string){
+    this.downvote.emit(reviewId);
   }
 
 }

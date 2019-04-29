@@ -46,16 +46,21 @@ export class AcccountEffects {
         withLatestFrom(this.store.select(selectAccountState)),         
         tap((result : [LogInSuccessAction, AccountState]) => {      
           console.log(result[0]);
-          localStorage.setItem('token', result[0].payload.userToken);          
+          localStorage.setItem('productrating-token', result[0].payload.userToken);   
+          localStorage.setItem('productrating-username', result[0].payload.userToken); 
+          localStorage.setItem('productrating-userroles', JSON.stringify(result[0].payload.userRoles));          
           this.router.navigateByUrl(result[1].loginReturnUrl);
         })
       );
+      
 
       @Effect({ dispatch: false })
       public LogOut: Observable<any> = this.actions.pipe(
         ofType(AccountActionTypes.LOGOUT),
         tap((user) => {
-          localStorage.removeItem('token');
+          localStorage.removeItem('productrating-token');   
+          localStorage.removeItem('productrating-username'); 
+          localStorage.removeItem('productrating-userroles');         
         })
       );      
 }

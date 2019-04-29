@@ -26,8 +26,6 @@
       </div>
     </div>
 
-
-
     <div *ngIf="!isLoggedIn" class="col-24">
       <a [routerLink]="['/account/login']" [queryParams]="{return: router.url}">Log in to comment.</a>
     </div>
@@ -36,14 +34,16 @@
     <div class="col-12">
       Positive reveiws:
       <div class="review-item-list-container">
-        <app-review-item *ngFor="let review of positiveReviews" [review]="review">
+        <app-review-item *ngFor="let review of positiveReviews" [review]="review" (upvote)="upvote($event)"
+          (downvote)="downvote($event)">
         </app-review-item>
       </div>
     </div>
     <div class="col-12">
       Negative reveiws:
       <div class="review-item-list-container">
-        <app-review-item *ngFor="let review of negativeReviews" [review]="review">
+        <app-review-item *ngFor="let review of negativeReviews" [review]="review" (upvote)="upvote($event)"
+          (downvote)="downvote($event)">
         </app-review-item>
       </div>
     </div>

@@ -8,13 +8,14 @@
     <div class="navbar-nav mr-auto">    
         <a routerLink='' class="nav-item nav-link ml-auto">Main page</a>   
         <ng-container *ngIf="isLoggedIn === true">
-            <a routerLink='/products/new' class="nav-item nav-link ml-auto">New product</a>   
+            <a routerLink='/products/new' class="nav-item nav-link">New product</a>               
         </ng-container>
     </div>
     <!-- right align navigation links -->
     <div class="navbar-nav">    
       <ng-container *ngIf="isLoggedIn === true">
         <a routerLink='/profile' class="nav-item nav-link">Profile</a>   
+        <a href="#" (click)="logout()" class="nav-item nav-link">Log out</a>   
       </ng-container>
       <ng-container *ngIf="isLoggedIn === false">
         <a routerLink='/account/login' class="nav-item nav-link">Login</a>   

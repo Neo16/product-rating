@@ -11,7 +11,7 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
   getToken(): string {
-    return localStorage.getItem('token');
+    return localStorage.getItem('productrating-token');
   }
 
   logIn(username: string, password: string): Observable<LoginResultData> {  

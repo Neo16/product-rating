@@ -24,9 +24,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getState.subscribe((state) => {
-      console.log(state);
-    });
     this.returnUrl = this.route.snapshot.queryParams['return'] || '/';
   }
 

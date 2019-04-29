@@ -7,8 +7,8 @@
     {{review.text}}
   </div>
   <div class="review-like-container">
-    <button [attr.disabled]="review.isMine ? '' : null" (click)="upvote()">up</button>
+    <button [attr.disabled]="review.isMine ? '' : null" (click)="callUpvote(review.id)">up</button>
     {{review.points}}
-    <button [attr.disabled]="review.isMine ? '' : null" (click)="downvote()">down</button>
+    <button [attr.disabled]="review.isMine ? '' : null" (click)="callDownvote(review.id)">down</button>
   </div>
 </div>
