@@ -7,10 +7,12 @@ export interface AccountState {
     user: User | null;
     // error message
     errorMessage: string | null;
+    loginReturnUrl: string | null;
 }
 
 export const initialState: AccountState = {
     isAuthenticated: false,
     user: null,
-    errorMessage: null
+    errorMessage: null,
+    loginReturnUrl: null,
  };

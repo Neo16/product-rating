@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Effect, ofType, Actions } from '@ngrx/effects';
-import { tap, map, switchMap} from 'rxjs/operators';
+import { tap, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import { LogInSuccessAction, LogInFailureAction, LogInAction, AccountActionTypes } from './account.actions';
 import { AccountService } from '../../core/services/account.service';
 import { Observable } from 'rxjs/Observable';
@@ -10,6 +10,9 @@ import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
 import { LoginResultData } from 'src/app/models/LoginResultData';
 import { User } from 'src/app/models/User';
+import { Store } from '@ngrx/store';
+import { AccountState } from './account.state';
+import { selectAccountState } from '../root-state';
 
 
 @Injectable()
@@ -17,6 +20,7 @@ export class AcccountEffects {
 
     constructor(
         private actions: Actions,
+        private store: Store<AccountState>,
         private accountService: AccountService,    
         public router: Router 
       ) {}
@@ -24,7 +28,7 @@ export class AcccountEffects {
     @Effect()
     public LogIn: Observable<any> = this.actions.pipe(
       ofType(AccountActionTypes.LOGIN),
-      map((action: LogInAction) => action.payload),
+      map((action: LogInAction) => action.payload),     
       switchMap(payload => {     
         return this.accountService.logIn(payload.username, payload.password)
           .map((loginResult: LoginResultData) => {                                   
@@ -39,10 +43,11 @@ export class AcccountEffects {
       @Effect({ dispatch: false })
       LogInSuccess: Observable<any> = this.actions.pipe(
         ofType(AccountActionTypes.LOGIN_SUCCESS),
-        map((action: LogInSuccessAction) => action.payload),
-        tap((result: LoginResultData) => {  
-          localStorage.setItem('token', result.userToken);          
-          this.router.navigateByUrl('');
+        withLatestFrom(this.store.select(selectAccountState)),         
+        tap((result : [LogInSuccessAction, AccountState]) => {      
+          console.log(result[0]);
+          localStorage.setItem('token', result[0].payload.userToken);          
+          this.router.navigateByUrl(result[1].loginReturnUrl);
         })
       );
 

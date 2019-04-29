@@ -5,8 +5,14 @@ import { LoginResultData } from 'src/app/models/LoginResultData';
 
 export function accountReducer(state: AccountState = initialState, action: AccountActions): AccountState {
     switch (action.type) {
-      case AccountActionTypes.LOGIN_SUCCESS: {
-        console.log("login success action called");
+      case AccountActionTypes.LOGIN:{
+        return {
+          ...state,
+          loginReturnUrl: action.payload.returnUrl
+        };
+      }
+
+      case AccountActionTypes.LOGIN_SUCCESS: {   
         var loginResponse = action.payload as LoginResultData;       
         
         var newState: AccountState = {
@@ -16,7 +22,8 @@ export function accountReducer(state: AccountState = initialState, action: Accou
             username: loginResponse.userName,
             roles: loginResponse.userRoles
           },
-          errorMessage: null
+          errorMessage: null,
+          loginReturnUrl: state.loginReturnUrl
         };           
         return newState;
        }       

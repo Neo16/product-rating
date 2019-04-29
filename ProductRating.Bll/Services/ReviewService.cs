@@ -32,7 +32,7 @@ namespace ProductRating.Bll.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task AddReview(Guid userId, CreateEditTextReviewDto textReview)
+        public async Task<TextReviewDto> AddReview(Guid userId, CreateEditTextReviewDto textReview)
         {
             var dbReview = new TextReview()
             {
@@ -46,7 +46,21 @@ namespace ProductRating.Bll.Services
 
             context.Reviews.Add(dbReview);
             await context.SaveChangesAsync();
+
+            return new TextReviewDto()
+            {
+                Id = dbReview.Id,
+                IsMine = true,
+                Text = dbReview.Text,
+                Mood = dbReview.Mood,
+                Points = 0,
+                CreatedAt = dbReview.CreatedAt.ToString("yyyy.MM.dd HH:mm"),
+                AuthorName = dbReview.Author.NickName,
+                WasDownvotedByMe = false,
+                WasUpvotedByMe = false
+            };
         }
+
         public async Task UpdateReview(Guid userId, Guid reviewId, CreateEditTextReviewDto textReview)
         {
             var dbReview = await context.Reviews

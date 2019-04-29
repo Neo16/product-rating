@@ -2,7 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ReviewData } from 'src/app/models/reviews/ReviewData';
 import { CreateReviewData } from 'src/app/models/reviews/CreateReviewData';
 import { ReviewService } from '../../services/review.service';
-import { ReviewMood } from 'src/app/models/reviews/ReviewMood';
+import { ReviewMood, ReviewMoodDisplay } from 'src/app/models/reviews/ReviewMood';
+import { Observable } from 'rxjs';
+import { AccountState } from 'src/app/store/account-store/account.state';
+import { Store } from '@ngrx/store';
+import { selectAccountState } from 'src/app/store/root-state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reviews',
@@ -11,7 +16,16 @@ import { ReviewMood } from 'src/app/models/reviews/ReviewMood';
 })
 export class ReviewsComponent implements OnInit {
 
-  constructor(private reviewService: ReviewService) { }
+  constructor(
+    private reviewService: ReviewService,
+    private acountStore: Store<AccountState>,
+    private router: Router
+    ) { 
+      this.getAccountState = this.acountStore.select(selectAccountState);
+    }
+
+  //stores
+  getAccountState: Observable<AccountState>; 
 
   //inputs
   @Input() productId: string;
@@ -20,18 +34,40 @@ export class ReviewsComponent implements OnInit {
   positiveReviews: ReviewData[] = [];
   negativeReviews: ReviewData[] = [];
   newReview: CreateReviewData = new CreateReviewData();
+  reviewMood =  ReviewMood;
+  moodDisplay = ReviewMoodDisplay;
+  isLoggedIn: boolean;
+  showForm: boolean = false;
 
   ngOnInit() {
+    this.newReview.mood = ReviewMood.Positive;
+    this.newReview.productId = this.productId;
     this.reviewService.getReviewsOfProduct(this.productId)
       .subscribe((reviews: ReviewData[]) => {  
         reviews.forEach(r => {        
-          if (r.mood == ReviewMood.Positive){
-            this.positiveReviews.push(r);
-          }
-          if (r.mood == ReviewMood.Negative){
-            this.negativeReviews.push(r);
-          }
+          this.loadReviewToPage(r);
         });
       })
+
+    this.getAccountState.subscribe((accountState) => {
+       this.isLoggedIn = accountState.isAuthenticated;
+    });
+  }
+
+  loadReviewToPage(r : ReviewData, beFirst: boolean = false){
+    if (r.mood == ReviewMood.Positive){
+       beFirst ? this.positiveReviews.unshift(r) : this.positiveReviews.push(r);
+    }
+    if (r.mood == ReviewMood.Negative){
+       beFirst ? this.negativeReviews.unshift(r) : this.negativeReviews.push(r);
+    }
+  }
+
+  addReview(){
+     this.reviewService.addNewReview(this.newReview)
+        .subscribe((r : ReviewData) => {          
+          this.loadReviewToPage(r, true);
+        })
+     this.newReview.text = null;
   }
 }

@@ -10,7 +10,7 @@ namespace ProductRating.Bll.ServiceInterfaces
     {
         Task AddScore(Guid userId, ScoreDto scoreDto);
 
-        Task AddReview(Guid userId, CreateEditTextReviewDto textReview);
+        Task<TextReviewDto> AddReview(Guid userId, CreateEditTextReviewDto textReview);
 
         Task UpdateReview(Guid userId, Guid reviewId, CreateEditTextReviewDto textReview);
 

@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { selectAccountState } from '../../../store/root-state';
 import { Observable } from 'rxjs';
 import { AccountState } from '../../../store/account-store/account.state';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,10 @@ export class LoginPageComponent implements OnInit {
   username: string = "user@productrating.com";
   password: string = "Asdf123!";
   getState: Observable<AccountState>;
-  
-  constructor(private acountStore: Store<AccountState>) { 
+  returnUrl: string;
+
+  constructor(private acountStore: Store<AccountState>,
+    private route: ActivatedRoute) { 
     this.getState = this.acountStore.select(selectAccountState);
   }
 
@@ -24,12 +27,14 @@ export class LoginPageComponent implements OnInit {
     this.getState.subscribe((state) => {
       console.log(state);
     });
+    this.returnUrl = this.route.snapshot.queryParams['return'] || '/';
   }
 
   login(): void {         
     const payload = {
       username: this.username,
-      password: this.password
+      password: this.password,
+      returnUrl: this.returnUrl
     };    
     this.acountStore.dispatch(new LogInAction(payload));
   }
