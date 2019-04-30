@@ -1,5 +1,9 @@
 <div class="product-detail-container" *ngIf="product != null">
-  <h2>{{product.name}}</h2>
+  <h2>
+    {{product.name}}
+    <bar-rating [(rate)]="product.scoreValue" [readOnly] [max]="5"></bar-rating>
+  </h2>
+
   <p>score: {{product.scoreValue}}</p>
   <!-- todo -->
   <p>price: {{product.price}}</p>

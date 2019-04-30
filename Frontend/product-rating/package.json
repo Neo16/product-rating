@@ -29,6 +29,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "ng5-slider": "^1.1.14",
+    "ngx-bar-rating": "^1.1.0",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",
     "tslib": "^1.9.0",

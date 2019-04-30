@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ReviewItemComponent } from './components/review-item/review-item.component';
 import { ReviewService } from './services/review.service';
+import { BarRatingModule } from "ngx-bar-rating";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReviewService } from './services/review.service';
   imports: [    
     CommonModule,
     ProductRoutingModule,
-    SharedModule
+    SharedModule,
+    BarRatingModule
   ],
   exports: [ProductListComponent],
   providers: [

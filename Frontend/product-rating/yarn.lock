@@ -4563,6 +4563,11 @@ ng5-slider@^1.1.14:
     detect-passive-events "^1.0.4"
     tslib "^1.7.1"
 
+ngx-bar-rating@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-bar-rating/-/ngx-bar-rating-1.1.0.tgz#47a260812b47bc6df157e0aaecae5b29249407c4"
+  integrity sha1-R6JggStHvG3xV+Cq7K5bKSSUB8Q=
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
