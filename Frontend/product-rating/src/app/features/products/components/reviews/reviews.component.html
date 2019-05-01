@@ -2,7 +2,7 @@
   <div class="row">
     <!-- Add comment form -->
     <div *ngIf="isLoggedIn" class="col-24">
-      <button class="btn btn-primary" type="button" (click)="showForm = !showForm" [ngClass]="{'d-none': showForm}">
+      <button class="btn btn-outline-dark add-review-btn" type="button" (click)="showForm = !showForm" [ngClass]="{'d-none': showForm}">
         Add review
       </button>
       <div class="review-form" [ngClass]="{'d-none': !showForm}">

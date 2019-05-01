@@ -53,7 +53,7 @@ export class ReviewsComponent implements OnInit {
       this.isLoggedIn = accountState.isAuthenticated;
     });
   }
-
+  
   loadReviewToPage(r: ReviewData, beFirst: boolean = false) {
     if (r.mood == ReviewMood.Positive) {
       beFirst ? this.positiveReviews.unshift(r) : this.positiveReviews.push(r);
@@ -69,6 +69,7 @@ export class ReviewsComponent implements OnInit {
         this.loadReviewToPage(r, true);
       })
     this.newReview.text = null;
+    this.showForm = false;
   }
 
   upvote(reviewId: string) {

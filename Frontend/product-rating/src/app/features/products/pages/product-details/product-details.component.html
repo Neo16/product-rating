@@ -3,7 +3,7 @@
     {{product.name}}
   </h2>
   <div class="score-row">
-    <bar-rating [(rate)]="product.scoreValue" [readOnly] [max]="5"></bar-rating>
+    <bar-rating [(rate)]="product.scoreValue" [readOnly] = "true" [max]="5"></bar-rating>
     ( {{product.scoreValue}} )   
 
     <p class="ml-3" *ngIf="isLoggedIn && product.scoreByMe != null">    
