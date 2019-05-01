@@ -13,6 +13,7 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ReviewItemComponent } from './components/review-item/review-item.component';
 import { ReviewService } from './services/review.service';
 import { BarRatingModule } from "ngx-bar-rating";
+import { ScoringComponent } from './components/scoring/scoring.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { BarRatingModule } from "ngx-bar-rating";
     ProductCellComponent,
     ProductDetailsComponent,
     ReviewsComponent,
-    ReviewItemComponent    
+    ReviewItemComponent,
+    ScoringComponent    
   ],
   imports: [    
     CommonModule,

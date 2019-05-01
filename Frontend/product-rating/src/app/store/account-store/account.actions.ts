@@ -6,6 +6,7 @@ export enum AccountActionTypes {
     LOGIN_SUCCESS = '[Auth] Login Success',
     LOGIN_FAILURE = '[Auth] Login Failure',   
     LOGOUT = '[Auth] Logout',
+    LOGIN_LOADED = '[Auth Login Loaded]'
   }
 
 export class LogInAction implements Action {
@@ -16,6 +17,11 @@ export class LogInAction implements Action {
 export class LogInSuccessAction implements Action {
     readonly type = AccountActionTypes.LOGIN_SUCCESS;
     constructor(public payload: LoginResultData) {}
+}
+
+export class LoadedLoginDataAction implements Action {
+  readonly type = AccountActionTypes.LOGIN_LOADED;
+  constructor(public payload: LoginResultData) {}
 }
   
 export class LogInFailureAction implements Action {
@@ -28,5 +34,5 @@ export class LogOutAction implements Action {
   }
   
 
-export type AccountActions = LogInAction | LogInSuccessAction | LogInFailureAction | LogOutAction;
+export type AccountActions = LogInAction | LogInSuccessAction | LogInFailureAction | LogOutAction | LoadedLoginDataAction;
     

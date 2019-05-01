@@ -140,15 +140,34 @@ namespace ProductRating.Bll.Services
             if (dbReview == null)
                 return;
 
-            var vote = new ReviewVote()
+            var downVoteByMe = await context.ReviewVotes
+              .Where(e => e.TextReviewId == reviewId)
+              .Where(e => e.UserId == userId)
+              .Where(e => e.VoteType == VoteType.Down)
+              .FirstOrDefaultAsync();
+            var upVoteByMe = await context.ReviewVotes
+               .Where(e => e.TextReviewId == reviewId)
+               .Where(e => e.UserId == userId)
+               .Where(e => e.VoteType == VoteType.Up)
+               .FirstOrDefaultAsync();
+
+            if (downVoteByMe != null)
             {
-                UserId = userId,
-                TextReviewId = dbReview.Id,
-                VoteType = VoteType.Up
-            };
+                context.Remove(downVoteByMe);
+            }
+
+            if (downVoteByMe == null && upVoteByMe == null)
+            {
+                var vote = new ReviewVote()
+                {
+                    UserId = userId,
+                    TextReviewId = dbReview.Id,
+                    VoteType = VoteType.Up
+                };                
+                context.ReviewVotes.Add(vote);
+            }
 
             dbReview.Points++;
-            context.ReviewVotes.Add(vote);
             await context.SaveChangesAsync();
         }
 
@@ -161,15 +180,33 @@ namespace ProductRating.Bll.Services
             if (dbReview == null)
                 return;
 
-            var vote = new ReviewVote()
-            {
-                UserId = userId,
-                TextReviewId = dbReview.Id,
-                VoteType = VoteType.Down
-            };
+            var upVoteByMe = await context.ReviewVotes
+                .Where(e => e.TextReviewId == reviewId)
+                .Where(e => e.UserId == userId)
+                .Where(e => e.VoteType == VoteType.Up)
+                .FirstOrDefaultAsync();
+            var downVoteByMe = await context.ReviewVotes
+                .Where(e => e.TextReviewId == reviewId)
+                .Where(e => e.UserId == userId)
+                .Where(e => e.VoteType == VoteType.Down)
+                .FirstOrDefaultAsync();
 
+            if (upVoteByMe != null)
+            {
+                context.Remove(upVoteByMe);
+            }
+            
+            if (downVoteByMe == null && upVoteByMe == null)
+            {
+                var vote = new ReviewVote()
+                {
+                    UserId = userId,
+                    TextReviewId = dbReview.Id,
+                    VoteType = VoteType.Down
+                };               
+                context.ReviewVotes.Add(vote);
+            }
             dbReview.Points--;
-            context.ReviewVotes.Add(vote);
             await context.SaveChangesAsync();
         }
     }

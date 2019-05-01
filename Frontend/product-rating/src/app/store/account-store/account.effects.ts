@@ -44,8 +44,7 @@ export class AcccountEffects {
       LogInSuccess: Observable<any> = this.actions.pipe(
         ofType(AccountActionTypes.LOGIN_SUCCESS),
         withLatestFrom(this.store.select(selectAccountState)),         
-        tap((result : [LogInSuccessAction, AccountState]) => {      
-          console.log(result[0]);
+        tap((result : [LogInSuccessAction, AccountState]) => {               
           localStorage.setItem('productrating-token', result[0].payload.userToken);   
           localStorage.setItem('productrating-username', result[0].payload.userToken); 
           localStorage.setItem('productrating-userroles', JSON.stringify(result[0].payload.userRoles));          

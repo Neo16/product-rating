@@ -18,11 +18,20 @@ export class ReviewItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  callUpvote(reviewId: string){
-    this.upvote.emit(reviewId);
+  pressedUpvote(){  
+    if (this.review.wasUpvotedByMe === true)
+    {  
+       this.downvote.emit(this.review.id); 
+       return;
+    }    
+    this.upvote.emit(this.review.id);
   }
-  callDownvote(reviewId: string){
-    this.downvote.emit(reviewId);
+  pressedDownvote(){
+    if (this.review.wasDownvotedByMe === true)
+    {       
+        this.upvote.emit(this.review.id);
+        return;
+    }    
+    this.downvote.emit(this.review.id);
   }
-
 }

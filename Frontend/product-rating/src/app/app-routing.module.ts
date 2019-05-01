@@ -13,19 +13,24 @@ const routes: Routes = [
     loadChildren: () => CoreModule
   },
   {
-    path: '',
-    component: LayoutComponent,
-    loadChildren: () => SearchModule
-  },
-  {
     path: 'profile',
     component: LayoutComponent,
-    loadChildren: () => ProfileModule    
+    loadChildren: () => ProfileModule
   },
   {
     path: 'products',
     component: LayoutComponent,
-    loadChildren: () => ProductsModule    
+    loadChildren: () => ProductsModule
+  },
+  {
+    path: 'search',
+    component: LayoutComponent,
+    loadChildren: () => SearchModule
+  },
+  {
+    path: '',
+    redirectTo: '/search',
+    pathMatch: 'full'
   }
 ];
 

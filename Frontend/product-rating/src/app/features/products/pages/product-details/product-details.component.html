@@ -2,6 +2,7 @@
   <h2>
     {{product.name}}
     <bar-rating [(rate)]="product.scoreValue" [readOnly] [max]="5"></bar-rating>
+    <app-scoring></app-scoring>
   </h2>
 
   <p>score: {{product.scoreValue}}</p>

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { selectAccountState } from '../../../store/root-state';
 import { Observable } from 'rxjs';
 import { AccountState } from '../../../store/account-store/account.state';
-import { LogOutAction, LogInSuccessAction } from 'src/app/store/account-store/account.actions';
+import { LogOutAction, LogInSuccessAction, LoadedLoginDataAction } from 'src/app/store/account-store/account.actions';
 import { LoginResultData } from 'src/app/models/LoginResultData';
 
 @Component({
@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
     var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as String[];
 
     if (userName && userToken) {
-      this.acccountStore.dispatch(new LogInSuccessAction({
+      this.acccountStore.dispatch(new LoadedLoginDataAction({
         userToken: userToken,
         userName: userName,
         userRoles: userRoles

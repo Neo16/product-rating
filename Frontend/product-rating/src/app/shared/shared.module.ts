@@ -4,7 +4,7 @@ import { EnumToArrayPipe } from './pipes/enumToArray';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faArrowDown, faArrowUp, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Ng5SliderModule } from 'ng5-slider';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -29,5 +29,8 @@ export class SharedModule {
   constructor() {
     // Add an icon to the library for convenient access in other components
     library.add(faTimes);
+    library.add(faArrowDown);
+    library.add(faArrowUp);
+    library.add(faStar); 
   }
  }

@@ -20,12 +20,12 @@ export class ReviewsComponent implements OnInit {
     private reviewService: ReviewService,
     private acountStore: Store<AccountState>,
     private router: Router
-    ) { 
-      this.getAccountState = this.acountStore.select(selectAccountState);
-    }
+  ) {
+    this.getAccountState = this.acountStore.select(selectAccountState);
+  }
 
   //stores
-  getAccountState: Observable<AccountState>; 
+  getAccountState: Observable<AccountState>;
 
   //inputs
   @Input() productId: string;
@@ -34,7 +34,7 @@ export class ReviewsComponent implements OnInit {
   positiveReviews: ReviewData[] = [];
   negativeReviews: ReviewData[] = [];
   newReview: CreateReviewData = new CreateReviewData();
-  reviewMood =  ReviewMood;
+  reviewMood = ReviewMood;
   moodDisplay = ReviewMoodDisplay;
   isLoggedIn: boolean;
   showForm: boolean = false;
@@ -43,53 +43,62 @@ export class ReviewsComponent implements OnInit {
     this.newReview.mood = ReviewMood.Positive;
     this.newReview.productId = this.productId;
     this.reviewService.getReviewsOfProduct(this.productId)
-      .subscribe((reviews: ReviewData[]) => {  
-        reviews.forEach(r => {        
+      .subscribe((reviews: ReviewData[]) => {
+        reviews.forEach(r => {
           this.loadReviewToPage(r);
         });
       })
 
     this.getAccountState.subscribe((accountState) => {
-       this.isLoggedIn = accountState.isAuthenticated;
+      this.isLoggedIn = accountState.isAuthenticated;
     });
   }
 
-  loadReviewToPage(r : ReviewData, beFirst: boolean = false){
-    if (r.mood == ReviewMood.Positive){
-       beFirst ? this.positiveReviews.unshift(r) : this.positiveReviews.push(r);
+  loadReviewToPage(r: ReviewData, beFirst: boolean = false) {
+    if (r.mood == ReviewMood.Positive) {
+      beFirst ? this.positiveReviews.unshift(r) : this.positiveReviews.push(r);
     }
-    if (r.mood == ReviewMood.Negative){
-       beFirst ? this.negativeReviews.unshift(r) : this.negativeReviews.push(r);
+    if (r.mood == ReviewMood.Negative) {
+      beFirst ? this.negativeReviews.unshift(r) : this.negativeReviews.push(r);
     }
   }
 
-  addReview(){
-     this.reviewService.addNewReview(this.newReview)
-        .subscribe((r : ReviewData) => {          
-          this.loadReviewToPage(r, true);
-        })
-     this.newReview.text = null;
+  addReview() {
+    this.reviewService.addNewReview(this.newReview)
+      .subscribe((r: ReviewData) => {
+        this.loadReviewToPage(r, true);
+      })
+    this.newReview.text = null;
   }
 
-  upvote(reviewId:string){
+  upvote(reviewId: string) {
     this.redirectIfNotLoggedIn();
+    var review = this.positiveReviews.concat(this.negativeReviews)
+      .find(x => x.id === reviewId);   
+
     this.reviewService.upvoteReview(reviewId)
-     .subscribe(e => {
-        this.positiveReviews.concat(this.negativeReviews)
-          .find(x => x.id === reviewId).points++;       
-      })    
+      .subscribe(e => {      
+        review.points++;
+        review.wasUpvotedByMe = !review.wasDownvotedByMe;
+        review.wasDownvotedByMe = false;
+      })
   }
 
-  downvote(reviewId:string){  
+  downvote(reviewId: string) {
     this.redirectIfNotLoggedIn();
-    this.reviewService.upvoteReview(reviewId)  
-      .subscribe(e =>{ this.positiveReviews.concat(this.negativeReviews)
-        .find(x => x.id === reviewId).points--;      
-       })     
-  } 
-  
-  redirectIfNotLoggedIn(){
-    if (!this.isLoggedIn){
+    var review = this.positiveReviews.concat(this.negativeReviews)
+     .find(x => x.id === reviewId);   
+
+    this.reviewService.downvoteReview(reviewId)
+      .subscribe(e => {       
+       review.points--;
+       review.wasDownvotedByMe = !review.wasUpvotedByMe;
+       review.wasUpvotedByMe = false;
+    })
+  }
+
+  redirectIfNotLoggedIn() {
+    if (!this.isLoggedIn) {
       this.router.navigate(['/account/login'], { queryParams: { return: this.router.url } });
     }
   }

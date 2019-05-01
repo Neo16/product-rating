@@ -28,7 +28,22 @@ export function accountReducer(state: AccountState = initialState, action: Accou
           loginReturnUrl: state.loginReturnUrl
         };           
         return newState;
-       }       
+       }    
+       case AccountActionTypes.LOGIN_LOADED: {   
+        var loginResponse = action.payload as LoginResultData;       
+        
+        var newState: AccountState = {
+          isAuthenticated: true,
+          user: {
+            token: loginResponse.userToken,
+            username: loginResponse.userName,
+            roles: loginResponse.userRoles
+          },
+          errorMessage: null,
+          loginReturnUrl: null
+        };           
+        return newState;
+       }          
       default: {       
         return state;
       }
