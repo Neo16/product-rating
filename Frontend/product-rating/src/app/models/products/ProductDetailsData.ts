@@ -18,4 +18,5 @@ export interface ProductDetailsData
     endOfProduction: Date | string;
 
     scoreValue: number;
+    scoreByMe: number | null;
 }

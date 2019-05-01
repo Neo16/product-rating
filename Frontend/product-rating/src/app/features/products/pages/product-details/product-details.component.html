@@ -1,12 +1,27 @@
 <div class="product-detail-container" *ngIf="product != null">
   <h2>
     {{product.name}}
-    <bar-rating [(rate)]="product.scoreValue" [readOnly] [max]="5"></bar-rating>
-    <app-scoring></app-scoring>
   </h2>
+  <div class="score-row">
+    <bar-rating [(rate)]="product.scoreValue" [readOnly] [max]="5"></bar-rating>
+    ( {{product.scoreValue}} )   
 
-  <p>score: {{product.scoreValue}}</p>
-  <!-- todo -->
+    <p class="ml-3" *ngIf="isLoggedIn && product.scoreByMe != null">    
+        you scored this product: {{product.scoreByMe}}
+    </p>
+    <app-scoring *ngIf="isLoggedIn" 
+      class="ml-3"
+      [scored]="product.scoreByMe"
+      (addScore)="addScore($event)">
+    </app-scoring>
+    <a *ngIf="!isLoggedIn" class="ml-3" 
+      [routerLink]="['/account/login']" [queryParams]="{return: router.url}" >
+      Score this product
+    </a>
+  </div>
+
+ 
+  <!-- Todo -->
   <p>price: {{product.price}}</p>
   <p>category: {{product.categoryName}}</p>
   <p>brand: {{product.brandName}}</p>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ReviewData } from 'src/app/models/reviews/ReviewData';
 import { CreateReviewData } from 'src/app/models/reviews/CreateReviewData';
+import { CreateScoreData } from 'src/app/models/reviews/CreateScoreData';
 
 @Injectable()
 export class ReviewService {
@@ -29,5 +30,8 @@ export class ReviewService {
     return this.http.post<ReviewData>(url, review);
   }
 
-
+  addScore(score: CreateScoreData){
+    const url = `${this.BASE_URL}/reviews/add-scrore`;
+    return this.http.post(url, score);
+  }
 }

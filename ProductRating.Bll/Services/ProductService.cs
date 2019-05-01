@@ -133,7 +133,7 @@ namespace ProductRating.Bll.Services
             return result.Distinct().ToList();
         }
 
-        public async Task<ProductDetailsDto> GetDetails(Guid productId)
+        public async Task<ProductDetailsDto> GetDetails(Guid productId, Guid? userId)
         {
             var product = await context.Products
                 .Include(e => e.Category)
@@ -144,7 +144,18 @@ namespace ProductRating.Bll.Services
                 .Where(e => e.Id == productId)
                 .FirstOrDefaultAsync();
 
-            return mapper.Map<ProductDetailsDto>(product);
+            var productDo = mapper.Map<ProductDetailsDto>(product);
+
+            if (userId != null)
+            {
+                productDo.ScoreByMe = await context.Scores
+                  .Where(e => e.ProductId == productId)
+                  .Where(e => e.AuthorId == userId.Value)
+                  .Select(e => e.Value)
+                  .FirstOrDefaultAsync();
+            }         
+
+            return productDo;
         }
 
         private List<Expression<Func<ProductAttributeValue, bool>>> MapAttributeFilters(ProductFilterDto filter)

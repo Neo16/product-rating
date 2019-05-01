@@ -20,6 +20,17 @@ namespace ProductRating.Bll.Services
 
         public async Task AddScore(Guid userId, ScoreDto scoreDto)
         {
+
+            var oldScore = await context.Scores
+                .Where(e => e.AuthorId == userId)
+                .Where(e => e.ProductId == scoreDto.ProductId)
+                .FirstOrDefaultAsync();
+
+            if (oldScore != null)
+            {
+                context.Remove(oldScore);
+            }
+
             var dbScrore = new Scorereview()
             {
                 AuthorId = userId,

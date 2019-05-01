@@ -33,7 +33,7 @@ namespace ProductRating.Bll.Mappings
                .ForMember(e => e.PropertyValueConnections, e => e.Ignore())
                .ForMember(e => e.ScoreValue, e => e.Ignore())
                .ForMember(e => e.Reviews, e => e.Ignore())
-               .ForMember(e => e.Scores, e => e.Ignore());   
+               .ForMember(e => e.Scores, e => e.Ignore());
 
 
             this.CreateMap<Product, ProductDetailsDto>()
@@ -41,8 +41,9 @@ namespace ProductRating.Bll.Mappings
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
                 .ForMember(e => e.Attributes, e => e.MapFrom(f => f.PropertyValueConnections.Select(g => g.ProductAttributeValue)))
                 .ForMember(e => e.BrandName, e => e.MapFrom(f => f.Brand.Name))
-                .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name));
-            
+                .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name))
+                .ForMember(e => e.ScoreValue, e => e.MapFrom(f => f.ScoreValue));
+
              this.CreateMap<ProductAttributeValue, AttributeBase>()
                  .ForMember(e => e.AttributeName, e => e.MapFrom(f => f.Attribute.Name))
                  .ForMember(e => e.AttributeId, e => e.MapFrom(f => f.Attribute.Id))

@@ -34,4 +34,5 @@ export class ProductService {
 
     return this.http.post<SearchResult>(url, searchParams, {params: queryParams});
   }
+
 }

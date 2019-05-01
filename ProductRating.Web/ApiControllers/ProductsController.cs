@@ -36,7 +36,14 @@ namespace ProductRating.Web.ApiControllers
         [HttpGet("{productId}")]
         public async Task<IActionResult> Details(Guid productId)
         {
-            var productResult = await productService.GetDetails(productId);
+            Guid? userId = null;
+
+            if (currentUserService.User != null)
+            {
+                userId = currentUserService.User.Id;
+            }
+
+            var productResult = await productService.GetDetails(productId, userId);
             return Ok(productResult);
         }
         

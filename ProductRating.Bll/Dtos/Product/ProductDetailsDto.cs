@@ -25,5 +25,7 @@ namespace ProductRating.Bll.Dtos.Product
         public DateTime EndOfProduction { get; set; }
 
         public double ScoreValue { get; set; }
+
+        public double? ScoreByMe { get; set; }
     }
 }

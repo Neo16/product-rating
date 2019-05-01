@@ -10,7 +10,7 @@ namespace ProductRating.Bll.ServiceInterfaces
     {
         Task<SearchResultDto> Find(ProductFilterDto filter, PaginationDto pagination);
 
-        Task<ProductDetailsDto> GetDetails(Guid productId);
+        Task<ProductDetailsDto> GetDetails(Guid productId, Guid? userId);
 
         Task<CreateEditProductDto> GetProductForUpdate(Guid productId);
 

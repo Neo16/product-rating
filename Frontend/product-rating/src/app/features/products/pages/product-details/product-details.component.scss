@@ -1,17 +1,24 @@
-@import "~src/variables"; 
-@import "~src/general"; 
+@import "~src/variables";
+@import "~src/general";
 
-.product-detail-container{
-    @extend %container-base;
+.product-detail-container {
+  @extend %container-base;
+
+  .score-row {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    display: flex;
+    width: 100%;
+    align-content: center;
+  }
 }
 
 .product-attribute-table {
+  td {
+    padding: 8px;
+  }
 
-    td{
-        padding: 8px;
-    }
-
-    tr:nth-child(odd){
-        background: $app-background-color;
-    }  
+  tr:nth-child(odd) {
+    background: $app-background-color;
+  }
 }
