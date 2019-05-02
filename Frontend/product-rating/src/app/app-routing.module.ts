@@ -5,6 +5,8 @@ import { CoreModule } from './core/core.module';
 import { ProfileModule } from './features/profile/profile.module';
 import { SearchModule } from './features/search/search.module';
 import { ProductsModule } from './features/products/products.module';
+import { ManageProductsModule } from './features/manage-products/manage-products.module';
+import { ManageCategoriesModule } from './features/manage-categories/manage-categories.module';
 
 const routes: Routes = [
   {
@@ -26,6 +28,16 @@ const routes: Routes = [
     path: 'search',
     component: LayoutComponent,
     loadChildren: () => SearchModule
+  },
+  {
+    path: 'manage-products',
+    component: LayoutComponent,
+    loadChildren: () => ManageProductsModule
+  },
+  {
+    path: 'manage-categories',
+    component: LayoutComponent,
+    loadChildren: () => ManageCategoriesModule
   },
   {
     path: '',

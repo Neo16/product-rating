@@ -12,6 +12,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers } from './store/root-state';
 import { AcccountEffects } from './store/account-store/account.effects';
 import { SearchEffects } from './store/search-store/search.effects';
+import { ManageProductsModule } from './features/manage-products/manage-products.module';
+import { ManageCategoriesModule } from './features/manage-categories/manage-categories.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { SearchEffects } from './store/search-store/search.effects';
     SearchModule,
     HttpClientModule,
     ProductsModule,
+    ManageProductsModule,
+    ManageCategoriesModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AcccountEffects, SearchEffects])
