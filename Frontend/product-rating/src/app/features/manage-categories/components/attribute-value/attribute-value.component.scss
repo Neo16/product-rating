@@ -1,0 +1,12 @@
+@import "~src/variables";
+
+.attribute-value{
+     span{
+          width: 90px;
+     }
+     padding: 5px;   
+     margin-top: 10px;
+     display: flex;
+     align-content: space-between;
+     justify-content: center;
+}

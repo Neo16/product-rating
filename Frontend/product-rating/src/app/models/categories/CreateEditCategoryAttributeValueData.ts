@@ -1,8 +1,18 @@
-export interface CreateEditCategoryAttributeValueData
-    {
-        stringValue: string;
+import { AttributeType } from './AttributeType';
 
-        intValue: number;
+export class CreateEditCategoryAttributeValueData
+    {
+        type: AttributeType;
+      
+        get intValue(): number {            
+            return parseInt(this.value);
+        }
+
+        get stringValue(): string {            
+            return this.value;
+        }         
 
         valueId: string | null;
+
+        value: string;
     }
