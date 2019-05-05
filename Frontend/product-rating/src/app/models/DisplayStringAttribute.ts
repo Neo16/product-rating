@@ -1,4 +1,4 @@
-export interface StringAttribute {
+export interface DisplayStringAttribute {
     AttributeName: string;
     Value: string;
 }

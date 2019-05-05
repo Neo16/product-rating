@@ -1,0 +1,21 @@
+<form>
+  <div class="form-group">
+    <label>Category name</label>
+    <input class="form-control" placeholder="name">
+  </div>
+
+  <div class="form-group">
+      <label for="exampleInputEmail1">Parent category</label>
+      <select class="form-control">
+        
+      </select>
+    </div>
+
+    <div *ngIf="category.attributes.length > 0" class="attributes-container">
+      <app-attribute 
+        *ngFor="let attribute of category.attributes"
+        [attribute] = "attribute">
+      </app-attribute>
+    </div>
+    <a (click)="addNewAttribute()" href="javascript:void(0)">New attribute</a>
+</form>

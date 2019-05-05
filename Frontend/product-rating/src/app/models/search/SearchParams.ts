@@ -1,7 +1,7 @@
 import { ProductOrder } from './ProductOrder';
 import { Order } from './Order';
-import { IntAttribute } from '../IntAttribute';
-import { StringAttribute } from '../StringAttribute';
+import { DisplayIntAttribute } from '../DisplayIntAttribute';
+import { DisplayStringAttribute } from '../DisplayStringAttribute';
 
 export class SearchParams {  
     textFilter: string | null;
@@ -11,6 +11,6 @@ export class SearchParams {
     maximumPrice: number | null;   
     orderBy: ProductOrder | null;
     order: Order | null;
-    intAttributes: IntAttribute[];
-    stringAttributes: StringAttribute[];
+    intAttributes: DisplayIntAttribute[];
+    stringAttributes: DisplayStringAttribute[];
  }

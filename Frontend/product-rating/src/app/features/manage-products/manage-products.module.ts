@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NewProductComponent } from './pages/new-product/new-product.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ManageProductsRoutingModule } from './manage-products-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,6 +12,7 @@ import { ManageProductsRoutingModule } from './manage-products-routing.module';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     ManageProductsRoutingModule
   ]
 })

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateEditCategoryData } from 'src/app/models/categories/CreateEditCategoryData';
 
 @Component({
   selector: 'app-new-category',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewCategoryComponent implements OnInit {
 
+  category: CreateEditCategoryData = new CreateEditCategoryData();
+  
   constructor() { }
 
   ngOnInit() {
+   
   }
-
 }

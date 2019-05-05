@@ -1,4 +1,4 @@
-export interface IntAttribute {
+export interface DisplayIntAttribute {
     AttributeName: string;
     Value: number;
 }

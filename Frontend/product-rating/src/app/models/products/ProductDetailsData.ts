@@ -1,4 +1,4 @@
-import { Attribute } from '../Attribute';
+import { DisplayAttribute } from '../DisplayAttribute';
 
 export interface ProductDetailsData
 {
@@ -11,7 +11,7 @@ export interface ProductDetailsData
     categoryName: string;
     categoryId: string;
 
-    attributes: Attribute[];    
+    attributes: DisplayAttribute[];    
     pictures: string[];
 
     startOfProduction: Date | string;
