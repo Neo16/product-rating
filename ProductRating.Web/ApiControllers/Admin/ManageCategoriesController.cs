@@ -30,7 +30,7 @@ namespace ProductRating.Web.ApiControllers.Admin
         [ProducesResponseType(typeof(List<CategoryManageHeaderDto>), 200)]
         public async Task<IActionResult> ListCategories([FromBody] ManageCategoryFilterDto filter, [FromQuery] PaginationDto pagination)
         {
-            var categories = await categoryService.GetCategories(filter, currentUserService.User.Id, pagination);
+            var categories = await categoryService.AdminGetCategories(filter, currentUserService.User.Id, pagination);
             return Ok(categories);
         }
 

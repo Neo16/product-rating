@@ -65,6 +65,13 @@ namespace ProductRating.Bll.Mappings
                .ForMember(e => e.ThumbnailImage, e => e.MapFrom(f => f.ThumbnailPicture))
                .ForMember(e => e.Price, e => e.MapFrom(f => f.Price));
 
+            this.CreateMap<Product, ProductManageHeaderDto>()
+               .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
+               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
+               .ForMember(e => e.BrandName, e => e.MapFrom(f => f.Brand.Name))
+               .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name))
+               .ForMember(e => e.CreatedAt, e => e.MapFrom(f => f.CreatedAt.ToString("yyyy.MM.dd HH:mm")));            
+
             this.CreateMap<Brand, BrandHeaderDto>()
                .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                .ForMember(e => e.Name, e => e.MapFrom(f => f.Name));              

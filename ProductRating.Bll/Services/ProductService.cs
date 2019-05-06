@@ -192,11 +192,11 @@ namespace ProductRating.Bll.Services
             }
             return query;
         }
-        private static IQueryable<Product> FilterForBrands(ProductFilterDto filter, IQueryable<Product> query)
+        private static IQueryable<Product> FilterForBrands(List<Guid> brandIds, IQueryable<Product> query)
         {
-            if (filter.BrandIds != null && filter.BrandIds.Count > 0)
+            if (brandIds != null && brandIds.Count > 0)
             {
-                query = query.Where(e => e.Brand == null || !filter.BrandIds.Contains(e.BrandId.Value));
+                query = query.Where(e => e.Brand == null || !brandIds.Contains(e.BrandId.Value));
             }
             return query;
         }
@@ -220,11 +220,11 @@ namespace ProductRating.Bll.Services
         {
             if (!skipCategory)
             {
-                query = FilterForCategory(filter, query);
+                query = FilterForCategory(filter.CategoryId, query);
             }
             if (!skipBrand)
             {
-                query = FilterForBrands(filter, query);
+                query = FilterForBrands(filter.BrandIds, query);
             }
             if (!skipPrice)
             {
@@ -234,15 +234,15 @@ namespace ProductRating.Bll.Services
         }
 
 
-        private static IQueryable<Product> FilterForCategory(ProductFilterDto filter, IQueryable<Product> query)
+        private static IQueryable<Product> FilterForCategory(Guid? categoryId, IQueryable<Product> query)
         {
-            if (filter.CategoryId != null)
+            if (categoryId != null)
             {
                 // three lvl deep
                 query = query.Where(e =>
-                      e.CategoryId == filter.CategoryId.Value
-                   || e.Category.Parent.Id == filter.CategoryId.Value
-                   || e.Category.Parent.Parent.Id == filter.CategoryId.Value);
+                      e.CategoryId == categoryId.Value
+                   || e.Category.Parent.Id == categoryId.Value
+                   || e.Category.Parent.Parent.Id == categoryId.Value);
             }
             return query;
         }
@@ -339,6 +339,36 @@ namespace ProductRating.Bll.Services
 
             context.Products.Remove(product);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<List<ProductManageHeaderDto>> AdminGetProducts(ManageProductFilterDto filter, Guid userId, PaginationDto pagination)
+        {
+            var query = context.Products
+              .Include(e => e.Brand)
+              .Include(e => e.Category)        
+              .AsQueryable();
+
+            query = FilterForCategory(filter.CategoryId, query);
+            query = FilterForBrands(filter.BrandIds, query);
+
+            if (!string.IsNullOrEmpty(filter.Name))
+            {
+                query = query.Where(e => e.Name.ToUpper().Contains(filter.Name.ToUpper()));                
+            }
+            if (filter.IsMine == true)
+            {
+                query = query.Where(e => e.CreatorId == userId);
+            }
+
+            //pagination            
+            if (pagination.Start != null && pagination.Length != null)
+            {
+                query = query.Skip(pagination.Start.Value - 1).Take(pagination.Length.Value);
+            }
+
+            return await query
+                .ProjectTo<ProductManageHeaderDto>(mapperConfiguration)
+                .ToListAsync();
         }
     }
 }

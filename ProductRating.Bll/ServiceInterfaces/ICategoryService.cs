@@ -9,7 +9,7 @@ namespace ProductRating.Bll.ServiceInterfaces
 {
     public interface ICategoryService
     {
-        Task<List<CategoryManageHeaderDto>> GetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination);
+        Task<List<CategoryManageHeaderDto>> AdminGetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination);
 
         Task<List<CategoryHeaderDto>> GetMainCategories();
 

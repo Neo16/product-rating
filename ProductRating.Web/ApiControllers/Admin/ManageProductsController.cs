@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers.Admin
 {
+    [ApiController]
+    [Authorize]
+    [Route("manage-products")]
     public class ManageProductsController : Controller
     {
         private readonly IProductService productService;
@@ -18,6 +24,14 @@ namespace ProductRating.Web.ApiControllers.Admin
         {
             this.productService = productService;
             this.currentUserService = currentUserService;
+        }
+
+        [HttpPost("list")]
+        [ProducesResponseType(typeof(List<ProductManageHeaderDto>), 200)]
+        public async Task<IActionResult> ListCategories([FromBody] ManageProductFilterDto filter, [FromQuery] PaginationDto pagination)
+        {
+            var products = await productService.AdminGetProducts(filter, currentUserService.User.Id, pagination);
+            return Ok(products);
         }
 
         [HttpPost("create")]

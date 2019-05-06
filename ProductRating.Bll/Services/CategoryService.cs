@@ -272,7 +272,7 @@ namespace ProductRating.Bll.Services
               
         }
 
-        public async Task<List<CategoryManageHeaderDto>> GetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination)
+        public async Task<List<CategoryManageHeaderDto>> AdminGetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination)
         {
             var query = context.Categories
                 .Include(e => e.Attributes)

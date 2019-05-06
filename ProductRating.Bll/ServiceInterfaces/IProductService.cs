@@ -19,5 +19,7 @@ namespace ProductRating.Bll.ServiceInterfaces
         Task UpdateProduct(Guid productId, CreateEditProductDto product);
 
         Task DeleteProduct(Guid productId);
+
+        Task<List<ProductManageHeaderDto>> AdminGetProducts(ManageProductFilterDto filter, Guid UserId, PaginationDto pagination);
     }
 }
