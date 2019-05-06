@@ -13,6 +13,10 @@ namespace ProductRating.Dal
 {
     public static class SeedDatabase
     {
+
+        static ApplicationUser webshopUser;
+
+
         public static void Seed(this ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
@@ -104,6 +108,11 @@ namespace ProductRating.Dal
                 RoleId = context.Roles.Where(e => e.Name == RoleNames.ADMIN_ROLE).Single().Id,
                 UserId = user.Id
             });
+            context.UserRoles.Add(new IdentityUserRole<Guid>()
+            {
+                RoleId = context.Roles.Where(e => e.Name == RoleNames.SHOP_OWNER_ROLE).Single().Id,
+                UserId = user.Id
+            });       
 
             context.UserRoles.Add(new IdentityUserRole<Guid>()
             {
@@ -112,6 +121,7 @@ namespace ProductRating.Dal
             });
 
             context.SaveChanges();
+            webshopUser = user;
             return context;
         }
 
@@ -122,6 +132,7 @@ namespace ProductRating.Dal
                 new Category()
                 {
                     Name = "Furniture",
+                    Creator = webshopUser,
                     Attributes = new List<ProductAttribute>()
                     {
                         new ProductAttributeString() {Name = "Material" },
@@ -129,7 +140,7 @@ namespace ProductRating.Dal
                         new ProductAttributeInt () {Name = "Height" },
                         new ProductAttributeInt () {Name = "Depth" }
                     }
-                },
+                },                
                 new Category()
                 {
                     Name = "Consumer electronics",
@@ -138,6 +149,7 @@ namespace ProductRating.Dal
                         new Category()
                         {
                             Name = "Laptops",
+                            Creator = webshopUser,
                             Attributes = new List<ProductAttribute>()
                             {
                                 new ProductAttributeString() {Name = "Processor", HasFixedValues = true }
@@ -146,6 +158,7 @@ namespace ProductRating.Dal
                         new Category()
                         {
                             Name = "Phones",
+                            Creator = webshopUser,
                             Attributes = new List<ProductAttribute>()
                             {
                                 new ProductAttributeString() {Name = "Back camera" }
@@ -218,6 +231,7 @@ namespace ProductRating.Dal
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Price = 600,
                 Name = "Z50",
+                Creator = webshopUser,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                      new ProductAttributeValueConnection()

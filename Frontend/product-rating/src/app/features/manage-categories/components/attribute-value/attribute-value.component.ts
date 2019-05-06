@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CreateEditCategoryAttributeValueData } from 'src/app/models/categories/CreateEditCategoryAttributeValueData';
 
 @Component({
@@ -13,9 +13,15 @@ export class AttributeValueComponent implements OnInit {
   @Input()
   index: number;
 
+  @Output()
+  delete: EventEmitter<CreateEditCategoryAttributeValueData> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  remove(){
+    this.delete.emit(this.attributeValue);
+  }
 }

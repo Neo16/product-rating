@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductRating.Model.Identity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,5 +23,9 @@ namespace ProductRating.Model.Entities.Products
         public Picture ThumbnailPicture { get; set; }
 
         public Guid? ThumbnailPictureId { get; set; }
+
+        public Guid? CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
     }
 }

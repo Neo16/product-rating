@@ -14,6 +14,7 @@
     <div *ngIf="category.attributes.length > 0" class="attributes-container">
       <app-attribute 
         *ngFor="let attribute of category.attributes"
+        (delete) = "onAttributeDelete($event)"
         [attribute] = "attribute">
       </app-attribute>
     </div>

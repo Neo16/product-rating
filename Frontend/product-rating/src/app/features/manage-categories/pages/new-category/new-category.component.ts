@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CreateEditCategoryData } from 'src/app/models/categories/CreateEditCategoryData';
+import { ManageCategoriesService } from '../../services/manage-categories.service';
 
 @Component({
   selector: 'app-new-category',
@@ -10,9 +11,14 @@ export class NewCategoryComponent implements OnInit {
 
   category: CreateEditCategoryData = new CreateEditCategoryData();
   
-  constructor() { }
+  constructor(private manageCatService: ManageCategoriesService) { }
 
-  ngOnInit() {
-   
-  }
+  ngOnInit() { }
+
+  onSubmit(){
+    this.manageCatService.createCategory(this.category)
+      .subscribe(e => {
+         console.log(e);
+      })
+   }
 }

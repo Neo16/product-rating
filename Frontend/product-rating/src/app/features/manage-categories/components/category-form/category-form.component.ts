@@ -20,4 +20,9 @@ export class CategoryFormComponent implements OnInit {
   addNewAttribute(){
     this.category.attributes.push(new CreateEditCategoryAttributeData()); 
   }
+
+  onAttributeDelete(attr: CreateEditCategoryAttributeData){
+    this.category.attributes = this.category.attributes
+        .filter(item => item !== attr);
+  }
 }

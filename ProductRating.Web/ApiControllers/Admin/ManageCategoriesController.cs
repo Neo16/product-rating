@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Web.WebServices;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers.Admin
@@ -14,7 +16,7 @@ namespace ProductRating.Web.ApiControllers.Admin
     public class ManageCategoriesController : Controller
     {
         private readonly ICategoryService categoryService;
-        private readonly CurrentUserService currentUserService;
+        private readonly CurrentUserService currentUserService;    
 
         public ManageCategoriesController(
             ICategoryService categoryService,
@@ -22,6 +24,14 @@ namespace ProductRating.Web.ApiControllers.Admin
         {
             this.categoryService = categoryService;
             this.currentUserService = currentUserService;
+        }
+
+        [HttpPost("list")]
+        [ProducesResponseType(typeof(List<CategoryManageHeaderDto>), 200)]
+        public async Task<IActionResult> ListCategories([FromBody] ManageCategoryFilterDto filter, [FromQuery] PaginationDto pagination)
+        {
+            var categories = await categoryService.GetCategories(filter, currentUserService.User.Id, pagination);
+            return Ok(categories);
         }
 
         [HttpPost("create")]

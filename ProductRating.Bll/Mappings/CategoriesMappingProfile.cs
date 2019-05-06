@@ -18,6 +18,13 @@ namespace ProductRating.Bll.Mappings
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
                 .ForMember(e => e.NumOfProducts, e => e.MapFrom(f => f.Products.Count));
 
+            this.CreateMap<Category, CategoryManageHeaderDto>()
+                .ForMember(e => e.ParentName, e => e.MapFrom(f => f.Parent.Name))
+                .ForMember(e => e.AttributeNames, e => e.MapFrom(f => string.Join(", ",f.Attributes.Select(a => a.Name).ToArray())))              
+                .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
+                .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
+                .ForMember(e => e.NumOfProducts, e => e.MapFrom(f => f.Products.Count));
+
             this.CreateMap<ProductAttribute, CreateEditCategoryAttributeDto>()
                 .ForMember(e => e.AttributeName, e => e.MapFrom(f => f.Name))
                 .ForMember(e => e.HasFixedValues, e => e.MapFrom(f => f.HasFixedValues))

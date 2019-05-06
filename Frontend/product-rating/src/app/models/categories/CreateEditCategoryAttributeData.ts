@@ -7,7 +7,7 @@ export class CreateEditCategoryAttributeData
 
     hasFixedValues: boolean = false;
 
-    type: AttributeType = AttributeType.Int;
+    type: AttributeType = AttributeType.String;
 
     attributeId: string | null = null;
 

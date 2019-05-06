@@ -1,12 +1,24 @@
 @import "~src/variables";
 
-.attribute-value{
-     span{
-          width: 90px;
-     }
-     padding: 5px;   
-     margin-top: 10px;
+.attribute-value {
+  span {
+    width: 90px;
+  }
+  input.form-control{
+       display: inline-block;   
+  }
+  padding: 5px;
+  margin-top: 10px;
+  display: flex;
+  align-content: space-between;
+  justify-content: center;
+
+  a.icon{    
+     padding: 10px;
+  }
+}
+
+.flex-between{     
      display: flex;
      align-content: space-between;
-     justify-content: center;
 }

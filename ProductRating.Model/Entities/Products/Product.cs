@@ -1,4 +1,5 @@
 ﻿using ProductRating.Model.Entities.Reviews;
+using ProductRating.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,5 +39,9 @@ namespace ProductRating.Model.Entities.Products
         public ICollection<ProductPicture> Pictures { get; set; }
 
         public long Price { get; set; }
+
+        public Guid? CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
     }
 }

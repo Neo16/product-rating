@@ -1,4 +1,9 @@
 <div class="attribute-value">
     <span>{{index}}. value:</span>
-    <input [(ngModel)]="attributeValue.value" class="form-control">
+    <div class="flex-between max-width">
+        <input [(ngModel)]="attributeValue.value" class="form-control">
+        <a class="pointer icon" (click)="remove()">
+            <fa-icon class="float-right" [icon]="['fas', 'trash-alt']" size="md"></fa-icon>
+        </a>
+    </div>
 </div>

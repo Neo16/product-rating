@@ -8,6 +8,9 @@ import { EditCategoryComponent } from './pages/edit-category/edit-category.compo
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AttributeValueComponent } from './components/attribute-value/attribute-value.component';
+import { ManageCategoriesService } from './services/manage-categories.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from 'src/app/core/services/token.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,14 @@ import { AttributeValueComponent } from './components/attribute-value/attribute-
     CommonModule,
     SharedModule,
     ManageCategoriesRoutingModule
+  ],
+  providers:[
+    ManageCategoriesService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
   ]
 })
 export class ManageCategoriesModule { }

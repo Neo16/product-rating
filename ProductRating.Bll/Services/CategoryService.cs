@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Category.CategoryAttributes;
 using ProductRating.Bll.Exceptions;
@@ -258,6 +259,38 @@ namespace ProductRating.Bll.Services
 
             return mapper.Map<CreateEditCategoryDto>(dbCategory);              
               
+        }
+
+        public async Task<List<CategoryManageHeaderDto>> GetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination)
+        {
+            var query = context.Categories
+                .Include(e => e.Attributes)
+                .Include(e => e.Products) // Todo: select productNum in query 
+                .Include(e => e.Parent)
+                .AsQueryable();
+
+            //filter
+            if (!string.IsNullOrWhiteSpace(filter.Name))
+            {
+                query = query.Where(e => e.Name.ToUpper().Contains(filter.Name.ToUpper()));
+            }
+            if (filter.IsMine == true)
+            {
+                query = query.Where(e => e.CreatorId == userId);
+            }
+
+            //pagination            
+            if (pagination.Start != null && pagination.Length != null)
+            {
+                query = query.Skip(pagination.Start.Value - 1).Take(pagination.Length.Value);
+            }
+
+            // ProjectTo doesnt work for this mapping (has string.join)
+            var categories = await query.ToListAsync();
+
+            return categories
+                .Select(e => mapper.Map<CategoryManageHeaderDto>(e))
+                .ToList();              
         }
     }
 }

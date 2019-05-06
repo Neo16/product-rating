@@ -1,4 +1,5 @@
-﻿using ProductRating.Bll.Dtos.Category;
+﻿using ProductRating.Bll.Dtos;
+using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Category.CategoryAttributes;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ namespace ProductRating.Bll.ServiceInterfaces
 {
     public interface ICategoryService
     {
+        Task<List<CategoryManageHeaderDto>> GetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination);
+
         Task<List<CategoryHeaderDto>> GetMainCategories();
 
         Task<List<CategoryHeaderDto>> GetChildCategoriesOf(Guid categoryId);       

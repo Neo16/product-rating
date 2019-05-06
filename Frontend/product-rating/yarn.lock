@@ -367,6 +367,10 @@
     semver "5.6.0"
     semver-intersect "1.4.0"
 
+"@swimlane/ngx-datatable@swimlane/ngx-datatable":
+  version "14.0.0"
+  resolved "https://codeload.github.com/swimlane/ngx-datatable/tar.gz/c9e11cfc13894132b9013c8cbcc73475f45157f4"
+
 "@types/jasmine@*":
   version "3.3.12"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-3.3.12.tgz#bf282cb540e9ad7a0a04b742082c073b655eab39"
