@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CreateEditCategoryAttributeValueData } from 'src/app/models/categories/CreateEditCategoryAttributeValueData';
+import { AttributeType } from 'src/app/models/categories/AttributeType';
 
 @Component({
   selector: 'app-attribute-value',
@@ -12,6 +13,8 @@ export class AttributeValueComponent implements OnInit {
   attributeValue: CreateEditCategoryAttributeValueData;
   @Input()
   index: number;
+  @Input()
+  type: AttributeType;
 
   @Output()
   delete: EventEmitter<CreateEditCategoryAttributeValueData> = new EventEmitter();

@@ -1,0 +1,19 @@
+.filter-div{
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    margin-left: auto;
+    padding-right: 30px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.filter-toggle{
+    display: block;
+    padding: 5px 0px; 
+}
+
+.action-cell{
+    text-align: right;
+    width: 100%;
+}

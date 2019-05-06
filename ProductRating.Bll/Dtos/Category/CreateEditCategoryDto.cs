@@ -12,6 +12,6 @@ namespace ProductRating.Bll.Dtos.Category
 
         public ICollection<CreateEditCategoryAttributeDto> Attributes { get; set; }
 
-        public Guid? ThumbnailPictureId { get; set; }
+        public Guid? ThumbnailPictureId { get; set; }        
     }
 }

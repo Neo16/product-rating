@@ -14,37 +14,29 @@ export class ManageCategoriesService {
 
   constructor(private http: HttpClient) { }
 
-  getCategories(filter: ManageCategoryFilterData, pagination: PaginationParams): Observable<CategoryManageHeaderData[]>{
+  getCategories(filter: ManageCategoryFilterData, pagination: PaginationParams): Observable<CategoryManageHeaderData[]> {
     const url = `${this.BASE_URL}/manage-categories/list`;
 
-        // pagination query parameters 
-        let queryParams = new HttpParams();   
-        queryParams = queryParams.append('length', pagination.length.toString());
-        queryParams = queryParams.append('start', pagination.start.toString());
-    
-        return this.http.post<CategoryManageHeaderData[]>(url, filter, {params: queryParams});
+    // pagination query parameters 
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('length', pagination.length.toString());
+    queryParams = queryParams.append('start', pagination.start.toString());
+
+    return this.http.post<CategoryManageHeaderData[]>(url, filter, { params: queryParams });
+  }
+
+  getCategory(categoryId: string): Observable<CreateEditCategoryData> {
+    const url = `${this.BASE_URL}/manage-categories/get-for-update/${categoryId}`;
+    return this.http.get<CreateEditCategoryData>(url);
   }
 
   createCategory(category: CreateEditCategoryData): Observable<any> {
     const url = `${this.BASE_URL}/manage-categories/create`;
+    return this.http.post<any>(url, JSON.stringify(category));
+  }
 
-    var categoryToPost: any = JSON.parse(JSON.stringify(category));      
-
-    categoryToPost.attributes.forEach(attr => {
-      attr.values = attr.values.map(v => {        
-        var newValue: any = {         
-          valueId: v.valueId
-        }
-        if (attr.type == AttributeType.Int) {
-          newValue.intValue = v.intValue;
-        }
-        if (attr.type == AttributeType.String) {
-          newValue.stringValue = v.stringValue;
-        }     
-        return newValue;      
-      })
-    });
-
-    return this.http.post<any>(url, JSON.stringify(categoryToPost));
+  updateCategory(categoryId: string, category: CreateEditCategoryData): Observable<any> {
+    const url = `${this.BASE_URL}/manage-categories/${categoryId}/update`;  
+    return this.http.put<any>(url, JSON.stringify(category));
   }
 }

@@ -93,6 +93,8 @@ namespace ProductRating.Bll.Services
         public async Task UpdateCategory(Guid categoryId, CreateEditCategoryDto category)
         {
             var oldDbCategory = await context.Categories
+                .Include(e => e.Attributes)
+                .ThenInclude(e => e.Values)
                 .SingleOrDefaultAsync(e => e.Id == categoryId);
 
             if (oldDbCategory == null)
@@ -131,9 +133,12 @@ namespace ProductRating.Bll.Services
 
                 if (oldAttr != null)
                 {
-                    //3.1 Attribútum név frisítése
-                    oldAttr.Name = attr.Name;
-                    UpdateAttributeValues(oldAttr, attr);
+                    if (attr.HasFixedValues)
+                    {
+                        //3.1 Attribútum név frisítése
+                        oldAttr.Name = attr.Name;
+                        UpdateAttributeValues(oldAttr, attr);
+                    }                    
                 }
             }
 
@@ -257,7 +262,13 @@ namespace ProductRating.Bll.Services
                 .ThenInclude(e => e.Values)
                 .FirstOrDefaultAsync(e => e.Id == categoryId);
 
-            return mapper.Map<CreateEditCategoryDto>(dbCategory);              
+            var mappedCategory = mapper.Map<CreateEditCategoryDto>(dbCategory);
+
+            // Attribute values are not editable, only can be added or removed. 
+            mappedCategory.Attributes.SelectMany(e => e.Values)
+                .Select(e => e.Editable = false);
+
+            return mappedCategory;              
               
         }
 

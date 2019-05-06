@@ -3,15 +3,11 @@ import { AttributeType } from './AttributeType';
 export class CreateEditCategoryAttributeValueData {
     type: AttributeType;
 
-    get intValue(): number {
-        return parseInt(this.value);
-    }
+    intValue: number 
 
-    get stringValue(): string {
-        return this.value;
-    }
+    stringValue: string 
 
     valueId: string | null;
 
-    value: string;    
+    editable: boolean = true;
 }

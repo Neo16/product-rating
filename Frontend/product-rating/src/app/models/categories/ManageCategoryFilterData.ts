@@ -1,5 +1,5 @@
 export class ManageCategoryFilterData
 {
-    Name: string = null;
-    IsMine: boolean | null = null;
+    name: string = null;
+    isMine: boolean | null = false;
 }

@@ -37,25 +37,25 @@ namespace ProductRating.Web.ApiControllers.Admin
         [HttpPost("create")]
         public async Task<IActionResult> CreateCategory(CreateEditCategoryDto category)
         {
-            await categoryService.CreateCategory(category);
-            return Ok();
+            var id =  await categoryService.CreateCategory(category);
+            return Ok(id);
         }
 
-        [HttpGet("get-for-update")]
-        public async Task<IActionResult> UpdateCategory(Guid categoryId)
+        [HttpGet("get-for-update/{categoryId}")]
+        public async Task<IActionResult> GetForUpdate(Guid categoryId)
         {
             var category = await categoryService.GetCategoryForUpdate(categoryId);
             return Ok(category);
         }
 
-        [HttpPut("update")]
+        [HttpPut("{categoryId}/update")]
         public async Task<IActionResult> UpdateCategory(Guid categoryId, CreateEditCategoryDto category)
         {
             await categoryService.UpdateCategory(categoryId, category);
             return Ok();
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("{categoryId}/delete")]
         public async Task<IActionResult> DeleteCategory(Guid categoryId)
         {
             await categoryService.DeleteCategory(categoryId);

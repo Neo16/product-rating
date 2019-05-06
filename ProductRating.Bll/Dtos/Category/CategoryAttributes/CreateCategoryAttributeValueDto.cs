@@ -9,5 +9,7 @@ namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
         public int IntValue { get; set; }
 
         public Guid? ValueId { get; set; }
+
+        public bool Editable { get; set; }
     }
 }

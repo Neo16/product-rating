@@ -27,14 +27,14 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok();
         }        
 
-        [HttpPut("update")]
+        [HttpPut("{productId}/update")]
         public async Task<IActionResult> Updateproduct(Guid productId, CreateEditProductDto product)
         {
             await productService.UpdateProduct(productId, product);
             return Ok();
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("{productId}/delete")]
         public async Task<IActionResult> Deleteproduct(Guid productId)
         {
             await productService.DeleteProduct(productId);

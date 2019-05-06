@@ -4572,6 +4572,11 @@ ngx-bar-rating@^1.1.0:
   resolved "https://registry.yarnpkg.com/ngx-bar-rating/-/ngx-bar-rating-1.1.0.tgz#47a260812b47bc6df157e0aaecae5b29249407c4"
   integrity sha1-R6JggStHvG3xV+Cq7K5bKSSUB8Q=
 
+ngx-ui-switch@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/ngx-ui-switch/-/ngx-ui-switch-8.0.1.tgz#4c834b6e40b3cb62fca5f607633baa23b75f5914"
+  integrity sha512-3qkmriWIAu5sg9nggDj6vH6Ilvq52RKoBSMp02831v5+URmM/V0v2tLlgeXal7xcRaagRz8J6VJLmDChyYr4IA==
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

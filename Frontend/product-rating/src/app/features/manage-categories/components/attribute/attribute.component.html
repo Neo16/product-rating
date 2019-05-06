@@ -29,7 +29,9 @@
         <div class="col-24 values-container">
             <div class="row">
                 <div class="col-12">
-                    <app-attribute-value *ngFor="let value of attribute.values; index as i" [attributeValue]="value"
+                    <app-attribute-value *ngFor="let value of attribute.values; index as i"
+                        [attributeValue]="value"
+                        [type] = "attribute.type"                     
                         [index]="i+1"
                         (delete) = "onValueDelete($event)">
                     </app-attribute-value>

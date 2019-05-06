@@ -8,6 +8,7 @@ import { faTimes, faArrowDown, faArrowUp, faStar, faTrash, faTrashAlt } from '@f
 import { Ng5SliderModule } from 'ng5-slider';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { UiSwitchModule } from 'ngx-ui-switch';
 
 @NgModule({
   declarations: [EnumToArrayPipe],
@@ -17,7 +18,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FormsModule,
     NgbModule.forRoot(),
     CommonModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    UiSwitchModule 
   ],
   exports: [
     NgbModule,
@@ -25,7 +27,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     FontAwesomeModule,
     FormsModule,
     EnumToArrayPipe,
-    NgxDatatableModule
+    NgxDatatableModule,
+    UiSwitchModule 
   ]
 })
 export class SharedModule {
