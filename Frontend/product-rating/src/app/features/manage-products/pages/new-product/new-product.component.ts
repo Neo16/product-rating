@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CreateEditProductData } from 'src/app/models/products/CreateEditProductData';
+import { Router } from '@angular/router';
+import { ManageProductsService } from '../../services/manage-products.service';
 
 @Component({
   selector: 'app-new-product',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewProductComponent implements OnInit {
 
-  constructor() { }
+  product: CreateEditProductData = new CreateEditProductData();
 
-  ngOnInit() {
-  }
+  constructor(
+    private manageCatService: ManageProductsService,
+    private router: Router) { }
 
+  ngOnInit() { }
+
+  onSubmit(){
+    this.manageCatService.createProduct(this.product)
+      .subscribe(e => {
+         this.router.navigate(['manage-products']);
+      })
+   }
 }

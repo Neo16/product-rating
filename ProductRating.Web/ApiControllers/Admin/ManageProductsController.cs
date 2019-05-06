@@ -28,28 +28,28 @@ namespace ProductRating.Web.ApiControllers.Admin
 
         [HttpPost("list")]
         [ProducesResponseType(typeof(List<ProductManageHeaderDto>), 200)]
-        public async Task<IActionResult> ListCategories([FromBody] ManageProductFilterDto filter, [FromQuery] PaginationDto pagination)
+        public async Task<IActionResult> ListProducts([FromBody] ManageProductFilterDto filter, [FromQuery] PaginationDto pagination)
         {
             var products = await productService.AdminGetProducts(filter, currentUserService.User.Id, pagination);
             return Ok(products);
         }
 
         [HttpPost("create")]
-        public async Task<IActionResult> Createproduct(CreateEditProductDto product)
+        public async Task<IActionResult> CreateProduct(CreateEditProductDto product)
         {
             await productService.CreateProduct(product);
             return Ok();
         }        
 
         [HttpPut("{productId}/update")]
-        public async Task<IActionResult> Updateproduct(Guid productId, CreateEditProductDto product)
+        public async Task<IActionResult> UpdateProduct(Guid productId, CreateEditProductDto product)
         {
             await productService.UpdateProduct(productId, product);
             return Ok();
         }
 
         [HttpDelete("{productId}/delete")]
-        public async Task<IActionResult> Deleteproduct(Guid productId)
+        public async Task<IActionResult> DeleteProduct(Guid productId)
         {
             await productService.DeleteProduct(productId);
             return Ok();
