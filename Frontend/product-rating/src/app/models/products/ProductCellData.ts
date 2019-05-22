@@ -3,6 +3,6 @@ export interface ProductCellData {
    name: string;
    score: number; //Todo backendre is kell 
    numberOfReviews: number; //Todo backendre is kell 
-   thumbnailImageUrl: string;
+   thumbnailImage: string;
    price: number;
 }

@@ -1,5 +1,6 @@
 <div>
-  <img src="https://via.placeholder.com/300x200">
+  <img *ngIf="product.thumbnailImage == null" src="https://via.placeholder.com/300x200">
+  <img *ngIf="product.thumbnailImage != null" [src]="'data:image/png;base64,' + product.thumbnailImage">
   <a [routerLink]="['/products', product.id]">
     {{product.brandName}} {{product.name}}
   </a> 

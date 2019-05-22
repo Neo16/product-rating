@@ -1,3 +1,6 @@
-<p>
-  edit-product works!
-</p>
+<div class="row">
+  <div class="col-24 basic-container">
+    <app-product-form [product]="product"></app-product-form>
+    <button (click)="onSubmit()" class="btn btn-outline-dark float-right">Save Product</button>
+  </div>
+</div>

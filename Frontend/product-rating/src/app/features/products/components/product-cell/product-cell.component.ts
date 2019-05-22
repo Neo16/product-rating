@@ -13,6 +13,7 @@ export class ProductCellComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+   
   }
 
 }

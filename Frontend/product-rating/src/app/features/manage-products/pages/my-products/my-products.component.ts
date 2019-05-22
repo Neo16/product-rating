@@ -24,7 +24,8 @@ export class MyProductsComponent implements OnInit {
   constructor(private manageProductService : ManageProductsService) { }
 
   listCategories() {
-    this.pagination.length = 10;
+    //Todo: use server side paging.
+    this.pagination.length = 1000;
     this.pagination.start = 1;
 
     this.manageProductService.getProducts(this.filter, this.pagination)

@@ -1,6 +1,7 @@
 import { CreateEditIntAttribute } from './CreateEditIntAttribute';
 import { CreateEditStringAttribute } from './CreateEditStringAttribute';
 import { PictureData } from '../PictureData';
+import { SimpleDateData } from '../SimpleDateData';
 
 export class CreateEditProductData
     {
@@ -11,14 +12,14 @@ export class CreateEditProductData
 
         categoryId: string | null = null;
 
-        intAttributes: CreateEditIntAttribute[];
+        intAttributes: CreateEditIntAttribute[] = [];
 
-        stringAttributes: CreateEditStringAttribute[];
+        stringAttributes: CreateEditStringAttribute[] = [];
 
         pictures: PictureData[];
 
-        thumbnailPicture: PictureData;       
+        thumbnailPicture: PictureData = new PictureData();       
 
-        startOfProduction: Date;
-        endOfProduction: Date;
+        startOfProduction: SimpleDateData = new SimpleDateData();
+        endOfProduction: SimpleDateData = new SimpleDateData();
     }

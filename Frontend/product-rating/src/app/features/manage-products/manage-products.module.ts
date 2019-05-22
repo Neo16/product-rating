@@ -6,13 +6,15 @@ import { ManageProductsRoutingModule } from './manage-products-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
+import { PictureUploaderComponent } from './components/picture-uploader/picture-uploader.component';
 
 @NgModule({
   declarations: [
     NewProductComponent,
     MyProductsComponent,
     EditProductComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    PictureUploaderComponent
   ],
   imports: [
     CommonModule,

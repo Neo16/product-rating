@@ -19,7 +19,7 @@ export class NewProductComponent implements OnInit {
 
   ngOnInit() { }
 
-  onSubmit() {
+  onSubmit() {  
     this.manageCatService.createProduct(this.product)
       .subscribe(e => {
         this.router.navigate(['manage-products']);

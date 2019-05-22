@@ -14,41 +14,19 @@ import { PictureService } from '../../services/picture-service';
 export class ProductFormComponent implements OnInit {
 
   @Input()
-  product: CreateEditProductData;  
-  categories: CategoryManageHeaderData[]; 
- 
+  product: CreateEditProductData;
+  categories: CategoryManageHeaderData[];
 
   constructor(
     private manageCategoriesService: ManageCategoriesService,
-    private pictureservice: PictureService) {    
+  ) {
   }
-
-  processFile(imageInput: any) {
-    const file: File = imageInput.files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener('load', (event: any) => {    
-      this.pictureservice.uploadImage(file).subscribe(
-        (res) => {        
-          alert("OK");
-          console.log(res);
-        },
-        (err) => {
-          alert("Not OK");
-          console.log(err);
-        })
-    });
-
-    reader.readAsDataURL(file);
-  }
-
 
   ngOnInit() {
     this.manageCategoriesService
-      .getCategories(new ManageCategoryFilterData() , new PaginationParams())
-      .subscribe(result =>{
-          this.categories = result;
-      })
+      .getCategories(new ManageCategoryFilterData(), new PaginationParams())
+      .subscribe(result => {
+        this.categories = result;
+      });   
   }
-
 }

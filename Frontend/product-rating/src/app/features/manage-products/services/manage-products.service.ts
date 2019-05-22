@@ -6,7 +6,6 @@ import { ProductManageHeaderData } from 'src/app/models/products/ProductHeaderDa
 import { ManageProductFilterData } from 'src/app/models/products/ManageProductFilterData';
 import { CreateEditProductData } from 'src/app/models/products/CreateEditProductData';
 
-
 @Injectable()
 export class ManageProductsService {
     private BASE_URL = 'https://localhost:44394';
@@ -30,8 +29,11 @@ export class ManageProductsService {
     }
 
     createProduct(product: CreateEditProductData): Observable<any> {
+        var toUpload = {... product};
+        toUpload.thumbnailPicture.data = null;
+
         const url = `${this.BASE_URL}/manage-products/create`;
-        return this.http.post<any>(url, JSON.stringify(product));
+        return this.http.post<any>(url, JSON.stringify(toUpload));
     }
 
     updateProduct(productId: string, product: CreateEditProductData): Observable<any> {

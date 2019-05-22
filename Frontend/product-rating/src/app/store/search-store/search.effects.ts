@@ -31,6 +31,7 @@ export class SearchEffects {
       switchMap((payload: SearchState) => {
         return this.productService.searchProducts(payload.filter, payload.pagination)
           .map((result: SearchResult) => { 
+            console.log(result.products);
             return new SearchSuccessAction(result);
           })
           .catch((error) => { 
