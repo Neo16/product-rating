@@ -5,18 +5,15 @@
   </div>
 
   <div class="form-group">
-      <label>Parent category</label>
-      <select [(ngModel)]="category.parentCategoryId" name="parentCategoryId" class="form-control">
-        
-      </select>
-    </div>
+    <label>Parent category</label>
+    <select [(ngModel)]="category.parentCategoryId" name="parentCategoryId" class="form-control">
+    </select>
+  </div>
 
-    <div *ngIf="category.attributes.length > 0" class="attributes-container">
-      <app-attribute 
-        *ngFor="let attribute of category.attributes"
-        (delete) = "onAttributeDelete($event)"
-        [attribute] = "attribute">
-      </app-attribute>
-    </div>
-    <a (click)="addNewAttribute()" href="javascript:void(0)">New attribute</a>
+  <div *ngIf="category.attributes.length > 0" class="attributes-container">
+    <app-attribute *ngFor="let attribute of category.attributes" (delete)="onAttributeDelete($event)"
+      [attribute]="attribute">
+    </app-attribute>
+  </div>
+  <a (click)="addNewAttribute()" href="javascript:void(0)">New attribute</a>
 </form>

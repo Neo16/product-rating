@@ -11,13 +11,27 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private injector: Injector) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> { 
     this.authService = this.injector.get(AccountService);
+
+    var needContentType =  request.url.indexOf("upload-picture") == -1;    
+
     const token: string = this.authService.getToken();   
-    request = request.clone({
-      setHeaders: {
-        'Authorization': `Bearer ${token}`,
-        'content-type': 'application/json'
-      }
-    });
+
+    if (needContentType){
+      request = request.clone({
+        setHeaders: {
+          'Authorization': `Bearer ${token}`,
+          'content-type': 'application/json'
+         }
+      });
+    }
+    else{
+      request = request.clone({
+        setHeaders: {
+          'Authorization': `Bearer ${token}`        
+         }
+      });
+    }   
     return next.handle(request);
   }
 }
+

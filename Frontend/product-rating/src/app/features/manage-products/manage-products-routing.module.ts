@@ -5,8 +5,9 @@ import { NewProductComponent } from './pages/new-product/new-product.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { ManageProductsService } from './services/manage-products.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
+import { PictureService } from './services/picture-service';
+import { TokenInterceptor } from 'src/app/core/services/token.service';
 
 const routes: Routes = [
   { path: 'edit/:id', component: EditProductComponent, canActivate: [AuthGuard] },
@@ -24,6 +25,7 @@ const routes: Routes = [
       useClass: TokenInterceptor,
       multi: true
     },
+    PictureService,    
   ]
 })
 export class ManageProductsRoutingModule { }

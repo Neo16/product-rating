@@ -1,24 +1,23 @@
 import { CreateEditIntAttribute } from './CreateEditIntAttribute';
 import { CreateEditStringAttribute } from './CreateEditStringAttribute';
+import { PictureData } from '../PictureData';
 
 export class CreateEditProductData
     {
         id: string;
         name: string; 
 
-        brandId: string;   
+        brandId: string | null = null;   
 
-        categoryId: string;
+        categoryId: string | null = null;
 
         intAttributes: CreateEditIntAttribute[];
 
         stringAttributes: CreateEditStringAttribute[];
 
-        pictureIds: string[];
+        pictures: PictureData[];
 
-        thumbnailPictureId: string | null;
-
-        thumbnailPictureString: string;
+        thumbnailPicture: PictureData;       
 
         startOfProduction: Date;
         endOfProduction: Date;

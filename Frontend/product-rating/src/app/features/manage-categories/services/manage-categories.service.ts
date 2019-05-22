@@ -19,8 +19,10 @@ export class ManageCategoriesService {
 
     // pagination query parameters 
     let queryParams = new HttpParams();
-    queryParams = queryParams.append('length', pagination.length.toString());
-    queryParams = queryParams.append('start', pagination.start.toString());
+    if (pagination.length != null && pagination.start != null){
+      queryParams = queryParams.append('length', pagination.length.toString());
+      queryParams = queryParams.append('start', pagination.start.toString());
+    } 
 
     return this.http.post<CategoryManageHeaderData[]>(url, filter, { params: queryParams });
   }

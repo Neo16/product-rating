@@ -14,14 +14,15 @@ export class NewProductComponent implements OnInit {
 
   constructor(
     private manageCatService: ManageProductsService,
-    private router: Router) { }
+    private router: Router) {  
+  }
 
   ngOnInit() { }
 
-  onSubmit(){
+  onSubmit() {
     this.manageCatService.createProduct(this.product)
       .subscribe(e => {
-         this.router.navigate(['manage-products']);
+        this.router.navigate(['manage-products']);
       })
-   }
+  }
 }

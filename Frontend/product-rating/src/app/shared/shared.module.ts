@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes, faArrowDown, faArrowUp, faStar, faTrash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Ng5SliderModule } from 'ng5-slider';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { UiSwitchModule } from 'ngx-ui-switch';
 
@@ -19,7 +19,8 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     NgbModule.forRoot(),
     CommonModule,
     NgxDatatableModule,
-    UiSwitchModule 
+    UiSwitchModule,
+    NgbModule
   ],
   exports: [
     NgbModule,
@@ -28,7 +29,8 @@ import { UiSwitchModule } from 'ngx-ui-switch';
     FormsModule,
     EnumToArrayPipe,
     NgxDatatableModule,
-    UiSwitchModule 
+    UiSwitchModule,
+    NgbModule
   ]
 })
 export class SharedModule {
