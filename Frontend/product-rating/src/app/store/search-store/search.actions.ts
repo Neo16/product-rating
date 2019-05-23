@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { SearchParams } from 'src/app/models/search/SearchParams';
 import { SearchResult } from 'src/app/models/search/SearchResult';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
+import { AttributeType } from 'src/app/models/categories/AttributeType';
 
 export enum SearchActionTypes {
     REMOVE_CATEGORY_FILTER = '[Search] Add category filter',
@@ -14,7 +15,19 @@ export enum SearchActionTypes {
     ADD_BRAND_FILTER = '[Search] Remove brand filter',
     CHANGE_PRODUCT_ORDER = '[Search] Change Product Order',
     CHANGE_ORDER =  '[Search] Change Order',
-    CHANGE_PAGINATION = '[SEARCH] Change pagination'
+    CHANGE_PAGINATION = '[SEARCH] Change pagination',
+    ADD_ATTRIBUTE_FILTER = '[SEARCH] Add attribute',
+    REMOVE_ATTRIBUTE_FILTER = '[SEARCH] Remove attribute'
+}
+
+export class AddAttributeFilterAction implements Action {
+  readonly type = SearchActionTypes.ADD_ATTRIBUTE_FILTER;
+  constructor(public attributeId: string, public valueId: string, public attrType: Number) {}
+}
+
+export class RemoveAttributeFilterAction implements Action {
+  readonly type = SearchActionTypes.REMOVE_ATTRIBUTE_FILTER;
+  constructor(public attributeId: string) {}
 }
 
 export class AddCategoryFilterAction implements Action {

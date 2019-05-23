@@ -1,10 +1,13 @@
 import { initialState, SearchState } from './search.state';
 import {
   SearchActionTypes, ChangeFilterAction, SearchSuccessAction,
-  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, ChangeOrderAction, ChangeProductOrderAction, ChangePaginationAction
+  AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, ChangeOrderAction, ChangeProductOrderAction, ChangePaginationAction, AddAttributeFilterAction
 } from './search.actions';
 import { filter } from 'rxjs/operators';
 import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
+import { AttributeType } from 'src/app/models/categories/AttributeType';
+import { DisplayIntAttribute } from 'src/app/models/DisplayIntAttribute';
+import { DisplayStringAttribute } from 'src/app/models/DisplayStringAttribute';
 
 function forAllCategoryInTree(categories: CategoryHeader[], func: (x: CategoryHeader) => void) {
   if (categories == undefined)
@@ -25,7 +28,7 @@ export function searchReducer(state: SearchState = initialState, action: any): S
           ...state.filter,
           brandIds: state.filter.brandIds.concat(brandId)
         }
-      }    
+      }
       return newState;
     }
     case SearchActionTypes.REMOVE_BRAND_FILTER: {
@@ -36,7 +39,48 @@ export function searchReducer(state: SearchState = initialState, action: any): S
           ...state.filter,
           brandIds: state.filter.brandIds.filter(e => e != brandId)
         }
-      }     
+      }
+      return newState;
+    }
+    case SearchActionTypes.ADD_ATTRIBUTE_FILTER: {
+      var attributeId = (action as AddAttributeFilterAction).attributeId;
+      var valueId = (action as AddAttributeFilterAction).valueId;
+      var attrType = (action as AddAttributeFilterAction).attrType;
+
+      console.log(attrType);
+
+      var newState = {
+        ...state
+      }
+
+      if (attrType == (AttributeType.Int as Number)) {
+        newState.filter.intAttributes.push({
+          valueId: valueId,
+          attributeId: attributeId
+        } as DisplayIntAttribute)
+      }
+
+      if (attrType == (AttributeType.String as Number)) {
+        newState.filter.stringAttributes.push({
+          valueId: valueId,
+          attributeId: attributeId
+        } as DisplayStringAttribute)
+      }      
+      return newState;
+    }
+    case SearchActionTypes.REMOVE_ATTRIBUTE_FILTER: {
+      var attributeId = (action as AddAttributeFilterAction).attributeId;     
+      var newState = {
+        ...state
+      }
+
+      newState.filter.stringAttributes = 
+        newState.filter.stringAttributes.filter(e => e.attributeId != attributeId);
+
+      newState.filter.intAttributes = 
+        newState.filter.intAttributes.filter(e => e.attributeId != attributeId);
+      
+      
       return newState;
     }
     case SearchActionTypes.ADD_CATEGORY_FILTER: {
@@ -86,14 +130,14 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       return {
         ...state,
         filter: Object.assign(state.filter, newFilter)
-      };    
+      };
     }
     case SearchActionTypes.CHANGE_PAGINATION: {
-      var newParams = (action as ChangePaginationAction).payload;     
+      var newParams = (action as ChangePaginationAction).payload;
       return {
         ...state,
         pagination: Object.assign(state.pagination, newParams)
-      };  
+      };
     }
     case SearchActionTypes.CHANGE_PRODUCT_ORDER: {
       var newProductOrder: number = (action as ChangeProductOrderAction).payload;
@@ -103,14 +147,14 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       newState.filter.orderBy = newProductOrder;
       return newState;
     }
-    case SearchActionTypes.CHANGE_ORDER: {      
+    case SearchActionTypes.CHANGE_ORDER: {
       var newOrder: number = (action as ChangeOrderAction).payload;
       var newState = {
         ...state,
       };
       newState.filter.order = newOrder;
       return newState;
-    }    
+    }
     case SearchActionTypes.SEARCH_SUCCESS: {
       var result = (action as SearchSuccessAction).payload;
 
@@ -120,25 +164,25 @@ export function searchReducer(state: SearchState = initialState, action: any): S
         brands: result.brands,
         maxPrice: result.maxPriceOption,
         pagination: {
-          ... state.pagination,
+          ...state.pagination,
           totalNumOfResults: result.totalNumOfResults
         }
-      } as SearchState;     
+      } as SearchState;
 
       // Only reload categories if there is no selected category 
       if (newState.filter.categoryId == null) {
         newState.categories = result.categories;
-      }          
+      }
 
       // Check all brands on ui 
-      newState.brands.forEach(f => f.isChecked = true);   
+      newState.brands.forEach(f => f.isChecked = true);
       // Make selected brand unchecked 
       newState.brands.filter(e => newState.filter.brandIds.indexOf(e.id) != -1)
-         .forEach(f =>f.isChecked = false);
-         
+        .forEach(f => f.isChecked = false);
+
       return newState;
     }
-    default: {  
+    default: {
       return state;
     }
   }

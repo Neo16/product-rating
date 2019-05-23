@@ -42,4 +42,28 @@
     </div> 
   </div>
 
+  <div *ngIf="attributes.length > 0 " class="row search-group-container">
+    <div class="col-24 search-group-header">
+      Category attributes
+    </div>
+    <div class="col-24 search-group-content">
+        <div *ngFor="let attribute of attributes">
+            <div *ngIf="attribute.hasFixedValues == true">
+                <label>{{attribute.attributeName}}</label>
+                <select name="attribute" class="form-control"
+                   (change)="selectAttributeValue(attribute.attributeId, attribute.type, $event)">
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let value of attribute.values" [value]="value.valueId">
+                      {{value.displayValue}}
+                    </option>
+                </select> 
+            </div>
+             <div *ngIf="attribute.hasFixedValues != true">
+               <label>{{attribute.attributeName}}</label>
+               <input class="form-control">
+            <div>
+        </div>  
+    </div> 
+  </div>
+
 </div>

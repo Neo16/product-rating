@@ -1,4 +1,6 @@
 export interface DisplayIntAttribute {
-    AttributeName: string;
-    Value: number;
+    valueId: string;
+    attributeName: string;
+    value: number;
+    attributeId: string;
 }
