@@ -1,5 +1,5 @@
 <div class="row">  
-    <form class="col-sm-8 offset-sm-8" (ngSubmit)="login()" #loginForm="ngForm">
+    <form class="col-sm-8 offset-sm-8 login-container" (ngSubmit)="login()" #loginForm="ngForm">
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
         <input  [(ngModel)]="username" name="username" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">

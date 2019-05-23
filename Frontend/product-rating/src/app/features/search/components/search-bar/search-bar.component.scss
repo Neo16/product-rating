@@ -14,7 +14,9 @@
     display: flex;    
     justify-content: flex-end;
     margin-top: 0.8rem;
-    select{
-
+    .form-control.small-select{
+        height: 30px;
+        padding: 0px;
     }
 }
+

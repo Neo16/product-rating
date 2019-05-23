@@ -6,4 +6,5 @@
   <a [routerLink]="['/products', product.id]">
     {{product.brandName}} {{product.name}}
   </a> 
+  <bar-rating [(rate)]="product.score" [readOnly] = "true" [max]="5"></bar-rating>
 </div>

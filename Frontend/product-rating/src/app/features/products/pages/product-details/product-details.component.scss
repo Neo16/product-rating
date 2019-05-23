@@ -4,6 +4,12 @@
 .product-detail-container {
   @extend %container-base;
 
+  img{
+    padding: 20px;
+    width: 100%;
+    object-fit: contain;
+  }
+
   .score-row {
     margin-top: 5px;
     margin-bottom: 15px;
@@ -20,5 +26,9 @@
 
   tr:nth-child(odd) {
     background: $app-background-color;
+  }
+
+  .br.br-default{
+    margin: -7px 0px;
   }
 }
