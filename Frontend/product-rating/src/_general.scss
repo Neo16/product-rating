@@ -6,7 +6,7 @@ body{
 %container-base{
     background-color: $container-color;   
     padding: 1rem;
-    margin-top: 1rem;    
+    margin-top: 1rem;       
 }
 
 .basic-container{
@@ -23,4 +23,22 @@ body{
 
 .max-width{
     width: 100%;
+}
+.bg-light {
+    background-image: linear-gradient(to right, #1974c8e8, #2d96c5, #6dc3d8, #36c5c9, #86ccbd);
+}
+
+.dropdown-menu{
+ background-color: $brand-blue;
+}
+
+.navbar-light .navbar-nav .nav-link:hover
+{
+    background-color: $brand-green;
+}
+
+.btn{
+    background-color: $brand-blue;
+    color: white;
+    font-weight: 500;
 }

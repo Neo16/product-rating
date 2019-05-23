@@ -1,11 +1,13 @@
 @import "~src/general"; 
+@import "~src/variables"; 
 
 .search-bar-container{
     @extend %container-base;
-
+    background-color: $brand-green;
 }
+
 .search-btn{
-    width: 100%;
+    width: 100%;    
 }
 
 .order-select-container{

@@ -29,9 +29,9 @@
             color: $app-mild-gray;
 
             &.voted{
-               background: $brand-blue-light;
+               background: $brand-blue;
                color: white;
-               border: 1px solid $brand-blue-light;
+               border: 1px solid $brand-blue;
             }
 
             &[disabled]{
