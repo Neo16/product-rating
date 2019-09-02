@@ -38,3 +38,9 @@
         <a [routerLink]= "['edit', value]" class="pointer">Edit</a>
     </div>  
   </ng-template>
+
+  <ng-template #deleteTmpl let-value="value" let-row="row">
+      <div class="action-cell">
+          <a (click)="delete(value)" href="javascript:void(0)" class="pointer">Delete</a>
+      </div>  
+  </ng-template>

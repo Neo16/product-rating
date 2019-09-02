@@ -14,6 +14,8 @@ export class MyCategoriesComponent implements OnInit {
   @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
 
+  @ViewChild('deleteTmpl') deleteTmpl: TemplateRef<any>;
+
   filter: ManageCategoryFilterData = new ManageCategoryFilterData();
   pagination: PaginationParams = new PaginationParams();
   categories: CategoryManageHeaderData[];
@@ -39,7 +41,8 @@ export class MyCategoriesComponent implements OnInit {
       { prop: 'numOfProducts' },
       { prop: 'attributeNames' },
       { prop: 'parentName' },
-      { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' }
+      { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
+      { name: 'id',  cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
     ];
     this.listCategories();
   }
@@ -52,4 +55,12 @@ export class MyCategoriesComponent implements OnInit {
   reload() {
     this.listCategories();
   } 
+
+  delete(id){    
+     //TODO: megerősítő popup
+    this.manageCatService.deleteCategory(id)
+      .subscribe(result => {       
+        this.reload();
+      })      
+  }
 }

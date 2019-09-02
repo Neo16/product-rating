@@ -29,7 +29,7 @@ export class ManageProductsService {
     }
 
     createProduct(product: CreateEditProductData): Observable<any> {
-        var toUpload = {... product};
+        var toUpload = { ...product };
         toUpload.thumbnailPicture.data = null;
 
         const url = `${this.BASE_URL}/manage-products/create`;
@@ -39,5 +39,10 @@ export class ManageProductsService {
     updateProduct(productId: string, product: CreateEditProductData): Observable<any> {
         const url = `${this.BASE_URL}/manage-products/${productId}/update`;
         return this.http.put<any>(url, JSON.stringify(product));
+    }
+
+    deleteProduct(productId: string): Observable<any> {
+        const url = `${this.BASE_URL}/manage-products/${productId}/delete`;
+        return this.http.delete<any>(url);
     }
 }

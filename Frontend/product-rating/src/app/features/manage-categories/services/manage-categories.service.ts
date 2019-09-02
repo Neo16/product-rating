@@ -41,4 +41,9 @@ export class ManageCategoriesService {
     const url = `${this.BASE_URL}/manage-categories/${categoryId}/update`;  
     return this.http.put<any>(url, JSON.stringify(category));
   }
+
+  deleteCategory(categoryId:string) : Observable<any>{
+    const url = `${this.BASE_URL}/manage-categories/${categoryId}/delete`;  
+    return this.http.delete<any>(url);
+  }
 }

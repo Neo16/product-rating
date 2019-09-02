@@ -15,13 +15,15 @@ export class MyProductsComponent implements OnInit {
   @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
 
+  @ViewChild('deleteTmpl') deleteTmpl: TemplateRef<any>;
+
   filter: ManageProductFilterData = new ManageProductFilterData();
   pagination: PaginationParams = new PaginationParams();
   products: ProductManageHeaderData[];
 
   columns = [];
 
-  constructor(private manageProductService : ManageProductsService) { }
+  constructor(private manageProductService: ManageProductsService) { }
 
   listCategories() {
     //Todo: use server side paging.
@@ -37,11 +39,12 @@ export class MyProductsComponent implements OnInit {
 
   ngOnInit() {
     this.columns = [
-      { prop: 'name' },   
+      { prop: 'name' },
       { prop: 'brandName' },
       { prop: 'categoryName' },
       { prop: 'createdAt' },
-      { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl}
+      { name: 'id', cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl },
+      { name: 'id', cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl }
     ];
     this.listCategories();
   }
@@ -53,6 +56,13 @@ export class MyProductsComponent implements OnInit {
 
   reload() {
     this.listCategories();
-  } 
+  }
 
+  delete(id) {
+    //TODO: megerősítő popup
+    this.manageProductService.deleteProduct(id)
+      .subscribe(result => {
+        this.reload();
+      });
+  }
 }
