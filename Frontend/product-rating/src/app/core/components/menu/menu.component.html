@@ -26,6 +26,15 @@
                 <a ngbDropdownItem routerLink='/manage-categories/new' class="nav-item nav-link">New category</a>
             </div>
           </li>       
+          <li ngbDropdown class="nav-item">
+              <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
+                Manage Brands
+              </a>
+              <div ngbDropdownMenu  aria-labelledby="navbarDropdown">            
+                  <a ngbDropdownItem routerLink='/manage-brands' class="nav-item nav-link">All brands</a>
+                  <a ngbDropdownItem routerLink='/manage-brands/new' class="nav-item nav-link">New brand</a>
+              </div>
+            </li>       
       </ng-container>
     </div>
     <!-- right align navigation links --> 

@@ -3,11 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../../core/guards/auth.guard';
 import { NewProductComponent } from './pages/new-product/new-product.component';
 import { MyProductsComponent } from './pages/my-products/my-products.component';
-import { ManageProductsService } from './services/manage-products.service';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
-import { PictureService } from './services/picture-service';
-import { TokenInterceptor } from 'src/app/core/services/token.service';
 
 const routes: Routes = [
   { path: 'edit/:id', component: EditProductComponent, canActivate: [AuthGuard] },
@@ -17,15 +13,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: [
-    ManageProductsService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true
-    },
-    PictureService,    
-  ]
+  exports: [RouterModule]  
 })
 export class ManageProductsRoutingModule { }

@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { BrandManageHeaderData } from 'src/app/models/brands/BrandManageHeaderData';
+import { ManageBrandFilterData } from 'src/app/models/brands/ManageBrandFilterData';
+import { PaginationParams } from 'src/app/models/search/PaginationParams';
+import { ManageBrandsService } from '../../services/manage-brands-service';
 
 @Component({
   selector: 'app-my-brands',
@@ -7,9 +11,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyBrandsComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
+  @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
 
-  ngOnInit() {
+  @ViewChild('deleteTmpl') deleteTmpl: TemplateRef<any>;
+
+  filter: ManageBrandFilterData = new ManageBrandFilterData();
+  pagination: PaginationParams = new PaginationParams();
+  brands: BrandManageHeaderData[];
+
+  columns = [];
+
+  constructor(private manageBrandService: ManageBrandsService) { }
+
+  listBrands() {
+    this.pagination.length = 10;
+    this.pagination.start = 1;
+
+    this.manageBrandService.getBrands(this.filter, this.pagination)
+      .subscribe(result => {
+        console.log(result);
+        this.brands = result;
+      })
   }
 
+  ngOnInit() {
+    this.columns = [
+      { prop: 'name' },
+      { prop: 'numOfProducts' },
+      { prop: 'attributeNames' },
+      { prop: 'parentName' },
+      { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
+      { name: 'id',  cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
+    ];
+    this.listBrands();
+  }
+
+  onToggleChange(isMine: boolean) {
+   // this.filter.isMine = isMine;
+    this.reload();
+  }
+
+  reload() {
+    this.listBrands();
+  } 
+
+  delete(id){    
+     //TODO: megerősítő popup
+    this.manageBrandService.deleteBrand(id)
+      .subscribe(result => {       
+        this.reload();
+      })      
+  }
 }

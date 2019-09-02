@@ -15,7 +15,7 @@ namespace ProductRating.Dal
     public static class SeedDatabase
     {
 
-        static ApplicationUser webshopUser;
+        static ApplicationUser webshopOwnderUser;
 
 
         public static void Seed(this ApplicationDbContext context)
@@ -122,7 +122,7 @@ namespace ProductRating.Dal
             });
 
             context.SaveChanges();
-            webshopUser = user;
+            webshopOwnderUser = user;
             return context;
         }
 
@@ -133,7 +133,7 @@ namespace ProductRating.Dal
                 new Category()
                 {
                     Name = "Furniture",
-                    Creator = webshopUser,
+                    Creator = webshopOwnderUser,
                     Attributes = new List<ProductAttribute>()
                     {
                         new ProductAttributeString() {Name = "Material" },
@@ -150,7 +150,7 @@ namespace ProductRating.Dal
                         new Category()
                         {
                             Name = "Laptops",
-                            Creator = webshopUser,
+                            Creator = webshopOwnderUser,
                             Attributes = new List<ProductAttribute>()
                             {
                                 new ProductAttributeString() {Name = "Processor", HasFixedValues = true }
@@ -159,7 +159,7 @@ namespace ProductRating.Dal
                         new Category()
                         {
                             Name = "Phones",
-                            Creator = webshopUser,
+                            Creator = webshopOwnderUser,
                             Attributes = new List<ProductAttribute>()
                             {
                                 new ProductAttributeString() {Name = "Back camera" }
@@ -188,14 +188,14 @@ namespace ProductRating.Dal
         {
             var brands = new List<Brand>()
             {
-                new Brand(){ Name = "Lenovo" },
-                new Brand(){ Name = "Apple" },
-                new Brand(){ Name = "Asus" },
-                new Brand(){ Name = "LG" },
-                new Brand(){ Name = "Samsung" },
-                new Brand(){ Name = "Sony" },
-                new Brand(){ Name = "JBL" },
-                new Brand(){ Name = "Huawei" },
+                new Brand(){ Name = "Lenovo", Creator = webshopOwnderUser },
+                new Brand(){ Name = "Apple" , Creator = webshopOwnderUser },
+                new Brand(){ Name = "Asus", Creator = webshopOwnderUser },
+                new Brand(){ Name = "LG" , Creator = webshopOwnderUser },
+                new Brand(){ Name = "Samsung" , Creator = webshopOwnderUser },
+                new Brand(){ Name = "Sony", Creator = webshopOwnderUser },
+                new Brand(){ Name = "JBL" , Creator = webshopOwnderUser },
+                new Brand(){ Name = "Huawei", Creator = webshopOwnderUser },
             };
 
             context.Brands.AddRange(brands);
@@ -234,7 +234,7 @@ namespace ProductRating.Dal
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Price = 600,
                 Name = "Z50",
-                Creator = webshopUser,
+                Creator = webshopOwnderUser,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                      new ProductAttributeValueConnection()

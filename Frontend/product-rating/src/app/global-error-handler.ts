@@ -12,7 +12,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     if (error instanceof HttpErrorResponse) {
         // Server Error
-        if (error.status == 400 && error.error != null){         
+        if (error.status == 400 && error.error.errorMessages != null){         
             //TODO: popup 
             var message = error.error.errorMessages.join(' ,');
             alert(message);

@@ -7,6 +7,7 @@ import { SearchModule } from './features/search/search.module';
 import { ProductsModule } from './features/products/products.module';
 import { ManageProductsModule } from './features/manage-products/manage-products.module';
 import { ManageCategoriesModule } from './features/manage-categories/manage-categories.module';
+import { ManageBrandsModule } from './features/manage-brands/manage-brands.module';
 
 const routes: Routes = [
   {
@@ -38,6 +39,11 @@ const routes: Routes = [
     path: 'manage-categories',
     component: LayoutComponent,
     loadChildren: () => ManageCategoriesModule
+  },
+  {
+    path: 'manage-brands',
+    component: LayoutComponent,
+    loadChildren: () => ManageBrandsModule
   },
   {
     path: '',

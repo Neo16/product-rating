@@ -1,3 +1,46 @@
-<p>
-  my-brands works!
-</p>
+<div>
+    <div class="table-container">
+      <div class="row">
+        <div class="col-6 form-group">
+          <label>Name</label>
+          <input [(ngModel)]="filter.name" (keyup.enter)="reload()" class="form-control" name="name"
+            placeholder="brand name">
+        </div>
+        <div class="col-6 form-group">
+          <label>created by me</label>
+          <ui-switch class="filter-toggle"       
+           color="#2d84cb"       
+           (valueChange)="onToggleChange($event)" [(ngModel)]="filter.isMine"></ui-switch>
+        </div>
+        <div class="col-5 filter-div">
+          <button class="btn btn-outline-primary" (click)="reload()">
+            Filter
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <ngx-datatable class="material"
+        [headerHeight]="50" 
+        [rowHeight]="'auto'"
+        [columnMode]="'force'" 
+        [rows]="brands"
+        [columns]="columns">
+      </ngx-datatable>
+    </div>
+  </div>
+  
+  <ng-template #hdrTpl let-column="column" >
+  </ng-template>
+  
+  <ng-template #editTmpl let-value="value" let-row="row">
+    <div class="action-cell">
+        <a [routerLink]= "['edit', value]" class="pointer">Edit</a>
+    </div>  
+  </ng-template>
+  
+  <ng-template #deleteTmpl let-value="value" let-row="row">
+      <div class="action-cell">
+          <a (click)="delete(value)" href="javascript:void(0)" class="pointer">Delete</a>
+      </div>  
+  </ng-template>

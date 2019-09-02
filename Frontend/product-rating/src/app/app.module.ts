@@ -16,6 +16,7 @@ import { ManageProductsModule } from './features/manage-products/manage-products
 import { ManageCategoriesModule } from './features/manage-categories/manage-categories.module';
 import { LoggingService } from './core/services/logger.service';
 import { GlobalErrorHandler } from './global-error-handler';
+import { ManageBrandsModule } from './features/manage-brands/manage-brands.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { GlobalErrorHandler } from './global-error-handler';
     ProductsModule,
     ManageProductsModule,
     ManageCategoriesModule,
+    ManageBrandsModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AcccountEffects, SearchEffects])
