@@ -29,6 +29,7 @@ export class MenuComponent implements OnInit {
     this.getAccountState.subscribe((accountState) => {
       this.isLoggedIn = accountState.isAuthenticated;
       if (this.isLoggedIn) {
+        console.log(accountState);
         this.userName = accountState.user.username;
         this.roles = accountState.user.roles;
       }      
@@ -39,10 +40,11 @@ export class MenuComponent implements OnInit {
   }
 
   loginFromLocalStorage() {
-    var userName = localStorage.getItem('productrating-token');
-    var userToken = localStorage.getItem('productrating-username');
+    var userToken = localStorage.getItem('productrating-token');
+    var userName = localStorage.getItem('productrating-username');
     var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as String[];
 
+    console.log(userName);
     if (userName && userToken) {
       this.acccountStore.dispatch(new LoadedLoginDataAction({
         userToken: userToken,

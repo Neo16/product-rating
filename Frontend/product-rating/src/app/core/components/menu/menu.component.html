@@ -28,11 +28,18 @@
           </li>       
       </ng-container>
     </div>
-    <!-- right align navigation links -->
+    <!-- right align navigation links --> 
     <div class="navbar-nav">
       <ng-container *ngIf="isLoggedIn === true">
-        <a routerLink='/profile' class="nav-item nav-link">Profile</a>
-        <a href="javascript:void(0)" (click)="logout()" class="nav-item nav-link">Log out</a>
+          <li ngbDropdown class="nav-item">
+              <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
+                Logged in as: {{userName}}
+              </a>
+              <div ngbDropdownMenu  aria-labelledby="navbarDropdown">            
+                  <a ngbDropdownItem routerLink='/profile' class="nav-item nav-link">Profile</a>
+                  <a href="javascript:void(0)" (click)="logout()" class="nav-item nav-link">Log out</a>
+              </div>
+          </li>   
       </ng-container>
       <ng-container *ngIf="isLoggedIn === false">
         <a routerLink='/account/login' class="nav-item nav-link">Login</a>
