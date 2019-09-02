@@ -43,12 +43,15 @@ namespace ProductRating.UnitTest
             context.Categories.Add(category);
             context.SaveChanges();
 
+            var now = DateTime.Now;
+            var start = DateTime.Now.AddYears(-2);
 
             return new CreateEditProductDto()
             {
                 CategoryId = category.Id,
-                EndOfProduction = DateTime.Now,
-                StartOfProduction = DateTime.Now.AddYears(-2),
+                //TODO:
+                EndOfProduction = new Bll.Dtos.SimpleDateData() {Day = now.Day, Month = now.Month, Year = now.Year },
+                StartOfProduction = new Bll.Dtos.SimpleDateData() { Day = start.Day, Month = start.Month, Year = start.Year },
                 Name = "ExampleProduct",
                 StringAttributes = new List<StringAttribute>() {
                     new StringAttribute() {
