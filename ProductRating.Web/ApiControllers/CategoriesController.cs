@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos.Category;
+using ProductRating.Bll.Dtos.Category.CategoryAttributes;
 using ProductRating.Bll.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace ProductRating.Web.ApiControllers
         }
 
         [HttpGet("{categoryId}/attributes")]
-        [ProducesResponseType(typeof(List<CategoryHeaderDto>), 200)]
+        [ProducesResponseType(typeof(List<CategoryAttributeDto>), 200)]
         public async Task<IActionResult> GetAttributesOf(Guid categoryId)
         {
             var attributes = await categoryService.GetAttributesOf(categoryId);

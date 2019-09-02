@@ -9,7 +9,7 @@ namespace ProductRating.Bll.Dtos.Product
         public Guid Id { get; set; }
         public string Name { get; set; } 
 
-        public Guid BrandId { get; set; }   
+        public Guid? BrandId { get; set; }   
 
         public Guid CategoryId { get; set; }
 
@@ -17,13 +17,11 @@ namespace ProductRating.Bll.Dtos.Product
 
         public List<StringAttribute> StringAttributes { get; set; }
 
-        public List<Guid> PictureIds { get; set; }
+        public List<PictureDto> Pictures { get; set; }
 
-        public Guid? ThumbnailPictureId { get; set; }
+        public PictureDto ThumbnailPicture { get; set; }       
 
-        public string ThumbnailPictureString { get; set; }
-
-        public DateTime StartOfProduction { get; set; }
-        public DateTime EndOfProduction { get; set; }
+        public SimpleDateData StartOfProduction { get; set; }
+        public SimpleDateData EndOfProduction { get; set; }
     }
 }

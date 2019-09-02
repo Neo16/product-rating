@@ -36,10 +36,17 @@ namespace ProductRating.Web.ApiControllers.Admin
 
         [HttpPost("create")]
         public async Task<IActionResult> CreateProduct(CreateEditProductDto product)
-        {
+        {          
             await productService.CreateProduct(product);
             return Ok();
-        }        
+        }
+
+        [HttpGet("get-for-update/{productId}")]
+        public async Task<IActionResult> GetForUpdate(Guid productId)
+        {
+            var product = await productService.GetProductForUpdate(productId);
+            return Ok(product);
+        }
 
         [HttpPut("{productId}/update")]
         public async Task<IActionResult> UpdateProduct(Guid productId, CreateEditProductDto product)

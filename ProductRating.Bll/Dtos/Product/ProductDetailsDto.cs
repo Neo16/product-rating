@@ -21,6 +21,8 @@ namespace ProductRating.Bll.Dtos.Product
         
         public List<string> Pictures { get; set; }
 
+        public string ThumbnailImage { get; set; }
+
         public DateTime StartOfProduction { get; set; }
         public DateTime EndOfProduction { get; set; }
 

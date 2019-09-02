@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using ProductRating.Bll.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace ProductRating.Bll.ServiceInterfaces
 {
     public interface IFileService
     {
-        Task<Guid> UploadPicture(IFormFile file);
+        Task<PictureDto> UploadPicture(IFormFile file);
     }
 }

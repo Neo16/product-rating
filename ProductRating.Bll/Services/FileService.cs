@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Exceptions;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
@@ -11,12 +13,14 @@ namespace ProductRating.Bll.Services
 {
     public class FileService : ServiceBase, IFileService
     {
-        public FileService(ApplicationDbContext ctx) : base(ctx)
-        {
+        private readonly IMapper mapper;
 
+        public FileService(ApplicationDbContext ctx, IMapper mapper) : base(ctx)
+        {
+            this.mapper = mapper;
         }
 
-        public async Task<Guid> UploadPicture(IFormFile file)
+        public async Task<PictureDto> UploadPicture(IFormFile file)
         {
             if (file.Length > 0)
             {
@@ -29,7 +33,7 @@ namespace ProductRating.Bll.Services
                     context.Pictures.Add(picture);
                     await context.SaveChangesAsync();
 
-                    return picture.Id;
+                    return mapper.Map<PictureDto>(picture);
                 }
             }
 

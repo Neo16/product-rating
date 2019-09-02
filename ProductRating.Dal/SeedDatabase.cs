@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ProductRating.Common;
 using ProductRating.Model.Entities.Products;
 using ProductRating.Model.Entities.Products.Attributes;
@@ -112,7 +113,7 @@ namespace ProductRating.Dal
             {
                 RoleId = context.Roles.Where(e => e.Name == RoleNames.SHOP_OWNER_ROLE).Single().Id,
                 UserId = user.Id
-            });       
+            });
 
             context.UserRoles.Add(new IdentityUserRole<Guid>()
             {
@@ -140,7 +141,7 @@ namespace ProductRating.Dal
                         new ProductAttributeInt () {Name = "Height" },
                         new ProductAttributeInt () {Name = "Depth" }
                     }
-                },                
+                },
                 new Category()
                 {
                     Name = "Consumer electronics",
@@ -207,6 +208,7 @@ namespace ProductRating.Dal
         {
             var computer1 = new Product()
             {
+                CreatedAt = DateTime.Now,
                 BrandId = context.Brands.Where(e => e.Name == "Apple").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Name = "MacBook Air 13\"",
@@ -227,6 +229,7 @@ namespace ProductRating.Dal
 
             var computer2 = new Product()
             {
+                CreatedAt = DateTime.Now,
                 BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Price = 600,
@@ -248,6 +251,7 @@ namespace ProductRating.Dal
 
             var mobilePhone1 = new Product()
             {
+                CreatedAt = DateTime.Now,
                 BrandId = context.Brands.Where(e => e.Name == "Huawei").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Phones").Single().Id,
                 Name = "Huawei P30 pro",
@@ -268,6 +272,7 @@ namespace ProductRating.Dal
 
             var book1 = new Product()
             {
+                CreatedAt = DateTime.Now,
                 CategoryId = context.Categories.Where(e => e.Name == "Books").Single().Id,
                 Name = "The Order of the Phoenix",
                 Price = 5,
@@ -293,6 +298,7 @@ namespace ProductRating.Dal
             };
             context.Products.Add(book1);
 
+            context.SaveChanges();
             context.AddDummyLaptops(30);
 
             context.SaveChanges();
@@ -301,24 +307,25 @@ namespace ProductRating.Dal
 
         private static void AddDummyLaptops(this ApplicationDbContext context, int count)
         {
-            var r = new Random();
+            var r = new Random();        
+            var processorValueId = context.ProductAttributeValues
+                .Include(e =>e.Attribute)
+                .Where(e => e.Attribute.Name == "Processor").First().Id;
+
             for (int i = 0; i < count; i++)
             {
                 var computer = new Product()
                 {
+                    CreatedAt = DateTime.Now,
                     BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                     CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                     Price = r.Next(500, 1400),
                     Name = "Dummy Laptop " + i,
                     PropertyValueConnections = new List<ProductAttributeValueConnection>()
-                {
+                 {
                      new ProductAttributeValueConnection()
                      {
-                        ProductAttributeValue =  new ProductAttributeStringValue()
-                         {
-                            StringValue = "Dummy Laptop Processor",
-                            Attribute = context.ProductAttributes.Where(e => e.Name == "Processor").Single()
-                        }
+                         ProductAttributeValueId = processorValueId
                      }
                 }
                 };

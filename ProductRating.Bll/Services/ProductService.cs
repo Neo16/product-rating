@@ -36,10 +36,14 @@ namespace ProductRating.Bll.Services
         public async Task<SearchResultDto> Find(ProductFilterDto filter, PaginationDto pagination)
         {
             var baseQuery = context.Products
+                .Include(e => e.ThumbnailPicture)             
                 .Include(e => e.Brand)
-                .Include(e => e.Category)
+                .Include(e => e.Category)               
                 .ThenInclude(e => e.Parent)
                 .ThenInclude(e => e.Parent)
+                .Include(e => e.PropertyValueConnections)
+                .ThenInclude(e => e.ProductAttributeValue)
+                .ThenInclude(e => e.Attribute)
                 .AsQueryable();
 
             //Text search filter
@@ -136,6 +140,7 @@ namespace ProductRating.Bll.Services
         public async Task<ProductDetailsDto> GetDetails(Guid productId, Guid? userId)
         {
             var product = await context.Products
+                .Include(e => e.ThumbnailPicture)
                 .Include(e => e.Category)
                 .Include(e => e.Brand)
                 .Include(e => e.PropertyValueConnections)
@@ -167,8 +172,7 @@ namespace ProductRating.Bll.Services
                 foreach (StringAttribute stringFilterAttr in filter.StringAttributes)
                 {
                     filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Id == stringFilterAttr.AttributeId
-                            && ((e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value
-                            || e.AttributeId == stringFilterAttr.ValueId));
+                            && ((e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value || e.Id == stringFilterAttr.ValueId));
                 }
             }
             if (filter.IntAttributes != null)
@@ -176,8 +180,7 @@ namespace ProductRating.Bll.Services
                 foreach (IntAttribute intFilterAttr in filter.IntAttributes)
                 {
                     filters.Add(e => e is ProductAttributeIntValue && e.Attribute.Id == intFilterAttr.AttributeId
-                            && ((e as ProductAttributeIntValue).IntValue == intFilterAttr.Value
-                            || e.AttributeId == intFilterAttr.ValueId));
+                            && ((e as ProductAttributeIntValue).IntValue == intFilterAttr.Value || e.Id == intFilterAttr.ValueId));
                 }
             }
 
@@ -279,40 +282,72 @@ namespace ProductRating.Bll.Services
 
             dbProduct.PropertyValueConnections = new List<ProductAttributeValueConnection>();
 
-            foreach (var attr in product.IntAttributes)
+            if (product.IntAttributes != null)
             {
-                dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                foreach (var attr in product.IntAttributes)
                 {
-                    ProductAttributeValue = new ProductAttributeIntValue()
+                    dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
                     {
-                        AttributeId = attr.AttributeId,
-                        IntValue = attr.Value,
-                        Id = attr.ValueId
-                    }
-                });
+                        ProductAttributeValue = new ProductAttributeIntValue()
+                        {
+                            AttributeId = attr.AttributeId,
+                            IntValue = attr.Value,
+                            Id = attr.ValueId
+                        }
+                    });
+                }
             }
-
-            foreach (var attr in product.StringAttributes)
+          
+            if(product.StringAttributes != null)
             {
-                dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                foreach (var attr in product.StringAttributes)
                 {
-                    ProductAttributeValue = new ProductAttributeStringValue()
+                    dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
                     {
-                        AttributeId = attr.AttributeId,
-                        StringValue = attr.Value,
-                        Id = attr.ValueId
-                    }
-                });
-            }
+                        ProductAttributeValue = new ProductAttributeStringValue()
+                        {
+                            AttributeId = attr.AttributeId,
+                            StringValue = attr.Value,
+                            Id = attr.ValueId
+                        }
+                    });
+                }
+            }            
 
             context.Products.Add(dbProduct);
             await context.SaveChangesAsync();
             return dbProduct.Id;
         }
 
-        public Task UpdateProduct(Guid productId, CreateEditProductDto product)
+        public async Task UpdateProduct(Guid productId, CreateEditProductDto product)
         {
-            throw new NotImplementedException();
+            var oldDbProduct = await context.Products
+              .Include(e => e.PropertyValueConnections)
+              .ThenInclude(e => e.ProductAttributeValue)             
+              .SingleOrDefaultAsync(e => e.Id == productId);
+
+            if (oldDbProduct == null)
+            {
+                throw new BusinessLogicException("The product does not exist.")
+                {
+                    ErrorCode = ErrorCode.InvalidArgument
+                };
+            }
+
+            var newDbProduct = mapper.Map<Product>(product);
+
+            //1. Kategória alap adatai frissíteni 
+            oldDbProduct.Name = newDbProduct.Name;
+            oldDbProduct.CategoryId = newDbProduct.CategoryId;
+            oldDbProduct.BrandId = newDbProduct.BrandId;
+            oldDbProduct.ThumbnailPictureId = newDbProduct.ThumbnailPictureId;
+            oldDbProduct.StartOfProduction = newDbProduct.StartOfProduction;
+            oldDbProduct.EndOfProduction = newDbProduct.EndOfProduction;
+
+
+            //2.: Todo Attribútum értékek frissítése 
+
+            await context.SaveChangesAsync();
         }
 
         public async Task DeleteProduct(Guid productId)
@@ -326,8 +361,11 @@ namespace ProductRating.Bll.Services
              .ThenInclude(e => e.Attribute)
              .SingleOrDefaultAsync(e => e.Id == productId);
 
-            foreach (var attrValue in product.PropertyValueConnections.Select(e => e.ProductAttributeValue))
+            foreach (var connection in product.PropertyValueConnections)
             {
+                context.Entry(connection).State = EntityState.Deleted;
+                var attrValue = connection.ProductAttributeValue;
+
                 // If the value is not connected to more products 
                 // and is not a value of a fixed value attribute, it can be deleted  
                 if (attrValue.ProductConnctions.Count == 1 && !attrValue.Attribute.HasFixedValues)

@@ -7,10 +7,11 @@ using System.Net;
 using System.Threading.Tasks;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
+using ProductRating.Bll.Dtos;
 
 namespace ProductRating.Web.ApiControllers
 {
-    [ApiController]
+    [ApiController] 
     [Route("files")]
     public class FilesController : Controller
     {
@@ -23,17 +24,17 @@ namespace ProductRating.Web.ApiControllers
 
         [HttpPost]
         [Route("upload-picture")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ProducesResponseType(typeof(Guid), 200)]
-        public async Task<IActionResult> UploadPlannyPicture([FromForm] IFormFile Picture)
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ProducesResponseType(typeof(PictureDto), 200)]
+        public async Task<IActionResult> UploadPicture([FromForm] UploadImageDto uploadImageDto)
         {
-            if (Picture == null)
+            if (uploadImageDto?.file == null)
             {
                 return BadRequest();
             }
 
-            var uploadedPictureId = await fileService.UploadPicture(Picture);
-            return Ok(uploadedPictureId);
+            PictureDto uploadedPicture = await fileService.UploadPicture(uploadImageDto.file);
+            return Ok(uploadedPicture);
         }
     }
 }

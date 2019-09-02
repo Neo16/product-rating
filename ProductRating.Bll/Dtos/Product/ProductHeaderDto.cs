@@ -17,5 +17,7 @@ namespace ProductRating.Bll.Dtos.Product
         public string ThumbnailImage { get; set; }
 
         public long Price { get; set; }
+
+        public long Score { get; set; }
     }
 }
