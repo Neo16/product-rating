@@ -22,5 +22,6 @@ export class GlobalErrorHandler implements ErrorHandler {
             console.log(error);            
          }      
     }    
+    console.log(error);            
   }
 }

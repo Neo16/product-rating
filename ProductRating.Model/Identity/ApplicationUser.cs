@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using ProductRating.Model.Entities;
+using ProductRating.Model.Entities.Products;
+using ProductRating.Model.Entities.Reviews;
 
 namespace ProductRating.Model.Identity
 {
@@ -17,5 +19,13 @@ namespace ProductRating.Model.Identity
         public string Natinality { get; set; }
 
         public string Introduction { get; set; }
+
+        public string Address { get; set; }      
+
+        public ICollection<TextReview> TextReviews { get; set; }
+
+        public ICollection<Product> Products { get; set; }
+
+        public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
     }
 }

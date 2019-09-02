@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Profile;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Model.Identity;
 using ProductRating.Web.WebServices;
 using System;
 using System.Collections.Generic;
@@ -10,32 +12,43 @@ using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers
 {
-    [Route("profil")]
+    [Route("profile")]
     public class ProfileController : Controller
     {
         private readonly IProfileService profileService;
         private readonly IReviewService reviewService;
         private readonly CurrentUserService currentUserService;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ProfileController(
             CurrentUserService currentUserService,
             IProfileService profileService,
+            UserManager<ApplicationUser> userManager,
             IReviewService reviewService)
         {
+            this.userManager = userManager;
             this.reviewService = reviewService;
             this.profileService = profileService;
             this.currentUserService = currentUserService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{userId?}")]
         [ProducesResponseType(typeof(ProfileDto), 200)]
-        public async Task<IActionResult> Profile(Guid userId)
+        public async Task<IActionResult> Profile(Guid? userId)
         {
-            var profile = await profileService.GetProfileByUserId(userId);
+            var isMine = userId == null;
+            if (isMine)
+            {
+                userId = (await currentUserService.GetCurrentUser()).Id;                
+            }
+
+            var profile = await profileService.GetProfileByUserId(userId.Value);
             if (profile == null)
             {
                 return BadRequest();
             }
+            profile.IsMine = isMine;
+
             return Ok(profile);
         }
        
