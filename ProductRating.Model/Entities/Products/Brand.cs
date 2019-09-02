@@ -11,5 +11,9 @@ namespace ProductRating.Model.Entities.Products
         public string Name { get; set; }
 
         public ICollection<Product> Products { get; set; }
+
+        public Guid? CreatorId { get; set; }
+
+        public ApplicationUser Creator { get; set; }
     }
 }
