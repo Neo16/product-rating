@@ -11,7 +11,6 @@ export class ProfilePageComponent implements OnInit {
 
   profile: ProfileData = null;
   isEditing: boolean = false;
-  isMine: boolean = false;
 
   constructor(private profileService: ProfileService) { }
 
