@@ -2,16 +2,21 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
 import {createCustomElement} from '@angular/elements'
 import { ScoreElementComponent } from './score-element/score-element.component';
+import { BarRatingModule } from "ngx-bar-rating";
+import { ScoreService } from './score-service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
-    BrowserModule
+    BrowserModule,
+    BarRatingModule,
+    HttpClientModule   
   ],
   declarations: [ 
     ScoreElementComponent
   ],
-  entryComponents: [ScoreElementComponent]
-
+  entryComponents: [ScoreElementComponent],
+  // providers: [ScoreService]
   
 })
 export class AppModule { 

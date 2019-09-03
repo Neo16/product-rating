@@ -1,5 +1,7 @@
-<p>
-  score-element works!
-  <button (click)="add();">Add</button>
-  {{number}}
-</p>
+<div class="score-box">
+  <a href="javascript:void(0);">Product-Rating score: {{score}}</a>
+  <bar-rating   
+    [(rate)]="score" 
+    [readOnly] = "true"
+    [max]="5"></bar-rating>
+</div>

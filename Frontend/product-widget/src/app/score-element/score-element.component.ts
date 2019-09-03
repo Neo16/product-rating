@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { ScoreService } from '../score-service';
 
 // Note: this project is an example of 
 // extractint an angular component to use it outside angular projects 
@@ -7,21 +8,20 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 @Component({
   selector: 'app-score-element',
   templateUrl: './score-element.component.html',
-  styleUrls: ['./score-element.component.scss'],
- // encapsulation: ViewEncapsulation.ShadowDom
+  styleUrls: ['./score-element.component.scss']
 })
 export class ScoreElementComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: ScoreService) { }
 
-  @Input() init: number;
-  number: number = 0;
+   @Input() productid: string;
+   score: number = 0;
 
   ngOnInit() {
-    this.number = this.init;
-  }  
-
-  add(){
-    this.number++;
-  }
+    console.log(this.productid);
+    this.service.getProductScore(this.productid)
+      .subscribe(result => {
+          this.score = result;
+      })
+  }   
 }
