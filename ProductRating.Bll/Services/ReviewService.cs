@@ -220,5 +220,13 @@ namespace ProductRating.Bll.Services
             dbReview.Points--;
             await context.SaveChangesAsync();
         }
+
+        public async Task<double?> GetScoreOfProduct(Guid productId)
+        {
+            return await context.Products
+                .Where(e => e.Id == productId)
+                .Select(e => e.ScoreValue)
+                .FirstOrDefaultAsync();
+        }
     }
 }
