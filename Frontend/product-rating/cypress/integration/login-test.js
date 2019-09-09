@@ -1,6 +1,6 @@
-describe("First test", () => {
-    it("should visit login page", () => {
-      cy.visit("/account/login");
+describe("Login test", () => {
+    it("should visit login page and log in", () => {
+      cy.visit("/account/login") ;
       cy.get('input[name="username"]')
       .clear()
       .type('user@productrating.com');

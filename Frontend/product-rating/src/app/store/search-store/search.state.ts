@@ -21,7 +21,7 @@ export const initialState: SearchState = {
       categoryId:  null,
       brandIds: [],
       minimumPrice: 0,
-      maximumPrice:  1000,
+      maximumPrice:  10000,
       orderBy: ProductOrder.BestScore,
       order: Order.Desc,
       intAttributes: [],
@@ -35,7 +35,7 @@ export const initialState: SearchState = {
    products: [],
    categories: [],
    brands: [],
-   maxPrice: 1000,
+   maxPrice: 10000,
 };
 
 

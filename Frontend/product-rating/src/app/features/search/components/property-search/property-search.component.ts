@@ -31,9 +31,9 @@ export class PropertySearchComponent implements OnInit {
   //price range slider
   sliderOptions: Options = {
     floor: 0,
-    ceil: 10000000,
-    step: 5,
-    minRange: 10,
+    ceil: 100000,
+    step: 100,
+    minRange: 500    
   };
 
   constructor(
@@ -58,7 +58,7 @@ export class PropertySearchComponent implements OnInit {
       this.filter = searchState.filter;
       this.brands = searchState.brands;
       this.categories = searchState.categories;
-      this.changeSliderMax(searchState.maxPrice);
+      //this.changeSliderMax(searchState.maxPrice);
     });
   }
 
