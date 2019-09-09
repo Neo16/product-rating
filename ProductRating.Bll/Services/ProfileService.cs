@@ -35,6 +35,7 @@ namespace ProductRating.Bll.Services
         public async Task<ProfileDto> GetProfileByUserId(Guid UserId)
         {
             var user = await context.Users
+                .Include(e => e.Avatar)
                 .Include(e => e.Roles)
                 .ThenInclude(e => e.Role)
                 .Where(e => e.Id == UserId)

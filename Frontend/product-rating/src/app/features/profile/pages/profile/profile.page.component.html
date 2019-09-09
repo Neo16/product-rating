@@ -1,7 +1,7 @@
 <div *ngIf="profile" class="profile-header">
    <div class="avatar-wrapper">
       <ng-container *ngIf="profile.avatar != null">
-          <img [src]="profile.avatar"/>
+          <img [src]="'data:image/png;base64,' + profile.avatar.data" />
       </ng-container>
       <ng-container *ngIf="profile.avatar == null">
           <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png"/>
@@ -16,9 +16,17 @@
           <button *ngIf="profile.isMine && !isEditing"
            (click)="isEditing = !isEditing"
            class="btn btn-outline-primary">Edit profile</button>  
-       </div> 
 
-       <!-- TODO: picture upload -->
+           <input hidden 
+            #uploader
+            accept="image/*"
+            (change)="processAvatar(uploader)"
+            type="file"/>
+
+            <button *ngIf="profile.isMine && isEditing"
+              (click)="uploader.click();"
+              class="btn btn-outline-primary">Change profile picture</button>  
+       </div> 
    </div>  
 </div>
 <div *ngIf="profile==null" class="profile-header">

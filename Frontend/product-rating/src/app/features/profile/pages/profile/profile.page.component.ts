@@ -3,6 +3,7 @@ import { ProfileService } from '../../services/profile-service';
 import { ProfileData } from 'src/app/models/profile/ProfileData';
 import { EditProfileData } from 'src/app/models/profile/EditProdileData';
 import { EditProfileFormComponent } from '../../components/edit-profile-form/edit-profile-form.component';
+import { PictureService } from 'src/app/features/manage-products/services/picture-service';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class ProfilePageComponent implements OnInit {
   editModel: EditProfileData = null;
   isEditing: boolean = false;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService,
+    private pictureservice: PictureService) { }
 
   ngOnInit() {
     this.loadProfile();    
@@ -41,5 +43,23 @@ export class ProfilePageComponent implements OnInit {
      .subscribe(e => {
         this.loadProfile();
      });   
-  }  
+  } 
+  
+  processAvatar(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {    
+      this.pictureservice.uploadImage(file).subscribe(
+        (res) => {                
+          this.profile.avatar = res.data;
+          this.editModel.pictureId = res.id;      
+        },
+        (err) => {
+          alert("Not OK");
+          console.log(err);
+        })
+    });
+    reader.readAsDataURL(file);
+  }
 }

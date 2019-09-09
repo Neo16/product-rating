@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProfileData } from 'src/app/models/profile/ProfileData';
+import { PictureService } from 'src/app/features/manage-products/services/picture-service';
 
 @Component({
   selector: 'app-profile-data',
@@ -14,6 +15,5 @@ export class ProfileDataComponent implements OnInit {
   profile: ProfileData;
 
   ngOnInit() {
-  }
-
+  }  
 }

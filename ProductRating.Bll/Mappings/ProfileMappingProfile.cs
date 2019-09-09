@@ -14,7 +14,7 @@ namespace ProductRating.Bll.Mappings
             CreateMap<ApplicationUser, ProfileDto>()
                 .ForMember(e => e.NickName, e => e.MapFrom(f => f.NickName))
                 .ForMember(e => e.Email, e => e.MapFrom(f => f.Email))
-                .ForMember(e => e.Avatar, e => e.MapFrom(f => Convert.ToBase64String(f.Avatar.Data)))
+                .ForMember(e => e.Avatar, e => e.MapFrom(f => f.Avatar))
                 .ForMember(e => e.Nationality, e => e.MapFrom(f => f.Nationality))
                 .ForMember(e => e.Introduction, e => e.MapFrom(f => f.Introduction));
         }
