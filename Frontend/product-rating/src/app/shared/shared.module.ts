@@ -6,9 +6,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faTimes, faArrowDown, faArrowUp, faStar, faTrash, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Ng5SliderModule } from 'ng5-slider';
-import {NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
 import { UiSwitchModule } from 'ngx-ui-switch';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   declarations: [EnumToArrayPipe],
