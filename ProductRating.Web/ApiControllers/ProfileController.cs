@@ -18,15 +18,12 @@ namespace ProductRating.Web.ApiControllers
         private readonly IProfileService profileService;
         private readonly IReviewService reviewService;
         private readonly CurrentUserService currentUserService;
-        private readonly UserManager<ApplicationUser> userManager;
 
         public ProfileController(
             CurrentUserService currentUserService,
             IProfileService profileService,
-            UserManager<ApplicationUser> userManager,
             IReviewService reviewService)
         {
-            this.userManager = userManager;
             this.reviewService = reviewService;
             this.profileService = profileService;
             this.currentUserService = currentUserService;
@@ -54,7 +51,7 @@ namespace ProductRating.Web.ApiControllers
        
 
         [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateMyProfile(EditProfileDto profile)
+        public async Task<IActionResult> UpdateMyProfile([FromBody] EditProfileDto profile)
         {
             if (ModelState.IsValid)
             {

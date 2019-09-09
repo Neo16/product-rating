@@ -16,7 +16,7 @@ namespace ProductRating.Model.Identity
 
         public Guid? AvatarId { get; set; }
 
-        public string Natinality { get; set; }
+        public string Nationality { get; set; }
 
         public string Introduction { get; set; }
 

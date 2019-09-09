@@ -17,11 +17,12 @@ export class ProfileService {
 
     getProfileById(userId: string): Observable<ProfileData> {
         const url = `${this.BASE_URL}/profile/${userId}`;
-        return this.http.get<ProfileData>(url, );
+        return this.http.get<ProfileData>(url);
     }
 
     editProfile(profile: EditProfileData): Observable<any> {
         const url = `${this.BASE_URL}/profile/update-profile`;
-        return this.http.post<ProfileData>(url, JSON.stringify(profile));
+        console.log(profile);
+        return this.http.put<any>(url, JSON.stringify(profile));
     }
 }

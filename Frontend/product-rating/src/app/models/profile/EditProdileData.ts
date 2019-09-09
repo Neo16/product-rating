@@ -5,7 +5,7 @@ export class EditProfileData {
 
     pictureId: string;
 
-    natinality: string;
+    nationality: string;
 
-    introduction: string;
+    introduction: string;   
 }

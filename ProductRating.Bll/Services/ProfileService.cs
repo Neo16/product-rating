@@ -73,8 +73,10 @@ namespace ProductRating.Bll.Services
 
             user.NickName = profile.NickName;
             user.Email = profile.Email;
-            user.AvatarId = profile.PictureId;
-            user.Natinality = profile.Natinality;
+            if (profile.PictureId != null){
+                user.AvatarId = profile.PictureId;
+            }      
+            user.Nationality = profile.Nationality;
             user.Introduction = profile.Introduction;
 
             await context.SaveChangesAsync();

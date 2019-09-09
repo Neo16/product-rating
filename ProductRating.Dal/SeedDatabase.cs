@@ -82,7 +82,7 @@ namespace ProductRating.Dal
                 NickName = "Péter",
                 Address = "9024, Győr, Arany János utca 11",
                 Introduction = "Etiam eget neque ac nisi sodales pellentesque. Donec suscipit enim feugiat tortor ultricies faucibus. Fusce eu ante mi. Fusce iaculis sed ipsum venenatis efficitur. Praesent dolor neque, maximus sit amet cursus vel, ornare et felis. Vestibulum auctor tellus odio, vel faucibus risus tincidunt sit amet.",
-                Natinality = "Hungarian"        
+                Nationality = "Hungarian"        
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
             context.Users.Add(user);

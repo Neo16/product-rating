@@ -6,7 +6,7 @@ export class ProfileData {
 
     avatar: string;
 
-    natinality: string;       
+    nationality: string;       
 
     introduction: string;
 
