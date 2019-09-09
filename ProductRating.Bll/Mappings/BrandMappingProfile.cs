@@ -13,7 +13,9 @@ namespace ProductRating.Bll.Mappings
               .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
               .ForMember(e => e.NumOfProducts, e => e.MapFrom(f => f.Products.Count))
-              .ForMember(e => e.Categories, e => e.MapFrom(f => string.Join(", ", f.Products.Select(d => d.Category.Name))));
+              .ForMember(e => e.Categories,
+                    e => e.MapFrom(f => string.Join(", ", f.Products.Select(d => d.Category.Name).Distinct()))
+               );
         }
     }
 }

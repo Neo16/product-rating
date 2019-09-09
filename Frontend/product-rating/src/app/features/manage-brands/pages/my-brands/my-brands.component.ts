@@ -29,8 +29,7 @@ export class MyBrandsComponent implements OnInit {
     this.pagination.start = 1;
 
     this.manageBrandService.getBrands(this.filter, this.pagination)
-      .subscribe(result => {
-        console.log(result);
+      .subscribe(result => {        
         this.brands = result;
       })
   }
@@ -39,8 +38,7 @@ export class MyBrandsComponent implements OnInit {
     this.columns = [
       { prop: 'name' },
       { prop: 'numOfProducts' },
-      { prop: 'attributeNames' },
-      { prop: 'parentName' },
+      { prop: 'categories' },
       { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
       { name: 'id',  cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
     ];
@@ -48,7 +46,7 @@ export class MyBrandsComponent implements OnInit {
   }
 
   onToggleChange(isMine: boolean) {
-   // this.filter.isMine = isMine;
+    this.filter.isMine = isMine;
     this.reload();
   }
 

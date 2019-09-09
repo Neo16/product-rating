@@ -1,4 +1,4 @@
 export class ManageBrandFilterData{
-    Name: string;
-    IsMine: boolean | null;
+    name: string;
+    isMine: boolean | null;
 }

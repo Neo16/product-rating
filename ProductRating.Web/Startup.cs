@@ -132,10 +132,8 @@ namespace ProductRating.Web
             builder.AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials()
-                   .AllowAnyOrigin()
-            ///  .WithOrigins("http://localhost:4200");
+                   .WithOrigins("http://localhost:4200")
             );
-            
             app.UseStaticFiles();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseCookiePolicy();

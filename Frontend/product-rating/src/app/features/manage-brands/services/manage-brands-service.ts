@@ -27,7 +27,7 @@ export class ManageBrandsService {
   }
 
   getBrand(brandId: string): Observable<CreateEditBrandData> {
-    const url = `${this.BASE_URL}/manage-brands/get-for-update/${brandId}`;
+    const url = `${this.BASE_URL}/manage-brands/get-for-update/${brandId}`;   
     return this.http.get<CreateEditBrandData>(url);
   }
 

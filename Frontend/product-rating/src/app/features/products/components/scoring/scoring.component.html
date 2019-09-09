@@ -3,7 +3,7 @@
     <form>
       <div class="score-modal-container">
           <div style="height: 66px">
-              <bar-rating [theme]="'fontawesome-o'" [(rate)]="newScore" [max]="5"></bar-rating>
+              <bar-rating [(rate)]="newScore" [max]="5"></bar-rating>
           </div>          
           <button type="button" class="btn" (click)="modal.close('Save click')">Save</button>   
       </div>       

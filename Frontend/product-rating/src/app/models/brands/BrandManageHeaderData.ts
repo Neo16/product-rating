@@ -1,9 +1,9 @@
 export class BrandManageHeaderData{
-    Id: string;
-    Name: string;
-    NumOfProducts: number;
+    id: string;
+    name: string;
+    numOfProducts: number;
 
     //List of categories of products of this brand 
     // as a comma separated string 
-    Categories: string;
+    categories: string;
 }

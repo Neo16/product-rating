@@ -9,10 +9,10 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { ManageBrandsService } from './services/manage-brands-service';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { BrandFormComponent } from './components/brand-form/brand-form.component';
 
 @NgModule({
-  declarations: [MyBrandsComponent, EditBrandComponent, NewBrandComponent],
+  declarations: [MyBrandsComponent, EditBrandComponent, NewBrandComponent, BrandFormComponent],
   imports: [
     CommonModule,
     SharedModule,
