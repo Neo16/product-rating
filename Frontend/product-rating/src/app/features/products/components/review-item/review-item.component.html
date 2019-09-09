@@ -1,0 +1,21 @@
+<div class="review-item-container">
+  <div class="review-info">
+    <div class="author-name">{{review.authorName}}</div>
+    <div class="created">{{review.createdAt}}</div>
+  </div>
+  <div class="review-body">
+    {{review.text}}
+  </div>
+  <div class="review-like-container">
+    <button
+       [ngClass]="{voted : review.wasUpvotedByMe}" [attr.disabled]="(review.isMine || wasUpvotedByMe) ? '' : null"
+      (click)="pressedUpvote()">
+      <fa-icon [icon]="['fas', 'arrow-up']" size="xs"></fa-icon>
+    </button>
+    {{review.points}}
+    <button [ngClass]="{voted : review.wasDownvotedByMe}" [attr.disabled]="(review.isMine || wasDownvotedByMe) ? '' : null"
+      (click)="pressedDownvote()">
+      <fa-icon [icon]="['fas', 'arrow-down']" size="sm"></fa-icon>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="row attribute-item">
+    <div class="col-24">
+        <a class="pointer" (click)="remove()">
+           <fa-icon class="float-right" [icon]="['fas', 'trash-alt']" size="md"></fa-icon>
+        </a>
+    </div>
+    <div class="form-group col-8">
+        <label>Attribute name</label>
+        <input [(ngModel)]="attribute.attributeName" name="name" class="form-control" placeholder="attribute name">
+    </div>
+
+    <div class="form-group col-8">
+        <label>Type</label>
+        <select class="form-control">
+            <option *ngFor="let type of attributeType | enumToArray" [value]="type">
+                {{attributeTypeDisplay[type]}}
+            </option>
+        </select>
+    </div>
+    <div class="form-check col-8">
+        <input [(ngModel)]="attribute.hasFixedValues" name="hasFixedValues" type="checkbox" class="form-check-input">
+        <label class="form-check-label">Attribute has fixed values</label>
+    </div>
+
+    <ng-container *ngIf="attribute.hasFixedValues === true">
+        <div class="col-24">
+            <a href="javascript:void(0)" (click)="addValue()">Add value</a>
+        </div>
+        <div class="col-24 values-container">
+            <div class="row">
+                <div class="col-12">
+                    <app-attribute-value *ngFor="let value of attribute.values; index as i"
+                        [attributeValue]="value"
+                        [type] = "attribute.type"                     
+                        [index]="i+1"
+                        (delete) = "onValueDelete($event)">
+                    </app-attribute-value>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>

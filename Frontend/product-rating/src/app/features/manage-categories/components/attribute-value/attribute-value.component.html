@@ -1,0 +1,12 @@
+<div class="attribute-value">
+    <span>{{index}}. value:</span>
+    <div class="flex-between max-width">
+        <input *ngIf="type == 1" [attr.disabled]="attributeValue.editable == false ? '' : null"
+             [(ngModel)]="attributeValue.stringValue" class="form-control">
+        <input *ngIf="type == 2" [attr.disabled]="attributeValue.editable == false ? '' : null"
+             [(ngModel)]="attributeValue.IntValue" class="form-control">
+        <a class="pointer icon" (click)="remove()">
+            <fa-icon class="float-right" [icon]="['fas', 'trash-alt']" size="md"></fa-icon>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="property-search-container">
+  <div class="row search-group-container">
+    <div class="col-24 search-group-header">
+        Price
+    </div>
+    <div class="col-24 search-group-content price-slider">
+        <ng5-slider [(value)]="filter.minimumPrice" [(highValue)]="filter.maximumPrice"
+         (userChange)="onUserPriceSliderChange($event)"
+         [options]="sliderOptions"></ng5-slider>
+    </div>    
+  </div>
+
+  <div class="row search-group-container">
+    <div class="col-24 search-group-header">
+      Categories
+    </div>
+    <div class="col-24 search-group-content">
+        <div *ngFor="let category of categories">
+            <app-category-picker        
+                      [category]="category"
+                      (select)="selectCategory($event)"
+                      (unSelect) = "unSelectCategory($event)">
+            </app-category-picker>     
+          </div>  
+    </div>
+   
+  </div>
+
+  <div class="row search-group-container">
+    <div class="col-24 search-group-header">
+      Brands
+    </div>
+    <div class="col-24 search-group-content">
+        <div *ngFor="let brand of brands">
+            <div *ngIf="brand != null">{{brand.name}}
+              <input
+                  type="checkbox"
+                  [checked]="brand.isChecked"              
+                  (change)="selectBrand(brand.id, $event)"/>
+            </div>
+        </div>  
+    </div> 
+  </div>
+
+  <div *ngIf="attributes.length > 0 " class="row search-group-container">
+    <div class="col-24 search-group-header">
+      Category attributes
+    </div>
+    <div class="col-24 search-group-content">
+        <div *ngFor="let attribute of attributes">
+            <div *ngIf="attribute.hasFixedValues == true">
+                <label>{{attribute.attributeName}}</label>
+                <select name="attribute" class="form-control"
+                   (change)="selectAttributeValue(attribute.attributeId, attribute.type, $event)">
+                    <option [value]="-1">All</option>
+                    <option *ngFor="let value of attribute.values" [value]="value.valueId">
+                      {{value.displayValue}}
+                    </option>
+                </select> 
+            </div>
+             <div *ngIf="attribute.hasFixedValues != true">
+               <label>{{attribute.attributeName}}</label>
+               <input class="form-control">
+            <div>
+        </div>  
+    </div> 
+  </div>
+
+</div>

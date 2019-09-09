@@ -1,0 +1,53 @@
+<div *ngIf="profile" class="profile-header">
+   <div class="avatar-wrapper">
+      <ng-container *ngIf="profile.avatar != null">
+          <img [src]="profile.avatar"/>
+      </ng-container>
+      <ng-container *ngIf="profile.avatar == null">
+          <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png"/>
+      </ng-container>
+   </div>
+   <div class="basic-profile-data-wrapper">
+      <div class="name-row">
+         <p class="username">{{profile.nickName}}</p>
+         <p class="userrole">{{profile.role}}</p>
+      </div>    
+      <div class="action-row">
+          <button *ngIf="profile.isMine" class="btn btn-outline-primary">Edit profile</button>
+       </div> 
+   </div>  
+</div>
+<div *ngIf="profile==null" class="profile-header">
+    <div class="avatar-wrapper">       
+        <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png"/>       
+     </div>
+</div>
+
+<div class="profile-details">
+  <ngb-tabset>
+    <ngb-tab title="About">
+      <ng-template ngbTabContent> 
+        <!-- TODO: innen új component és kicserélni, ha edit van  -->
+        <div *ngIf="profile" class="detail-tab">      
+            <div class="label">Email</div>
+            <p>{{profile.email}}</p>     
+
+            <div class="label">Introduction</div>
+            <p *ngIf="profile.introduction">{{profile.introduction}}</p>  
+            <p *ngIf="profile.introduction == null">User doesn't have an introduction.</p>      
+
+            <div class="label">Nationality</div>
+            <p *ngIf="profile.nationality">{{profile.nationality}}</p>  
+            <p *ngIf="profile.nationality == null">unknown</p>              
+        </div>  
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Activity">
+      <ng-template ngbTabContent>
+        <div class="detail-tab">
+            <p>TODO show revies given by user</p>   
+        </div>       
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

@@ -1,0 +1,51 @@
+<form *ngIf="product != null">
+  <div class="form-group">
+    <label>Product name</label>
+    <input [(ngModel)]="product.name" name="product-name" class="form-control" placeholder="name">
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="form-group">
+        <label>Category</label>
+        <select [(ngModel)]="product.categoryId" name="categoryId" class="form-control">
+          <option [value]="null" disabled>Choose a category</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label>Brand</label>
+        <select [(ngModel)]="product.brandId" name="brandId" class="form-control">
+          <option [value]="null" disabled>Choose a brand</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label>Start of production</label>
+        <input type="text" (click)="d.toggle()" #d="ngbDatepicker" name="startOfProduction" class="form-control"
+          ngbDatepicker [(ngModel)]="product.startOfProduction" />
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="form-group">
+        <label>End of production</label>
+        <input type="text" (click)="d2.toggle()" #d2="ngbDatepicker" name="endOfProduction" class="form-control"
+          ngbDatepicker [(ngModel)]="product.endOfProduction" />
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <app-picture-uploader [picture]="product.thumbnailPicture"></app-picture-uploader>
+    </div>
+  </div>
+
+
+
+</form>
