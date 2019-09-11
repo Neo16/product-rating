@@ -1,0 +1,19 @@
+<form *ngIf="category != null">
+  <div class="form-group">
+    <label>Category name</label>
+    <input [(ngModel)]="category.name" name="category-name" class="form-control" placeholder="name">
+  </div>
+
+  <div class="form-group">
+    <label>Parent category</label>
+    <select [(ngModel)]="category.parentCategoryId" name="parentCategoryId" class="form-control">
+    </select>
+  </div>
+
+  <div *ngIf="category.attributes.length > 0" class="attributes-container">
+    <app-attribute *ngFor="let attribute of category.attributes" (delete)="onAttributeDelete($event)"
+      [attribute]="attribute">
+    </app-attribute>
+  </div>
+  <a (click)="addNewAttribute()" href="javascript:void(0)">New attribute</a>
+</form>

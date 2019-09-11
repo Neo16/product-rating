@@ -1,0 +1,12 @@
+@import "~src/general"; 
+
+.product-list-container{
+    @extend %container-base;
+    margin-top: 0px;
+    background-color: white;
+}
+.pagination-container{
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}

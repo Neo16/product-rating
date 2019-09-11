@@ -1,0 +1,37 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ReviewData } from 'src/app/models/reviews/ReviewData';
+import { CreateReviewData } from 'src/app/models/reviews/CreateReviewData';
+import { CreateScoreData } from 'src/app/models/reviews/CreateScoreData';
+
+@Injectable()
+export class ReviewService {
+  private BASE_URL = 'https://localhost:44394';
+
+  constructor(private http: HttpClient) {}
+
+  getReviewsOfProduct(productId: string){    
+    const url = `${this.BASE_URL}/products/${productId}/reviews`;
+    return this.http.get<ReviewData[]>(url);
+  }
+
+  upvoteReview(reviewId: string){    
+    const url = `${this.BASE_URL}/reviews/upvote-review`;
+    return this.http.post<any>(url, {id: reviewId});
+  }
+
+  downvoteReview(reviewId: string){    
+    const url = `${this.BASE_URL}/reviews/downvote-review`;
+    return this.http.post<any>(url, {id: reviewId});
+  }
+
+  addNewReview(review: CreateReviewData){
+    const url = `${this.BASE_URL}/reviews/add-review`;
+    return this.http.post<ReviewData>(url, review);
+  }
+
+  addScore(score: CreateScoreData){
+    const url = `${this.BASE_URL}/reviews/add-scrore`;
+    return this.http.post(url, score);
+  }
+}

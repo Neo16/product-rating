@@ -1,0 +1,10 @@
+<div class="label">Email</div>
+<p>{{profile.email}}</p>     
+
+<div class="label">Introduction</div>
+<p *ngIf="profile.introduction">{{profile.introduction}}</p>  
+<p *ngIf="profile.introduction == null">User doesn't have an introduction.</p>      
+
+<div class="label">Nationality</div>
+<p *ngIf="profile.nationality">{{profile.nationality}}</p>  
+<p *ngIf="profile.nationality == null">unknown</p>              

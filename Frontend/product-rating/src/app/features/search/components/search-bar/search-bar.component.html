@@ -1,0 +1,33 @@
+<div class="search-bar-container">
+    <div class="row">
+        <div class="col-19">
+            <div class="form-group">               
+                <input [(ngModel)] ="filterModel.textFilter" id="textFilter" name="textFilter" type="text" class="form-control">
+            </div> 
+        </div>
+        <div class="col-5">
+            <button type="button" class="btn search-btn"
+             (click)="changeFilter()">Search {{clickMessage}}</button>
+        </div>
+    </div>    
+</div>
+
+<div class="row">
+    <div class="col-24 order-select-container">
+        <div>               
+            <select class="form-control small-select" [ngModel]="filterModel.orderBy" (ngModelChange)="onProductOrderChange($event)">
+                <option *ngFor="let type of productOrder | enumToArray" [value]="type">
+                    {{productOrderDisplay[type]}}
+                </option>       
+            </select>
+        </div> 
+        <div>               
+            <select class="form-control small-select" [ngModel]="filterModel.order" (ngModelChange)="onOrderChange($event)">
+                <option *ngFor="let type of order | enumToArray" [value]="type">
+                    {{orderDisplay[type]}}
+                </option>  
+            </select>
+        </div> 
+    </div>        
+</div> 
+

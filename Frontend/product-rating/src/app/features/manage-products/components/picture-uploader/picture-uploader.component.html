@@ -1,0 +1,13 @@
+<div class="picture-box">
+  <div class="picture-container">
+    <img *ngIf="picture?.data == null" class="uploaded-img" src="https://via.placeholder.com/300x200" />
+    <img *ngIf="picture?.data != null" class="uploaded-img" [src]="'data:image/png;base64,' + picture.data" />
+  </div>
+  <div class="upload-button-container">
+      <input 
+      #imageInput
+      accept="image/*"
+      (change)="processFile(imageInput)"
+      type="file">
+  </div>  
+</div>

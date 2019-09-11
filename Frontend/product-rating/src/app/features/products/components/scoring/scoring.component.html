@@ -1,0 +1,16 @@
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <form>
+      <div class="score-modal-container">
+          <div style="height: 66px">
+              <bar-rating [(rate)]="newScore" [max]="5"></bar-rating>
+          </div>          
+          <button type="button" class="btn" (click)="modal.close('Save click')">Save</button>   
+      </div>       
+    </form>
+  </div>
+</ng-template>
+
+<a (click)="open(content)" href="javascript:void(0)">
+  {{scored!=null ? 'Change your score' : 'Score this product'}}
+</a>

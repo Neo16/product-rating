@@ -1,0 +1,44 @@
+@import "~src/general"; 
+
+.review-item-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+    .review-info{
+        padding: 15px;      
+        .author-name{
+            font-weight: 600;
+            font-size: 18px;
+        }    
+        .created{
+            font-style: italic;
+            font-size: 13px;
+        }        
+    }
+    .review-body {
+        padding: 15px;       
+        
+    }
+    .review-like-container{
+        padding: 15px;
+        width: 60px;
+        button{
+            background: transparent;
+            border: 1px solid $app-mild-gray;
+            border-radius: 5px;
+            color: $app-mild-gray;
+
+            &.voted{
+               background: $brand-blue;
+               color: white;
+               border: 1px solid $brand-blue;
+            }
+
+            &[disabled]{
+                color: $app-light-gray;
+                border: 1px solid $app-light-gray;
+            }
+        }
+    }
+}
+

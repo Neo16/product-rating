@@ -1,0 +1,73 @@
+@import "~src/general"; 
+@import "~src/variables"; 
+
+.property-search-container{
+    @extend %container-base;
+    background-color: white;
+    padding-top: 0px;
+}
+
+.search-group-container{
+    margin-bottom: 1rem;
+    margin-right: -1rem;
+    margin-left: -1rem;   
+    .search-group-header{ 
+        padding: 7px 20px;
+        border-bottom: 1px solid $app-light-gray;
+        border-top: 1px solid $app-light-gray;
+        background: $brand-blue;
+        font-weight: 600;
+        color: white;      
+    }
+    .search-group-content{
+        padding: 0px 20px;
+    }
+}
+
+
+::ng-deep {
+    
+    .price-slider .ng5-slider .ng5-slider-bar {
+      background: $brand-blue;
+      height: 3px;
+    }
+    .price-slider .ng5-slider .ng5-slider-selection {
+      background: $brand-blue;
+      height: 4px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-pointer {
+      width: 12px;
+      height: 12px;
+      top: auto; /* to remove the default positioning */
+      bottom: -3px;
+      background-color: $brand-blue;
+      border-radius: 6px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-pointer:after {
+      display: none;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-bubble {
+      bottom: 14px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-limit {
+      font-weight: bold;
+      color:  $brand-blue;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-tick {
+      width: 1px;
+      height: 10px;
+      margin-left: 4px;
+      border-radius: 0;
+      background:  $brand-blue;
+      top: -1px;
+    }
+  
+    .price-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+      background:  $brand-blue;
+    }
+  }

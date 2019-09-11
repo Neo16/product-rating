@@ -1,0 +1,32 @@
+@import "~src/general"; 
+@import "~src/variables"; 
+
+.filter-div{
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    margin-left: auto;
+    padding-right: 30px;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.filter-toggle{
+    display: block;
+    padding: 5px 0px; 
+}
+
+.action-cell{
+    text-align: right;
+    width: 100%;
+    max-width: 100px;
+}
+
+.table-container{
+    @extend %container-base;
+    background-color: $brand-green;
+    label{
+        color: 4e4e4e;
+        font-weight: 500;
+    }
+}

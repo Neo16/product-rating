@@ -1,0 +1,22 @@
+@import "~src/general"; 
+@import "~src/variables"; 
+
+.search-bar-container{
+    @extend %container-base;
+    background-color: $brand-green;
+}
+
+.search-btn{
+    width: 100%;    
+}
+
+.order-select-container{
+    display: flex;    
+    justify-content: flex-end;
+    margin-top: 0.8rem;
+    .form-control.small-select{
+        height: 30px;
+        padding: 0px;
+    }
+}
+
