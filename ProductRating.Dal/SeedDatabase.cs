@@ -82,7 +82,8 @@ namespace ProductRating.Dal
                 NickName = "Péter",
                 Address = "9024, Győr, Arany János utca 11",
                 Introduction = "Etiam eget neque ac nisi sodales pellentesque. Donec suscipit enim feugiat tortor ultricies faucibus. Fusce eu ante mi. Fusce iaculis sed ipsum venenatis efficitur. Praesent dolor neque, maximus sit amet cursus vel, ornare et felis. Vestibulum auctor tellus odio, vel faucibus risus tincidunt sit amet.",
-                Nationality = "Hungarian"        
+                Nationality = "Hungarian",
+                ApiKey = "123456"
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
             context.Users.Add(user);
@@ -96,7 +97,8 @@ namespace ProductRating.Dal
                 EmailConfirmed = true,
                 SecurityStamp = "3543545345",
                 PhoneNumber = "+311124211",
-                NickName = "Dávid"
+                NickName = "Dávid",
+                ApiKey = "123123"
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
             context.Users.Add(user2);

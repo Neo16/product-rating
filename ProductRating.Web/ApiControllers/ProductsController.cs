@@ -60,5 +60,17 @@ namespace ProductRating.Web.ApiControllers
             var reviews = await reviewService.GetReviewsOfProduct(userId, productId);
             return Ok(reviews);
         }
+
+        [HttpGet("{productId}/score")]
+        public async Task<IActionResult> Score(Guid productId)
+        {
+            var score = await reviewService.GetScoreOfProduct(productId);
+            if (score == null)
+            {
+                return BadRequest("Unknown product.");
+            }
+
+            return Ok(score);
+        }
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -129,12 +130,14 @@ namespace ProductRating.Web
             app.UseHttpsRedirection();
 
             app.UseCors(builder =>
-            builder.AllowAnyHeader()
-                   .AllowAnyMethod()
-                   .AllowCredentials()
-                   .WithOrigins("http://localhost:4200")
+                builder.AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials()
+                       .AllowAnyOrigin()
             );
             app.UseStaticFiles();
+         //   app.UseEndpointRouting();
+            app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseCookiePolicy();
             app.UseAuthentication();

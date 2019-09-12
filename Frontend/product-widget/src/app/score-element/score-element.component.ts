@@ -15,11 +15,12 @@ export class ScoreElementComponent implements OnInit {
   constructor(private service: ScoreService) { }
 
    @Input() productid: string;
+   @Input() key: string;
    score: number = 0;
 
   ngOnInit() {
     console.log(this.productid);
-    this.service.getProductScore(this.productid)
+    this.service.getProductScore(this.productid, this.key)
       .subscribe(result => {
           this.score = result;
       })

@@ -20,6 +20,7 @@ namespace ProductRating.Web.MiddleWare
 
         public async Task Invoke(HttpContext context)
         {
+            // TODO: log 
             try
             {
                 await _next(context);

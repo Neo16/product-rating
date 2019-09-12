@@ -9,8 +9,8 @@ export class ScoreService{
 
     constructor(private http: HttpClient) {}
 
-    getProductScore(productId: string){    
-        const url = `${this.BASE_URL}/products/${productId}/score`;
+    getProductScore(productId: string, key: string){    
+        const url = `${this.BASE_URL}/products/${productId}/score?key=${key}`;
         return this.http.get<number>(url);
      }
 }
