@@ -15,7 +15,7 @@ namespace ProductRating.Web.MiddleWare
     {
         private readonly RequestDelegate next;
         private readonly List<string> urlWhiteList = new List<string>() {
-            "http://localhost:4200"
+            "localhost"
         };
 
         private readonly IApiKeyService apiKeyService;
@@ -28,15 +28,15 @@ namespace ProductRating.Web.MiddleWare
 
         public async Task Invoke(HttpContext context)
         {
-            string referer = context.Request.Headers["origin"].ToString();
-          
-            if (!urlWhiteList.Contains(referer))
+            string origin = context.Request.Headers["origin"].ToString();
+            string siteBaseUrl = origin == "null" ? "" : new Uri(origin).Host;
+
+            if (!urlWhiteList.Contains(siteBaseUrl))
             {
                 if (context.Request.Query.TryGetValue("key", out var apiKeyTry))
                 {
                     var apiKey = apiKeyTry.ToString();
-
-                    var isValid = await apiKeyService.IsApiKeyValid(apiKey);
+                    var isValid = await apiKeyService.IsApiKeyValid(siteBaseUrl, apiKey);
 
                     if (!isValid)
                     {

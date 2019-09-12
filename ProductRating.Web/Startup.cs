@@ -135,8 +135,7 @@ namespace ProductRating.Web
                        .AllowCredentials()
                        .AllowAnyOrigin()
             );
-            app.UseStaticFiles();
-         //   app.UseEndpointRouting();
+            app.UseStaticFiles();        
             app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseCookiePolicy();

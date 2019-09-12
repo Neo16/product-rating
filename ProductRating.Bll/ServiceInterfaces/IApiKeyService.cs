@@ -7,6 +7,6 @@ namespace ProductRating.Bll.Services
 {
     public interface IApiKeyService
     {
-        Task<bool> IsApiKeyValid(string key);
+        Task<bool> IsApiKeyValid(string siteBaseUrl, string key);
     }
 }

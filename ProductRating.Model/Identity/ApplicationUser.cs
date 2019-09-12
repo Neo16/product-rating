@@ -28,6 +28,6 @@ namespace ProductRating.Model.Identity
 
         public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
 
-        public string ApiKey { get; set; }
+        public virtual ICollection<Subscription> Subscriptions { get; set; }
     }
 }

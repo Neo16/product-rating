@@ -33,6 +33,8 @@ namespace ProductRating.Dal
 
         public virtual DbSet<ReviewVote> ReviewVotes { get; set; }
 
+        public virtual DbSet<Subscription> Subscriptions { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
