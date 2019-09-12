@@ -1,7 +1,7 @@
 <div class="review-component-container">
   <div class="row">
     <!-- Add comment form -->
-    <div *ngIf="isLoggedIn" class="col-24">
+    <div *ngIf="isLoggedIn" class="col-24 basic-container">
       <button class="btn add-review-btn" type="button" (click)="showForm = !showForm" [ngClass]="{'d-none': showForm}">
         Add review
       </button>
@@ -26,13 +26,13 @@
       </div>
     </div>
 
-    <div *ngIf="!isLoggedIn" class="col-24">
+    <div *ngIf="!isLoggedIn" class="col-24 basic-container">
       <a [routerLink]="['/account/login']" [queryParams]="{return: router.url}">Log in to comment.</a>
     </div>
 
     <!-- List reviews of profucts-->
     <div class="col-12">
-      Positive reveiws:
+      <p class="review-class">Positive reveiws:</p>
       <div class="review-item-list-container">
         <app-review-item *ngFor="let review of positiveReviews" [review]="review" (upvote)="upvote($event)"
           (downvote)="downvote($event)">
@@ -40,7 +40,7 @@
       </div>
     </div>
     <div class="col-12">
-      Negative reveiws:
+      <p class="review-class">Negative reveiws:</p>
       <div class="review-item-list-container">
         <app-review-item *ngFor="let review of negativeReviews" [review]="review" (upvote)="upvote($event)"
           (downvote)="downvote($event)">

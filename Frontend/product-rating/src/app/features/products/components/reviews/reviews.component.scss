@@ -1,16 +1,21 @@
 .review-component-container {
-  .review-form { 
-    .comment-textarea {      
+  .review-form {
+    .comment-textarea {
       resize: none;
-      height: 140px;         
+      height: 140px;
     }
     button {
       float: right;
-    } 
+    }
   }
-  .add-review-btn{
+  .add-review-btn {
     width: 100%;
     margin-bottom: 20px;
   }
 }
 
+.review-class {
+  margin-top: 15px;
+  margin-bottom: 0px;
+  font-weight: 500;
+}
