@@ -34,8 +34,8 @@
     <div class="col-12">
       <p class="review-class">Positive reveiws:</p>
       <div class="review-item-list-container">
-        <app-review-item *ngFor="let review of positiveReviews" [review]="review" (upvote)="upvote($event)"
-          (downvote)="downvote($event)">
+        <app-review-item *ngFor="let review of positiveReviews" [review]="review" (upvoteEvent)="upvote($event)"
+          (downvoteEvent)="downvote($event)" (editEvent)="edit($event)" (deleteEvent)="delete($event)">
         </app-review-item>
       </div>
     </div>

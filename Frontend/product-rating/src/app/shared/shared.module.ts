@@ -4,7 +4,7 @@ import { EnumToArrayPipe } from './pipes/enumToArray';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faTimes, faArrowDown, faArrowUp, faStar, faTrash, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faArrowDown, faArrowUp, faStar, faTrash, faTrashAlt, faEdit, faPencilAlt, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
 import { UiSwitchModule } from 'ngx-ui-switch';
@@ -43,5 +43,7 @@ export class SharedModule {
     library.add(faTrash); 
     library.add(faTrashAlt); 
     library.add(faEdit);
+    library.add(faPencilAlt);
+    library.add(faSave);  
   }
  }

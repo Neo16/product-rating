@@ -36,6 +36,10 @@ namespace ProductRating.Web.ApiControllers
         [HttpPost("add-review")]
         public async Task<IActionResult> AddTextReview(CreateEditTextReviewDto textReview)
         {
+            if (textReview.ProductId == null)
+            {
+                return BadRequest();
+            }
             var review = await reviewService.AddReview(currentUserService.User.Id, textReview);
             return Ok(review);
         }

@@ -50,7 +50,7 @@ namespace ProductRating.Bll.Services
                 AuthorId = userId,
                 CreatedAt = DateTime.Now,
                 Mood = textReview.Mood,
-                ProductId = textReview.ProductId,
+                ProductId = textReview.ProductId.Value,
                 Text = textReview.Text,
                 Points = 1
             };

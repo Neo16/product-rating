@@ -1,7 +1,6 @@
 @import "~src/general"; 
 
 .review-item-container{
-
     @extend %container-base;
     padding: 5px 5px;
     width: 100%;
@@ -19,8 +18,13 @@
         }        
     }
     .review-body {
-        padding: 12px;       
+        padding: 12px;     
+        width: 100%;
         
+        textarea{
+            width: 100%;
+            resize: none;
+        }        
     }
     .review-like-container{
         

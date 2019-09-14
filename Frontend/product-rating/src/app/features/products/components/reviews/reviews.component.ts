@@ -8,6 +8,7 @@ import { AccountState } from 'src/app/store/account-store/account.state';
 import { Store } from '@ngrx/store';
 import { selectAccountState } from 'src/app/store/root-state';
 import { Router } from '@angular/router';
+import { ReviewEditArgs } from '../review-item/review-item.component';
 
 @Component({
   selector: 'app-reviews',
@@ -87,8 +88,7 @@ export class ReviewsComponent implements OnInit {
 
   downvote(reviewId: string) {
     this.redirectIfNotLoggedIn();
-    var review = this.positiveReviews.concat(this.negativeReviews)
-     .find(x => x.id === reviewId);   
+    var review = this.findReview(reviewId);
 
     this.reviewService.downvoteReview(reviewId)
       .subscribe(e => {       
@@ -98,9 +98,35 @@ export class ReviewsComponent implements OnInit {
     })
   }
 
+  edit(args: ReviewEditArgs){
+    console.log("args:");
+    console.log(args);
+
+    var review = this.findReview(args.reviewId);
+
+    this.reviewService.editReview(args.reviewId, args.reviewText, args.mood)
+      .subscribe(e =>{
+        review.mood = args.mood;
+        review.text = args.reviewText;
+      });
+  }
+  delete(reviewId: string){
+    var review = this.findReview(reviewId);
+
+    this.reviewService.deleteReview(reviewId)
+    .subscribe(e =>{
+        this.positiveReviews = this.positiveReviews.filter(r => r.id != reviewId);
+        this.negativeReviews = this.negativeReviews.filter(r => r.id != reviewId);
+    });
+  }  
   redirectIfNotLoggedIn() {
     if (!this.isLoggedIn) {
       this.router.navigate(['/account/login'], { queryParams: { return: this.router.url } });
     }
+  }
+
+  findReview(reviewId: string){
+    return this.positiveReviews.concat(this.negativeReviews)
+    .find(x => x.id === reviewId);
   }
 }

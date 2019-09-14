@@ -3,9 +3,15 @@
     <div class="author-name">{{review.authorName}}</div>
     <div class="created">{{review.createdAt}}</div>
   </div>
-  <div class="review-body">
+  <!-- if not editing, show comment text -->
+  <div *ngIf="!isEditing" class="review-body">
     {{review.text}}
   </div>
+  <!-- if editing, show input  -->
+  <div *ngIf="isEditing" class="review-body">
+    <textarea [(ngModel)]="editedText"></textarea>
+  </div>
+
   <div class="review-like-container">
     <button *ngIf="!review.isMine" [ngClass]="{voted : review.wasUpvotedByMe}" (click)="pressedUpvote()">
       <fa-icon [icon]="['fas', 'arrow-up']" size="xs"></fa-icon>
@@ -16,12 +22,17 @@
     </button>
 
     <div *ngIf="review.isMine" class="own-comment-actions">
-      <button>
-        <fa-icon  [icon]="['fas', 'edit']" size="sm"></fa-icon>
-      </button>      
-      <button>
-        <fa-icon  [icon]="['fas', 'trash']" size="sm"></fa-icon>
-      </button>     
+      <ng-container *ngIf="!isEditing">
+        <button (click)="edit()">
+          <fa-icon [icon]="['fas', 'pencil-alt']" size="sm"></fa-icon>
+        </button>
+        <button (click)="delete()">
+          <fa-icon [icon]="['fas', 'trash']" size="sm"></fa-icon>
+        </button>
+      </ng-container>
+      <button *ngIf="isEditing" (click)="save()">
+        <fa-icon [icon]="['fas', 'save']" size="sm"></fa-icon>
+      </button>
     </div>
   </div>
 </div>

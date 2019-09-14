@@ -4,5 +4,5 @@ export class CreateReviewData
 {
     mood: ReviewMood;
     text: string;
-    productId: string;
+    productId: string | null;
 }
