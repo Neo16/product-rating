@@ -68,7 +68,9 @@ export class ReviewsComponent implements OnInit {
   }
 
   upvote(reviewId: string) {
-    this.openLoginPopup();
+    if (!this.isLoggedIn){
+      this.openLoginPopup();
+    }   
     var review = this.positiveReviews.concat(this.negativeReviews)
       .find(x => x.id === reviewId);
 
@@ -81,7 +83,9 @@ export class ReviewsComponent implements OnInit {
   }
 
   downvote(reviewId: string) {
-    this.openLoginPopup();
+    if (!this.isLoggedIn){
+      this.openLoginPopup();
+    }   
     var review = this.findReview(reviewId);
 
     this.reviewService.downvoteReview(reviewId)

@@ -5,12 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faArrowDown, faArrowUp, faTrash, faTrashAlt, faPencilAlt, faSave, fas } from '@fortawesome/free-solid-svg-icons';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EnumToArrayPipe } from './pipes/enumToArray';
 import { CommonModule } from '@angular/common';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ReviewItemComponent } from './components/review-item/review-item.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
+import { TokenInterceptor } from './token-interceptor';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
     FormsModule,
     FontAwesomeModule,
     CommonModule,
-    NgbModule, 
+    NgbModule,
     HttpClientModule
   ],
   declarations: [
@@ -26,19 +27,23 @@ import { LoginFormComponent } from './components/login-form/login-form.component
     ReviewItemComponent,
     EnumToArrayPipe,
     LoginFormComponent
-  ],  
-  entryComponents: [ReviewsComponent]
- 
+  ],
+  entryComponents: [ReviewsComponent],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }]
 })
-export class AppModule { 
+export class AppModule {
   constructor(private injector: Injector, library: FaIconLibrary) {
-    library.addIconPacks(fas); 
+    library.addIconPacks(fas);
     library.addIcons(faArrowDown);
     library.addIcons(faArrowUp);
-    library.addIcons(faTrash); 
-    library.addIcons(faTrashAlt); 
+    library.addIcons(faTrash);
+    library.addIcons(faTrashAlt);
     library.addIcons(faPencilAlt);
-    library.addIcons(faSave);  
+    library.addIcons(faSave);
   }
 
   ngDoBootstrap() {
