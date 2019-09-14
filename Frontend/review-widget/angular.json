@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "product-widget": {
+    "review-widget": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/product-widget",
+            "outputPath": "dist/review-widget",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,12 +30,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              {
-                "input": "node_modules/document-register-element/build/document-register-element.js"
-              },
-              {
-                "input": "node_modules/document-register-element/build/document-register-element.js"
-              },
               {
                 "input": "node_modules/document-register-element/build/document-register-element.js"
               }
@@ -72,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "product-widget:build"
+            "browserTarget": "review-widget:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "product-widget:build:production"
+              "browserTarget": "review-widget:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "product-widget:build"
+            "browserTarget": "review-widget:build"
           }
         },
         "test": {
@@ -117,7 +111,7 @@
         }
       }
     },
-    "product-widget-e2e": {
+    "review-widget-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -126,11 +120,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "product-widget:serve"
+            "devServerTarget": "review-widget:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "product-widget:serve:production"
+              "devServerTarget": "review-widget:serve:production"
             }
           }
         },
@@ -146,5 +140,5 @@
       }
     }
   },
-  "defaultProject": "product-widget"
+  "defaultProject": "review-widget"
 }

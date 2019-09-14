@@ -1,0 +1,18 @@
+$icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
+
+$container-color:  white;
+$app-background-color: #f8f8f8;
+$brand-blue: #2d84cb;;
+$brand-green: #5bc8c44f;
+$app-light-gray: #d6d6d6;
+$app-mild-gray: #b5b5b5;
+
+// override bootstrap variables 
+$grid-columns: 24;
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1260px
+);
+$grid-gutter-width: 20px;

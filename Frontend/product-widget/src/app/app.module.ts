@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
-import {createCustomElement} from '@angular/elements'
+import { createCustomElement } from '@angular/elements'
 import { ScoreElementComponent } from './score-element/score-element.component';
 import { BarRatingModule } from "ngx-bar-rating";
 import { ScoreService } from './score-service';
@@ -10,17 +10,17 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     BarRatingModule,
-    HttpClientModule   
+    HttpClientModule
   ],
-  declarations: [ 
+  declarations: [
     ScoreElementComponent
   ],
   entryComponents: [ScoreElementComponent],
   // providers: [ScoreService]
-  
+
 })
-export class AppModule { 
-  constructor(private injector: Injector) {}
+export class AppModule {
+  constructor(private injector: Injector) { }
 
   ngDoBootstrap() {
     // using createCustomElement from angular package it will convert angular component to stander web component

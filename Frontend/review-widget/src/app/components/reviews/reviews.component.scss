@@ -1,0 +1,27 @@
+@import "~src/general"; 
+
+.review-component-container {
+     background-color: $app-background-color;    
+     padding: 20px;
+
+    .review-form {
+      .comment-textarea {
+        resize: none;
+        height: 140px;
+      }
+      button {
+        float: right;
+      }
+    }
+    .add-review-btn {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .review-class {
+    margin-top: 15px;
+    margin-bottom: 0px;
+    font-weight: 500;
+  }
+  
