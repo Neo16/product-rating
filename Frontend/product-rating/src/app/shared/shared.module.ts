@@ -9,9 +9,12 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { NgbModule, NgbDatepicker} from '@ng-bootstrap/ng-bootstrap';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { PopupComponent } from './popup/popup.component';
+import { ModalService } from './services/modal-service';
 
 @NgModule({
-  declarations: [EnumToArrayPipe],
+  declarations: [EnumToArrayPipe, PopupComponent],
+  providers: [ModalService],
   imports: [
     Ng5SliderModule,
     FontAwesomeModule,
@@ -30,7 +33,8 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     EnumToArrayPipe,
     NgxDatatableModule,
     UiSwitchModule,
-    NgbModule
+    NgbModule,
+    PopupComponent
   ]
 })
 export class SharedModule {

@@ -3,6 +3,7 @@ import { CategoryManageHeaderData } from 'src/app/models/categories/CategoryMana
 import { ManageCategoryFilterData } from 'src/app/models/categories/ManageCategoryFilterData';
 import { ManageCategoriesService } from '../../services/manage-categories.service';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
+import { ModalService } from 'src/app/shared/services/modal-service';
 
 @Component({
   selector: 'app-my-categories',
@@ -22,7 +23,9 @@ export class MyCategoriesComponent implements OnInit {
 
   columns = [];
 
-  constructor(private manageCatService: ManageCategoriesService) { }
+  constructor(
+    private manageCatService: ManageCategoriesService,
+    private modalService: ModalService) { }
 
   listCategories() {
     this.pagination.length = 10;
@@ -41,8 +44,8 @@ export class MyCategoriesComponent implements OnInit {
       { prop: 'numOfProducts' },
       { prop: 'attributeNames' },
       { prop: 'parentName' },
-      { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
-      { name: 'id',  cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
+      { name: 'id', cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
+      { name: 'id', cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
     ];
     this.listCategories();
   }
@@ -54,13 +57,15 @@ export class MyCategoriesComponent implements OnInit {
 
   reload() {
     this.listCategories();
-  } 
+  }
 
-  delete(id){    
-     //TODO: megerősítő popup
-    this.manageCatService.deleteCategory(id)
-      .subscribe(result => {       
-        this.reload();
-      })      
+  delete(id: string) {
+    this.modalService.openConfirmationModal("Confirm delete", "Are you sure, you want to delete this product?")
+      .then(yep => {
+        this.manageCatService.deleteCategory(id)
+          .subscribe(result => {
+            this.reload();
+          })
+      })
   }
 }

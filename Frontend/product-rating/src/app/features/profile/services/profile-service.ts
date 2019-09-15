@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProfileData } from 'src/app/models/profile/ProfileData';
 import { EditProfileData } from 'src/app/models/profile/EditProdileData';
+import { ChangePasswordData } from 'src/app/models/ChangePasswordData';
 
 @Injectable()
 export class ProfileService {
@@ -21,8 +22,12 @@ export class ProfileService {
     }
 
     editProfile(profile: EditProfileData): Observable<any> {
-        const url = `${this.BASE_URL}/profile/update-profile`;
-        console.log(profile);
+        const url = `${this.BASE_URL}/profile/update-profile`;   
         return this.http.put<any>(url, JSON.stringify(profile));
+    }
+
+    changePassword(data: ChangePasswordData): Observable<any>{
+        const url = `${this.BASE_URL}/account/change-password`;        
+        return this.http.post<any>(url, JSON.stringify(data));
     }
 }

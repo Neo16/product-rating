@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/features/products/services/product.servi
 import { ManageProductFilterData } from 'src/app/models/products/ManageProductFilterData';
 import { ProductManageHeaderData } from 'src/app/models/products/ProductHeaderData';
 import { ManageProductsService } from '../../services/manage-products.service';
+import { ModalService } from 'src/app/shared/services/modal-service';
 
 @Component({
   selector: 'app-my-products',
@@ -23,7 +24,8 @@ export class MyProductsComponent implements OnInit {
 
   columns = [];
 
-  constructor(private manageProductService: ManageProductsService) { }
+  constructor(private manageProductService: ManageProductsService,
+    private modalService: ModalService) { }
 
   listCategories() {
     //Todo: use server side paging.
@@ -58,11 +60,13 @@ export class MyProductsComponent implements OnInit {
     this.listCategories();
   }
 
-  delete(id) {
-    //TODO: megerősítő popup
-    this.manageProductService.deleteProduct(id)
-      .subscribe(result => {
-        this.reload();
-      });
+  delete(id: string) {
+    this.modalService.openConfirmationModal("Confirm delete", "Are you sure, you want to delete this product?")
+      .then(yep => {
+        this.manageProductService.deleteProduct(id)
+          .subscribe(result => {
+            this.reload();
+          });
+      })
   }
 }

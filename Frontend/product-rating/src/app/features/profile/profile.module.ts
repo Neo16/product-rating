@@ -8,12 +8,15 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { EditProfileFormComponent } from './components/edit-profile-form/edit-profile-form.component';
 import { ProfileDataComponent } from './components/profile-data/profile-data.component';
+import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
+
 
 @NgModule({
   declarations: [
     ProfilePageComponent,
     EditProfileFormComponent,
-    ProfileDataComponent
+    ProfileDataComponent,
+    ChangePasswordFormComponent
   ],
   providers: [
     ProfileService,

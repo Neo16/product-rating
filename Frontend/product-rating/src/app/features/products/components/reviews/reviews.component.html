@@ -6,7 +6,7 @@
         Add review
       </button>
       <div class="review-form" [ngClass]="{'d-none': !showForm}">
-        <form (ngSubmit)="addReview()" #loginForm="ngForm">
+        <form (ngSubmit)="addReview()">
           <div class="form-group">
             I am giving this product a
             <select [(ngModel)]="newReview.mood" name="mood">

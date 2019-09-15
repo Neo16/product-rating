@@ -3,6 +3,7 @@ import { BrandManageHeaderData } from 'src/app/models/brands/BrandManageHeaderDa
 import { ManageBrandFilterData } from 'src/app/models/brands/ManageBrandFilterData';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ManageBrandsService } from '../../services/manage-brands-service';
+import { ModalService } from 'src/app/shared/services/modal-service';
 
 @Component({
   selector: 'app-my-brands',
@@ -22,14 +23,16 @@ export class MyBrandsComponent implements OnInit {
 
   columns = [];
 
-  constructor(private manageBrandService: ManageBrandsService) { }
+  constructor(
+    private manageBrandService: ManageBrandsService,
+    private modalService: ModalService) { }
 
   listBrands() {
     this.pagination.length = 10;
     this.pagination.start = 1;
 
     this.manageBrandService.getBrands(this.filter, this.pagination)
-      .subscribe(result => {        
+      .subscribe(result => {
         this.brands = result;
       })
   }
@@ -39,8 +42,8 @@ export class MyBrandsComponent implements OnInit {
       { prop: 'name' },
       { prop: 'numOfProducts' },
       { prop: 'categories' },
-      { name: 'id',  cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
-      { name: 'id',  cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
+      { name: 'id', cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl, width: '100px' },
+      { name: 'id', cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl, width: '100px' }
     ];
     this.listBrands();
   }
@@ -52,13 +55,16 @@ export class MyBrandsComponent implements OnInit {
 
   reload() {
     this.listBrands();
-  } 
-
-  delete(id){    
-     //TODO: megerősítő popup
-    this.manageBrandService.deleteBrand(id)
-      .subscribe(result => {       
-        this.reload();
-      })      
   }
+
+  delete(id: string) {
+    this.modalService.openConfirmationModal("Confirm delete", "Are you sure, you want to delete this product?")
+      .then(yep => {
+        this.manageBrandService.deleteBrand(id)
+          .subscribe(result => {
+            this.reload();
+          })
+      })
+  }
+
 }

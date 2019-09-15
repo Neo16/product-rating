@@ -14,7 +14,7 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     LoginPageComponent,
     MenuComponent,
-    LayoutComponent    
+    LayoutComponent
   ],
   imports: [    
     SharedModule,

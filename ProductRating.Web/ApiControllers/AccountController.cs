@@ -50,7 +50,7 @@ namespace ProductRating.Web.ApiControllers
         }
 
         [HttpPost("change-password")]
-        public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto model)
         {
             ApplicationUser user = await currentUserService.GetCurrentUser();
             IdentityResult result = await userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);

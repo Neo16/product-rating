@@ -17,6 +17,7 @@ import { ManageCategoriesModule } from './features/manage-categories/manage-cate
 import { LoggingService } from './core/services/logger.service';
 import { GlobalErrorHandler } from './global-error-handler';
 import { ManageBrandsModule } from './features/manage-brands/manage-brands.module';
+import { PopupComponent } from './shared/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ManageBrandsModule } from './features/manage-brands/manage-brands.modul
     EffectsModule.forRoot([AcccountEffects, SearchEffects])
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PopupComponent]
 })
 export class AppModule { }
