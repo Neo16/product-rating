@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using ProductRating.Bll.Services;
+using ProductRating.Bll.ServiceInterfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -18,12 +16,12 @@ namespace ProductRating.Web.MiddleWare
             "localhost"
         };
 
-        private readonly IApiKeyService apiKeyService;
+        private readonly ISubscriptionService subscriptionService;
 
-        public ApiKeyMiddleware(RequestDelegate next, IApiKeyService apiKeyService)
+        public ApiKeyMiddleware(RequestDelegate next, ISubscriptionService subscriptionService)
         {
             this.next = next;
-            this.apiKeyService = apiKeyService;
+            this.subscriptionService = subscriptionService;
         }
 
         public async Task Invoke(HttpContext context)
@@ -36,7 +34,7 @@ namespace ProductRating.Web.MiddleWare
                 if (context.Request.Query.TryGetValue("key", out var apiKeyTry))
                 {
                     var apiKey = apiKeyTry.ToString();
-                    var isValid = await apiKeyService.IsApiKeyValid(siteBaseUrl, apiKey);
+                    var isValid = await subscriptionService.IsApiKeyValid(siteBaseUrl, apiKey);
 
                     if (!isValid)
                     {

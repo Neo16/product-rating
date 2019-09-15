@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using ProductRating.Bll.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
+using ProductRating.Bll.Dtos.Account;
 using ProductRating.Bll.Dtos.Profile;
 using ProductRating.Bll.ServiceInterfaces;
-using ProductRating.Model.Identity;
 using ProductRating.Web.WebServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers
@@ -18,15 +14,18 @@ namespace ProductRating.Web.ApiControllers
         private readonly IProfileService profileService;
         private readonly IReviewService reviewService;
         private readonly CurrentUserService currentUserService;
+        private readonly ISubscriptionService subscriptionService;
 
         public ProfileController(
             CurrentUserService currentUserService,
             IProfileService profileService,
-            IReviewService reviewService)
+            IReviewService reviewService,
+            ISubscriptionService apiKeyService)
         {
             this.reviewService = reviewService;
             this.profileService = profileService;
             this.currentUserService = currentUserService;
+            this.subscriptionService = apiKeyService;
         }
 
         [HttpGet("{userId?}")]
@@ -36,7 +35,7 @@ namespace ProductRating.Web.ApiControllers
             var isMine = userId == null;
             if (isMine)
             {
-                userId = (await currentUserService.GetCurrentUser()).Id;                
+                userId = currentUserService.User.Id;                
             }
 
             var profile = await profileService.GetProfileByUserId(userId.Value);
@@ -67,6 +66,27 @@ namespace ProductRating.Web.ApiControllers
         {
             var reviews = await reviewService.GetReviewsMadeByUser(userId);
             return Ok(reviews);
+        }
+
+        [HttpGet("subscriptions")]
+        public async Task<IActionResult> GetSubscriptions()
+        {
+            var subscriptions = await subscriptionService.GetSubscriptions(currentUserService.User.Id);
+            return Ok(subscriptions);
+        }
+
+        [HttpPost("require-subscription")]
+        public async Task<IActionResult> RequireApiKey(RequireSubscriptionDto requireApiKeyDto)
+        {
+            await subscriptionService.RequireSubscription(currentUserService.User.Id, requireApiKeyDto);
+            return Ok();
+        }
+
+        [HttpPost("delete-subscription/{subscriptionId}")]
+        public async Task<IActionResult> DeleteApiKey(Guid subscriptionId)
+        {
+            await subscriptionService.DeleteSubscription(subscriptionId);
+            return Ok();
         }
     }
 }

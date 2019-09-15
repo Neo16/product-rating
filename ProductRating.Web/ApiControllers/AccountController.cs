@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos.Account;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Model.Identity;
+using ProductRating.Web.WebServices;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,13 +14,16 @@ namespace ProductRating.Web.ApiControllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ITokenService tokenService;
+        private readonly CurrentUserService currentUserService;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            CurrentUserService currentUserService)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
+            this.currentUserService = currentUserService;
         }
 
         [HttpPost("login")]
@@ -48,7 +52,17 @@ namespace ProductRating.Web.ApiControllers
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto model)
         {
-            return Ok();
-        }
+            ApplicationUser user = await currentUserService.GetCurrentUser();
+            IdentityResult result = await userManager.ChangePasswordAsync(user, model.Password, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(result.Errors);
+            }           
+        }       
     }
 }
