@@ -5,6 +5,9 @@
       <button class="btn add-review-btn" type="button" (click)="showForm = !showForm" [ngClass]="{'d-none': showForm}">
         Add review
       </button>
+      <div class="d-flex justify-content-end">
+        <a href="#" (click)="logOut()">Log out</a>
+      </div>
       <div class="review-form" [ngClass]="{'d-none': !showForm}">
         <form (ngSubmit)="addReview()" #loginForm="ngForm">
           <div class="form-group">
@@ -27,7 +30,7 @@
     </div>
 
     <div *ngIf="!isLoggedIn" class="col-24 basic-container">
-      <a href="#" (click)="openLoginPopup()" >Log in to comment.</a>
+      <a href="#" (click)="openLoginPopup()">Log in to comment.</a>
     </div>
 
     <!-- List reviews of profucts-->
@@ -49,19 +52,3 @@
     </div>
   </div>
 </div>
-
-<!-- login modal -->
-<ng-template #loginModal let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Login to ProductRating</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">    
-    <app-login-form (loginSuccessEvent)="checkIfLoggedIn()"></app-login-form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close()">Login</button>
-  </div>
-</ng-template>

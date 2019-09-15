@@ -4,7 +4,9 @@ import { ReviewService } from '../../services/review-service';
 import { ReviewData } from '../../models/ReviewData';
 import { CreateReviewData } from '../../models/CreateReviewData';
 import { ReviewMood, ReviewMoodDisplay } from '../../models/ReviewMood';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { LoginService } from 'src/app/services/login-service';
+import { LoginFormComponent } from '../login-form/login-form.component';
 
 @Component({
   selector: 'app-reviews',
@@ -13,18 +15,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ReviewsComponent implements OnInit {
 
-  constructor(
-    private reviewService: ReviewService,
-    private modalService: NgbModal
-  ) {
-
-  }
-
   //template refs
-  @ViewChild('loginModal', { static: false }) loginModal: ElementRef;
+  //@ViewChild('loginModal', { static: false }) loginModal: ElementRef;
 
   //inputs
   @Input() productid: string;
+  @Input() key: string;
 
   //component data
   positiveReviews: ReviewData[] = [];
@@ -35,9 +31,16 @@ export class ReviewsComponent implements OnInit {
   isLoggedIn: boolean = false;
   showForm: boolean = false;
 
-  ngOnInit() {
+  constructor(   
+    private loginService: LoginService,
+    private reviewService: ReviewService,
+    private modalService: NgbModal
+  ) {}
 
-    this.checkIfLoggedIn();
+  ngOnInit() {
+    this.loginService.setApiKey(this.key);
+    this.reviewService.setApiKey(this.key);    
+    this.checkIfLoggedIn();   
 
     this.newReview.mood = ReviewMood.Positive;
     this.newReview.productId = this.productid;
@@ -117,10 +120,10 @@ export class ReviewsComponent implements OnInit {
   }
 
   openLoginPopup() {
-    this.modalService.open(this.loginModal, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      //Closed
-    }, (reason) => {
-      //Dismissed
+    this.modalService.open(LoginFormComponent).result.then((result) => {    
+      this.checkIfLoggedIn();
+    }, (reason) => {     
+      this.checkIfLoggedIn();
     });
   }
 
@@ -131,6 +134,11 @@ export class ReviewsComponent implements OnInit {
 
   checkIfLoggedIn() {
     var userToken = localStorage.getItem('productrating-token');
-    this.isLoggedIn = userToken != null;
+    this.isLoggedIn = userToken != null;  
+  } 
+
+  logOut(){
+    localStorage.removeItem('productrating-token');
+    this.isLoggedIn = false;
   }
 }

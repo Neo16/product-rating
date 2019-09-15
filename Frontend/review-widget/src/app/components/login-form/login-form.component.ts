@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { LoginService } from 'src/app/services/login-service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-login-form',
@@ -11,9 +12,9 @@ export class LoginFormComponent implements OnInit {
   username: string = "user@productrating.com";
   password: string = "Asdf123!";
 
-  loginSuccessEvent: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private loginService: LoginService) { }
+  constructor(
+    private loginService: LoginService,
+    public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
   }
@@ -22,10 +23,16 @@ export class LoginFormComponent implements OnInit {
     this.loginService.logIn(this.username, this.password)
     .subscribe(e => {
         if (e.userToken != null){
-          this.loginSuccessEvent.emit();
+          localStorage.setItem('productrating-token', e.userToken);     
+          this.activeModal.close("Submit");
         }
-        //TODO: login failure-t kezelni 
+        else{
+          //TODO: login failure-t kezelni 
+          this.activeModal.close("Submit");
+        }    
     });
+
+   
   }
 
 }

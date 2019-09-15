@@ -11,30 +11,35 @@ import { ReviewMood } from '../models/ReviewMood';
 export class ReviewService {
 
   private BASE_URL = 'https://localhost:44394';
+  private API_KEY = '';
 
   constructor(private http: HttpClient) { }
 
+  setApiKey(key: string) {
+    this.API_KEY = key;
+  }
+
   getReviewsOfProduct(productId: string): Observable<ReviewData[]> {
-    const url = `${this.BASE_URL}/products/${productId}/reviews`;
+    const url = `${this.BASE_URL}/products/${productId}/reviews?key=${this.API_KEY}`;
     return this.http.get<ReviewData[]>(url);
   }
 
   upvoteReview(reviewId: string): Observable<any> {
-    const url = `${this.BASE_URL}/reviews/upvote-review`;
+    const url = `${this.BASE_URL}/reviews/upvote-review?key=${this.API_KEY}`;
     return this.http.post<any>(url, { id: reviewId });
   }
 
   downvoteReview(reviewId: string): Observable<any> {
-    const url = `${this.BASE_URL}/reviews/downvote-review`;
+    const url = `${this.BASE_URL}/reviews/downvote-review?key=${this.API_KEY}`;
     return this.http.post<any>(url, { id: reviewId });
   }
 
   addNewReview(review: CreateReviewData): Observable<ReviewData> {
-    const url = `${this.BASE_URL}/reviews/add-review`;
+    const url = `${this.BASE_URL}/reviews/add-review?key=${this.API_KEY}`;
     return this.http.post<ReviewData>(url, review);
   }
   editReview(reviewId: string, text: string, mood: ReviewMood): Observable<any> {
-    const url = `${this.BASE_URL}/reviews/${reviewId}/update`;
+    const url = `${this.BASE_URL}/reviews/${reviewId}/update?key=${this.API_KEY}`;
 
     var editedReview: CreateReviewData = {
       mood: mood,
@@ -46,7 +51,7 @@ export class ReviewService {
   }
 
   deleteReview(reviewId: string): Observable<any> {
-    const url = `${this.BASE_URL}/reviews/${reviewId}`;
+    const url = `${this.BASE_URL}/reviews/${reviewId}?key=${this.API_KEY}`;
     return this.http.delete<any>(url);
   }
 

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faArrowDown, faArrowUp, faTrash, faTrashAlt, faPencilAlt, faSave, fas } from '@fortawesome/free-solid-svg-icons';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -28,7 +28,7 @@ import { TokenInterceptor } from './token-interceptor';
     EnumToArrayPipe,
     LoginFormComponent
   ],
-  entryComponents: [ReviewsComponent],
+  entryComponents: [ReviewsComponent, LoginFormComponent],
   providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,

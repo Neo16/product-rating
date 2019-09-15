@@ -8,12 +8,17 @@ import { LoginResultData } from '../models/LoginResultData';
 })
 export class LoginService {
     private BASE_URL = 'https://localhost:44394';
+    private API_KEY = '';
 
-    constructor(private http:HttpClient){}
+    constructor(private http: HttpClient) { }
 
-    logIn(username: string, password: string): Observable<LoginResultData> {  
-        const url = `${this.BASE_URL}/account/login`;
-        return this.http.post<LoginResultData>(url, JSON.stringify({username, password}));
+    setApiKey(key: string) {
+        this.API_KEY = key;
     }
-    
+
+    logIn(username: string, password: string): Observable<LoginResultData> {
+        const url = `${this.BASE_URL}/account/login?key=${this.API_KEY}`;
+        return this.http.post<LoginResultData>(url, JSON.stringify({ username, password }));
+    }
+
 }
