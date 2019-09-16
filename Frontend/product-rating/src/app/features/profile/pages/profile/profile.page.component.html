@@ -1,68 +1,67 @@
 <div *ngIf="profile" class="profile-header">
-   <div class="avatar-wrapper">
-      <ng-container *ngIf="profile.avatar != null">
-          <img [src]="'data:image/png;base64,' + profile.avatar.data" />
-      </ng-container>
-      <ng-container *ngIf="profile.avatar == null">
-          <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png"/>
-      </ng-container>
-   </div>
-   <div class="basic-profile-data-wrapper">
-      <div class="name-row">
-         <p class="username">{{profile.nickName}}</p>
-         <p class="userrole">{{profile.role}}</p>
-      </div>    
-      <div class="action-row">
-          <button *ngIf="profile.isMine && !isEditing"
-           (click)="isEditing = !isEditing"
-           class="btn btn-outline-primary">Edit profile</button>  
+  <div class="avatar-wrapper">
+    <ng-container *ngIf="profile.avatar != null">
+      <img [src]="'data:image/png;base64,' + profile.avatar.data" />
+    </ng-container>
+    <ng-container *ngIf="profile.avatar == null">
+      <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png" />
+    </ng-container>
+  </div>
+  <div class="basic-profile-data-wrapper">
+    <div class="name-row">
+      <p class="username">{{profile.nickName}}</p>
+      <p class="userrole">{{profile.role}}</p>
+    </div>
+    <div class="action-row">
+      <button *ngIf="profile.isMine && !isEditing" (click)="isEditing = !isEditing" class="btn btn-outline-primary">Edit
+        profile</button>
 
-           <input hidden 
-            #uploader
-            accept="image/*"
-            (change)="processAvatar(uploader)"
-            type="file"/>
+      <input hidden #uploader accept="image/*" (change)="processAvatar(uploader)" type="file" />
 
-            <button *ngIf="profile.isMine && isEditing"
-              (click)="uploader.click();"
-              class="btn btn-outline-primary">Change profile picture</button>  
-       </div> 
-   </div>  
+      <button *ngIf="profile.isMine && isEditing" (click)="uploader.click();" class="btn btn-outline-primary">Change
+        profile picture</button>
+    </div>
+  </div>
 </div>
 <div *ngIf="profile==null" class="profile-header">
-    <div class="avatar-wrapper">       
-        <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png"/>       
-     </div>
+  <div class="avatar-wrapper">
+    <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png" />
+  </div>
 </div>
 
 <div class="profile-details">
   <ngb-tabset>
     <ngb-tab title="About">
-      <ng-template ngbTabContent> 
+      <ng-template ngbTabContent>
         <!-- If isEditing is true: form is active, otherwise display profile data -->
-        <div *ngIf="profile != null && !isEditing" class="detail-tab">      
-            <app-profile-data [profile]="profile"></app-profile-data>
-        </div>  
-        <div *ngIf="editModel != null && isEditing"class="detail-tab">
-          <app-edit-profile-form
-             (save) = "saveProfile();"
-             [profile]="editModel"></app-edit-profile-form>
-        </div>    
+        <div *ngIf="profile != null && !isEditing" class="detail-tab">
+          <app-profile-data [profile]="profile"></app-profile-data>
+        </div>
+        <div *ngIf="editModel != null && isEditing" class="detail-tab">
+          <app-edit-profile-form (save)="saveProfile();" [profile]="editModel"></app-edit-profile-form>
+        </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Security">
+    <ngb-tab *ngIf="profile.isMine" title="Security">
+      <ng-template ngbTabContent>
+        <div class="detail-tab">
+          <app-change-password-form></app-change-password-form>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab *ngIf="profile.isMine" title="Subscriptions">
         <ng-template ngbTabContent>
-          <div *ngIf="profile.isMine" class="detail-tab">
-              <app-change-password-form></app-change-password-form>  
-          </div>       
+          <div class="detail-tab">
+            <app-subscriptions></app-subscriptions>
+          </div>
         </ng-template>
       </ngb-tab>
     <ngb-tab title="Activity">
       <ng-template ngbTabContent>
         <div class="detail-tab">
-            <p>TODO show revies given by user</p>   
-        </div>       
+          <p>TODO show revies given by user</p>
+        </div>
       </ng-template>
-    </ngb-tab>   
+    </ngb-tab>
   </ngb-tabset>
 </div>

@@ -9,14 +9,17 @@ import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { EditProfileFormComponent } from './components/edit-profile-form/edit-profile-form.component';
 import { ProfileDataComponent } from './components/profile-data/profile-data.component';
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
-
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
+import { SubscriptionItemComponent } from './components/subscription-item/subscription-item.component';
 
 @NgModule({
   declarations: [
     ProfilePageComponent,
     EditProfileFormComponent,
     ProfileDataComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    SubscriptionsComponent,
+    SubscriptionItemComponent
   ],
   providers: [
     ProfileService,

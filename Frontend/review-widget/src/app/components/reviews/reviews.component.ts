@@ -31,16 +31,16 @@ export class ReviewsComponent implements OnInit {
   isLoggedIn: boolean = false;
   showForm: boolean = false;
 
-  constructor(   
+  constructor(
     private loginService: LoginService,
     private reviewService: ReviewService,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loginService.setApiKey(this.key);
-    this.reviewService.setApiKey(this.key);    
-    this.checkIfLoggedIn();   
+    this.reviewService.setApiKey(this.key);
+    this.checkIfLoggedIn();
 
     this.newReview.mood = ReviewMood.Positive;
     this.newReview.productId = this.productid;
@@ -71,9 +71,9 @@ export class ReviewsComponent implements OnInit {
   }
 
   upvote(reviewId: string) {
-    if (!this.isLoggedIn){
+    if (!this.isLoggedIn) {
       this.openLoginPopup();
-    }   
+    }
     var review = this.positiveReviews.concat(this.negativeReviews)
       .find(x => x.id === reviewId);
 
@@ -86,9 +86,9 @@ export class ReviewsComponent implements OnInit {
   }
 
   downvote(reviewId: string) {
-    if (!this.isLoggedIn){
+    if (!this.isLoggedIn) {
       this.openLoginPopup();
-    }   
+    }
     var review = this.findReview(reviewId);
 
     this.reviewService.downvoteReview(reviewId)
@@ -120,11 +120,12 @@ export class ReviewsComponent implements OnInit {
   }
 
   openLoginPopup() {
-    this.modalService.open(LoginFormComponent).result.then((result) => {    
-      this.checkIfLoggedIn();
-    }, (reason) => {     
-      this.checkIfLoggedIn();
-    });
+    this.modalService.open(LoginFormComponent).result.then(
+      (fulfilled) => {
+        this.checkIfLoggedIn();
+      }, (rejected) => {
+        this.checkIfLoggedIn();
+      });
   }
 
   findReview(reviewId: string) {
@@ -134,10 +135,10 @@ export class ReviewsComponent implements OnInit {
 
   checkIfLoggedIn() {
     var userToken = localStorage.getItem('productrating-token');
-    this.isLoggedIn = userToken != null;  
-  } 
+    this.isLoggedIn = userToken != null;
+  }
 
-  logOut(){
+  logOut() {
     localStorage.removeItem('productrating-token');
     this.isLoggedIn = false;
   }

@@ -1,0 +1,26 @@
+@import "~src/general";
+
+.subscription-item {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  background-color: white;
+  padding: 8px;
+  margin-bottom: 10px;
+
+  &.last-item {
+    margin-bottom: 0px;
+  }
+}
+
+.subscription-actions {
+  button {
+    background: transparent;
+    color: $app-mild-gray;
+    border: 0px;
+
+    &:focus {
+      outline: 0px;
+    }
+  }
+}

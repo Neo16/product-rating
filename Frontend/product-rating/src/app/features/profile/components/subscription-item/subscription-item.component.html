@@ -1,0 +1,10 @@
+<div class="subscription-item">
+  <div class="subscription-url">Site base url<br>"{{subscription.url}}"</div>
+  <div class="subscription-key">Api key<br>{{subscription.key}}</div>
+  <div class="subscription-key">Daily calls<br> {{subscription.dayLimit}}</div>
+  <div class="subscription-actions">    
+    <button (click)="delete()">
+      <fa-icon [icon]="['fas', 'trash']" size="sm"></fa-icon>
+    </button> 
+  </div>
+</div>

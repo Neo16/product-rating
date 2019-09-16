@@ -48,6 +48,7 @@ namespace ProductRating.Bll.Services
                 .Where(e => e.UserId == userId)
                 .Select(e => new SubscriptionDto()
                 {
+                    Id = e.Id,
                     Key = e.ApiKey,
                     Url  = e.SiteBaseUrl,
                     DayLimit = e.DayLimit                    

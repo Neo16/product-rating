@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { ProfileData } from 'src/app/models/profile/ProfileData';
 import { EditProfileData } from 'src/app/models/profile/EditProdileData';
 import { ChangePasswordData } from 'src/app/models/ChangePasswordData';
+import { RequireSubscriptionData } from 'src/app/models/profile/RequireSubscriptionData';
+import { SubscriptionData } from 'src/app/models/profile/SubscriptionData';
 
 @Injectable()
 export class ProfileService {
@@ -22,12 +24,25 @@ export class ProfileService {
     }
 
     editProfile(profile: EditProfileData): Observable<any> {
-        const url = `${this.BASE_URL}/profile/update-profile`;   
+        const url = `${this.BASE_URL}/profile/update-profile`;
         return this.http.put<any>(url, JSON.stringify(profile));
     }
 
-    changePassword(data: ChangePasswordData): Observable<any>{
-        const url = `${this.BASE_URL}/account/change-password`;        
+    changePassword(data: ChangePasswordData): Observable<any> {
+        const url = `${this.BASE_URL}/account/change-password`;
         return this.http.post<any>(url, JSON.stringify(data));
+    }
+
+    getSubscriptions(): Observable<any> {
+        const url = `${this.BASE_URL}/profile/subscriptions`;
+        return this.http.get<any>(url);
+    }
+    requireSubscription(request: RequireSubscriptionData): Observable<SubscriptionData[]> {
+        const url = `${this.BASE_URL}/profile/require-subscription`;
+        return this.http.post<any>(url, JSON.stringify(request));
+    }
+    deleteSubscription(subscriptionId: string): Observable<any> {
+        const url = `${this.BASE_URL}/profile/delete-subscription/${subscriptionId}`;
+        return this.http.delete<any>(url);
     }
 }

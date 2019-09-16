@@ -76,14 +76,14 @@ namespace ProductRating.Web.ApiControllers
         }
 
         [HttpPost("require-subscription")]
-        public async Task<IActionResult> RequireApiKey(RequireSubscriptionDto requireApiKeyDto)
+        public async Task<IActionResult> RequireSubscription([FromBody] RequireSubscriptionDto requireApiKeyDto)
         {
             await subscriptionService.RequireSubscription(currentUserService.User.Id, requireApiKeyDto);
             return Ok();
         }
 
-        [HttpPost("delete-subscription/{subscriptionId}")]
-        public async Task<IActionResult> DeleteApiKey(Guid subscriptionId)
+        [HttpDelete("delete-subscription/{subscriptionId}")]
+        public async Task<IActionResult> DeleteSubscription(Guid subscriptionId)
         {
             await subscriptionService.DeleteSubscription(subscriptionId);
             return Ok();
