@@ -23,3 +23,8 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+//overwrite localstorage clearing, so cypress stays logged in between tests 
+Cypress.LocalStorage.clear = function (keys, ls, rs) {   
+   return;
+}

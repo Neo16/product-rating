@@ -12,12 +12,12 @@
     <textarea [(ngModel)]="editedText"></textarea>
   </div>
 
-  <div class="review-like-container">
-    <button *ngIf="!review.isMine" [ngClass]="{voted : review.wasUpvotedByMe}" (click)="pressedUpvote()">
+  <div class="review-like-container" [attr.isMine]="review.isMine ? '' : null">
+    <button test="upvote" *ngIf="!review.isMine" [ngClass]="{voted : review.wasUpvotedByMe}" (click)="pressedUpvote()">
       <fa-icon [icon]="['fas', 'arrow-up']" size="xs"></fa-icon>
     </button>
     {{review.points}}
-    <button *ngIf="!review.isMine" [ngClass]="{voted : review.wasDownvotedByMe}" (click)="pressedDownvote()">
+    <button test="downvote" *ngIf="!review.isMine" [ngClass]="{voted : review.wasDownvotedByMe}" (click)="pressedDownvote()">
       <fa-icon [icon]="['fas', 'arrow-down']" size="sm"></fa-icon>
     </button>
 
