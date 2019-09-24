@@ -35,11 +35,33 @@ describe("Manage categoires test", () => {
         cy.get('.ngx-datatable').should('contain', "Digital camera");
     });
 
-    it("should delete category", () => {
-
+    it("should edit category", () => {
         cy.get('input[name="name"]')
             .clear()
-            .type('Camera');
+            .type('Digital camera');
+        cy.get('button').contains('Filter').click();
+        cy.wait(200);
+
+        cy.get('a').contains('Edit').first().click();
+
+        //type category name
+        cy.get('input[name="category-name"]')
+            .clear()
+            .type('Camcorder');
+
+        //save category 
+        cy.get('button').contains('Update Category').click();
+
+        //check 
+        cy.get('.ngx-datatable').should('contain', "Camcorder");
+    });
+
+    it("should delete category", () => {
+        cy.get('input[name="name"]')
+            .clear()
+            .type('Camcorder');
+        cy.wait(200);
+
         cy.get('button').contains('Filter').click();
 
         cy.get('a').contains('Delete').first().click();
@@ -50,6 +72,6 @@ describe("Manage categoires test", () => {
 
         //check     
         cy.get('.ngx-datatable').should('not.contain', 'Digital camera');
+    });  
 
-    });
 });
