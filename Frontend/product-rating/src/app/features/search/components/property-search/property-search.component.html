@@ -34,6 +34,7 @@
         <div *ngFor="let brand of brands">
             <div *ngIf="brand != null">{{brand.name}}
               <input
+                  [attr.test]="brand.name"
                   type="checkbox"
                   [checked]="brand.isChecked"              
                   (change)="selectBrand(brand.id, $event)"/>

@@ -12,10 +12,10 @@ describe("Search test", () => {
 
       //Check if only the correct result is there
       cy.get('.product-list-container').find('.product-cell').should('have.length', 1);
-      cy.get('.product-cell').should('contain', 'Lenovo Dummy Laptop 20');
+      cy.get('.product-cell').should('contain', 'Dummy Laptop 20');
     });
 
-    it("should search for category", () => {  
+    it("should search by category", () => {  
         
         cy.get('input[name="textFilter"]')
         .clear();
@@ -34,5 +34,21 @@ describe("Search test", () => {
 
         // product should be a phone
         cy.get('body').should('contain', 'category: Phones');
+      });
+
+      it("should filter out a brand", () => {   
+        cy.visit("/search") ;
+        cy.wait(200);
+        
+        //Search for macbook
+        cy.get('input[name="textFilter"]')
+          .clear()
+          .type("MacBook");
+
+        //get rid of apple results
+        cy.get('input[test="Apple"]').uncheck();        
+       
+        //MacBook Air 13 should not be among the results
+        cy.get('body').should('not.contain', 'MacBook Air 13');
       });
   });

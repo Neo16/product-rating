@@ -1,4 +1,21 @@
 describe("Review test", () => {
+    it("should score a product 1-5 ", () => {
+        //Navigate a product's detail page     
+        cy.visit("/search");
+        cy.get('.product-cell').first().find('a').click({ force: true });
+        cy.wait(200);
+
+        cy.get('a').contains('Change your score').click();
+        cy.wait(200);
+
+        //click on the 5th star, then save score
+        cy.get('.score-modal-container').find('.br-unit').eq(4).click();
+        cy.get('button').contains('Save').click();
+
+        //check
+        cy.get('.score-row').should('contain', 'you scored this product: 5');
+    });
+
     it("should add a text review", () => {
         //Navigate a product's detail page     
         cy.visit("/search");
@@ -57,7 +74,7 @@ describe("Review test", () => {
 
         //find a review, that's not written by the user logged in 
         //TODO: add indicator poperty to find reviews that the user didnt up/downvote yet 
-        cy.get('.review-like-container:not([isMine])')            
+        cy.get('.review-like-container:not([isMine])')
             .first().then(($score) => {
                 //original score
                 const score = parseInt($score.text());
@@ -66,7 +83,7 @@ describe("Review test", () => {
                 cy.get('button[test="upvote"]').first().click();
                 //check
                 cy.get('.review-like-container').first().should(($upvotedScore) => {
-                    expect(parseInt($upvotedScore.text())).to.eq(score+1);                   
+                    expect(parseInt($upvotedScore.text())).to.eq(score + 1);
                 })
 
                 //downvote 
@@ -74,12 +91,11 @@ describe("Review test", () => {
                 cy.get('button[test="downvote"]').first().click();
                 //check
                 cy.get('.review-like-container').first().should(($downvotedScore) => {
-                    expect(parseInt($downvotedScore.text())).to.eq(score-1);                   
+                    expect(parseInt($downvotedScore.text())).to.eq(score - 1);
                 })
 
                 //upvote again, to get back to original state 
                 cy.get('button[test="upvote"]').first().click();
             })
-
     });
 });
