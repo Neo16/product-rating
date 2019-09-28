@@ -286,15 +286,24 @@ namespace ProductRating.Bll.Services
             {
                 foreach (var attr in product.IntAttributes)
                 {
-                    dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                    if(attr.ValueId == null)
                     {
-                        ProductAttributeValue = new ProductAttributeIntValue()
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
                         {
-                            AttributeId = attr.AttributeId,
-                            IntValue = attr.Value,
-                            Id = attr.ValueId
-                        }
-                    });
+                            ProductAttributeValue = new ProductAttributeIntValue()
+                            {
+                                AttributeId = attr.AttributeId,
+                                IntValue = attr.Value                               
+                            }
+                        });
+                    }
+                    else
+                    {
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                        {
+                            ProductAttributeValueId = attr.ValueId.Value                           
+                        });
+                    }                    
                 }
             }
           
@@ -302,15 +311,24 @@ namespace ProductRating.Bll.Services
             {
                 foreach (var attr in product.StringAttributes)
                 {
-                    dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                    if (attr.ValueId == null)
                     {
-                        ProductAttributeValue = new ProductAttributeStringValue()
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
                         {
-                            AttributeId = attr.AttributeId,
-                            StringValue = attr.Value,
-                            Id = attr.ValueId
-                        }
-                    });
+                            ProductAttributeValue = new ProductAttributeStringValue()
+                            {
+                                AttributeId = attr.AttributeId,
+                                StringValue = attr.Value                              
+                            }
+                        });
+                    }
+                    else
+                    {
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                        {
+                            ProductAttributeValueId = attr.ValueId.Value
+                        });
+                    }                    
                 }
             }            
 

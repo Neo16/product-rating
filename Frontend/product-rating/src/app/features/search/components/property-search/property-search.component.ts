@@ -7,7 +7,7 @@ import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
 import { BrandHeader } from 'src/app/models/search/BrandHeader';
 import { ChangeFilterAction, FireSearchAction, AddCategoryFilterAction, RemoveCategoryFilterAction, AddBrandFilterAction, RemoveBrandFilterAction, AddAttributeFilterAction, RemoveAttributeFilterAction } from 'src/app/store/search-store/search.actions';
 import { SearchParams } from 'src/app/models/search/SearchParams';
-import { SearchHelperService } from '../../services/search-helper.service';
+import { HelperService } from '../../services/search-helper.service';
 import { Options, ChangeContext } from 'ng5-slider';
 import { SearchCategoryAttributeData } from 'src/app/models/categories/search/SearchCategoryAttributeData';
 import { AttributeType } from 'src/app/models/categories/AttributeType';
@@ -38,7 +38,7 @@ export class PropertySearchComponent implements OnInit {
 
   constructor(
     private store: Store<SearchState>,
-    private helperService: SearchHelperService) {
+    private helperService: HelperService) {
     this.getSearchState = this.store.select(selectSearchState);
   }
 

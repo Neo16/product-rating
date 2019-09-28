@@ -8,7 +8,7 @@ describe("Review test", () => {
         cy.get('a').contains('Change your score').click();
         cy.wait(200);
 
-        //click on the 5th star, then save score
+        //click on the 5th star (starting from 0), then save score
         cy.get('.score-modal-container').find('.br-unit').eq(4).click();
         cy.get('button').contains('Save').click();
 

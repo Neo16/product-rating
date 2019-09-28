@@ -6,7 +6,7 @@ import { SearchRoutingModule } from './search-routing.module';
 import { PropertySearchComponent } from './components/property-search/property-search.component';
 import { ProductsModule } from '../products/products.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SearchHelperService } from './services/search-helper.service';
+import { HelperService } from './services/search-helper.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { CategoryPickerComponent } from './components/category-picker/category-picker.component';
@@ -26,7 +26,7 @@ import { CategoryPickerComponent } from './components/category-picker/category-p
     SharedModule
   ],
   providers: [
-    SearchHelperService,
+    HelperService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

@@ -15,6 +15,6 @@ namespace ProductRating.Bll.Dtos.Product
 
         public string AttributeName { get; set; }
 
-        public Guid ValueId { get; set; }
+        public Guid? ValueId { get; set; }
     }
 }

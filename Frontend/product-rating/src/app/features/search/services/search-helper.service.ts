@@ -5,7 +5,7 @@ import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
 import { SearchCategoryAttributeData } from 'src/app/models/categories/search/SearchCategoryAttributeData';
 
 @Injectable()
-export class SearchHelperService {
+export class HelperService {
   private BASE_URL = 'https://localhost:44394';
 
   constructor(private http: HttpClient) {}

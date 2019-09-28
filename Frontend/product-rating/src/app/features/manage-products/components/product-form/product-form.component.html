@@ -8,7 +8,8 @@
     <div class="col-12">
       <div class="form-group">
         <label>Category</label>
-        <select [(ngModel)]="product.categoryId" name="categoryId" class="form-control">
+        <select (change)="onCategoryChange($event.target.value)" [(ngModel)]="product.categoryId" name="categoryId"
+          class="form-control">
           <option [value]="null" disabled>Choose a category</option>
           <option *ngFor="let category of categories" [value]="category.id">
             {{category.name}}
@@ -21,6 +22,9 @@
         <label>Brand</label>
         <select [(ngModel)]="product.brandId" name="brandId" class="form-control">
           <option [value]="null" disabled>Choose a brand</option>
+          <option *ngFor="let brand of brands" [value]="brand.id">
+            {{brand.name}}
+          </option>
         </select>
       </div>
     </div>
@@ -44,8 +48,27 @@
     <div class="col-12">
       <app-picture-uploader [picture]="product.thumbnailPicture"></app-picture-uploader>
     </div>
+
+    <div *ngIf="attributes.length > 0" class="col-12">
+      <div *ngFor="let attribute of attributes">
+        <div *ngIf="attribute.hasFixedValues == true">
+          <label>{{attribute.attributeName}}</label>
+          <select name="attribute" class="form-control"
+            (change)="selectAttributeValue(attribute.attributeId, attribute.type, $event)">
+            <option [value]="-1">All</option>
+            <option *ngFor="let value of attribute.values" [value]="value.valueId">
+              {{value.displayValue}}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="attribute.hasFixedValues != true">
+          <label>{{attribute.attributeName}}</label>
+          <input class="form-control" (change)="changeAttributeValue(attribute.attributeId, attribute.type, $event)">
+          <div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-
 
 </form>
