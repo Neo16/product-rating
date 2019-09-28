@@ -26,8 +26,6 @@ namespace ProductRating.Model.Identity
 
         public ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
-
         public virtual ICollection<Subscription> Subscriptions { get; set; }
     }
 }

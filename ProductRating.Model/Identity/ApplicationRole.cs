@@ -6,6 +6,6 @@ using System.Text;
 namespace ProductRating.Model.Identity
 {
     public class ApplicationRole : IdentityRole<Guid>
-    {
+    {       
     }
 }

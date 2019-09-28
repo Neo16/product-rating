@@ -34,10 +34,11 @@ namespace ProductRating.Bll.Services
 
         public async Task<ProfileDto> GetProfileByUserId(Guid UserId)
         {
+            var ownerRole = await context.Set<ApplicationRole>().SingleAsync(e => e.Name == RoleNames.SHOP_OWNER_ROLE);
+            var adminRole = await context.Set<ApplicationRole>().SingleAsync(e => e.Name == RoleNames.ADMIN_ROLE);
+
             var user = await context.Users
-                .Include(e => e.Avatar)
-                .Include(e => e.Roles)
-                .ThenInclude(e => e.Role)
+                .Include(e => e.Avatar)                
                 .Where(e => e.Id == UserId)
                 .SingleOrDefaultAsync();
 
@@ -47,11 +48,11 @@ namespace ProductRating.Bll.Services
             }
 
             var profile = mapper.Map<ProfileDto>(user); 
-            if (user.Roles.Any(e => e.Role.Name == RoleNames.ADMIN_ROLE))
+            if (context.UserRoles.Where(d => d.UserId == user.Id).Any(e => e.RoleId == adminRole.Id))
             {
                 profile.Role = "Administrator";
             }
-            else if(user.Roles.Any(e => e.Role.Name == RoleNames.SHOP_OWNER_ROLE)) {
+            else if(context.UserRoles.Where(d => d.UserId == user.Id).Any(e => e.RoleId == ownerRole.Id)) {
                 profile.Role = "Webshop owner";
             }
             else

@@ -14,14 +14,14 @@ import { AcccountEffects } from './store/account-store/account.effects';
 import { SearchEffects } from './store/search-store/search.effects';
 import { ManageProductsModule } from './features/manage-products/manage-products.module';
 import { ManageCategoriesModule } from './features/manage-categories/manage-categories.module';
-import { LoggingService } from './core/services/logger.service';
 import { GlobalErrorHandler } from './global-error-handler';
 import { ManageBrandsModule } from './features/manage-brands/manage-brands.module';
 import { PopupComponent } from './shared/popup/popup.component';
+import { ManageUsersModule } from './features/manage-users/manage-users.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent   
   ],
   imports: [
     BrowserModule,
@@ -34,6 +34,7 @@ import { PopupComponent } from './shared/popup/popup.component';
     ManageCategoriesModule,
     ManageBrandsModule,
     BrowserAnimationsModule,
+    ManageUsersModule,
     StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([AcccountEffects, SearchEffects])
   ],
