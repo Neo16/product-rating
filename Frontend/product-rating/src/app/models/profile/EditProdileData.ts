@@ -1,4 +1,5 @@
 export class EditProfileData {
+    
     nickName: string;
 
     email: string;

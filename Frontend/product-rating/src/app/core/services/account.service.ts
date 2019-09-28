@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../../models/User';
 import { Observable } from 'rxjs';
 import { LoginResultData } from 'src/app/models/LoginResultData';
+import { RegisterData } from 'src/app/models/RegisterData';
 
 @Injectable()
 export class AccountService {
@@ -18,4 +19,10 @@ export class AccountService {
     const url = `${this.BASE_URL}/account/login`;
     return this.http.post<LoginResultData>(url, JSON.stringify({username, password}));
   }
+
+  register(data: RegisterData): Observable<any> {  
+    const url = `${this.BASE_URL}/account/register`;
+    return this.http.post<any>(url, JSON.stringify(data));
+  }
+
 }

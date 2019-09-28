@@ -1,20 +1,23 @@
 <form>
   <div class="form-group">
-    <label for="email">Email</label> 
+    <label for="email">Nickname</label>
+    <input [(ngModel)]="profile.nickName" name="nickName" placeholder="Nickname" type="text" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
     <input [(ngModel)]="profile.email" name="email" placeholder="Email address" type="text" class="form-control">
   </div>
   <div class="form-group">
-    <label for="introduction">Introduction</label> 
-    <textarea [(ngModel)]="profile.introduction" name="introduction"
-       placeholder="What should others know about you?" type="text" class="form-control"></textarea>
+    <label for="introduction">Introduction</label>
+    <textarea [(ngModel)]="profile.introduction" name="introduction" placeholder="What should others know about you?"
+      type="text" class="form-control"></textarea>
   </div>
   <div class="form-group">
-    <label for="nationality">Nationality</label> 
-    <input [(ngModel)]="profile.nationality" name="nationality" placeholder="Nationality" type="text" class="form-control">
-  </div> 
+    <label for="nationality">Nationality</label>
+    <input [(ngModel)]="profile.nationality" name="nationality" placeholder="Nationality" type="text"
+      class="form-control">
+  </div>
   <div class="form-group">
-    <button
-     (click)="submit();"     
-     type="button" type="button" class="btn btn-primary">Save profile</button>
+    <button (click)="submit();" type="button" type="button" class="btn btn-primary">Save profile</button>
   </div>
 </form>

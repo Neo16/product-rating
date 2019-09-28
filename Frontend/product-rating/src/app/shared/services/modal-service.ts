@@ -7,10 +7,12 @@ export class ModalService {
 
     constructor(private ngModalService: NgbModal) { }
 
-    openInformationModal(title: string, message: string) {
+    openInformationModal(title: string, message: string): Promise<any> {
         var modalRef = this.ngModalService.open(PopupComponent);
         (modalRef.componentInstance as PopupComponent).title = title;
-        (modalRef.componentInstance as PopupComponent).body = message;    
+        (modalRef.componentInstance as PopupComponent).body = message; 
+        
+        return modalRef.result;
     }
 
     openConfirmationModal(title: string, message: string): Promise<any>  {

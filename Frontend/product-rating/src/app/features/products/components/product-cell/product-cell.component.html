@@ -1,10 +1,13 @@
 <div class="product-cell">
   <div class="image-container">
-      <img *ngIf="product.thumbnailImage == null" src="https://via.placeholder.com/300x200">
-      <img *ngIf="product.thumbnailImage != null" [src]="'data:image/png;base64,' + product.thumbnailImage">
-  </div>  
+    <img *ngIf="product.thumbnailImage == null" src="https://via.placeholder.com/300x200">
+    <img *ngIf="product.thumbnailImage != null" [src]="'data:image/png;base64,' + product.thumbnailImage">
+  </div>
   <a [routerLink]="['/products', product.id]">
     {{product.brandName}} {{product.name}}
-  </a> 
-  <bar-rating [(rate)]="product.score" [readOnly] = "true" [max]="5"></bar-rating>
+    <br>
+    <div class="price">${{product.price}}</div>
+  </a>
+
+  <bar-rating [(rate)]="product.score" [readOnly]="true" [max]="5"></bar-rating>
 </div>

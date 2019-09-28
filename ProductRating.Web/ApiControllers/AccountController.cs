@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos.Account;
+using ProductRating.Bll.Dtos.Enum;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Common;
 using ProductRating.Model.Identity;
 using ProductRating.Web.WebServices;
 using System.Linq;
@@ -24,6 +26,51 @@ namespace ProductRating.Web.ApiControllers
             this.userManager = userManager;
             this.tokenService = tokenService;
             this.currentUserService = currentUserService;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterDto model)
+        {
+            if (!ModelState.IsValid)
+            {                
+                return BadRequest("Mandatory fields should be filled.");
+            }
+            var passwordValidator = new PasswordValidator<ApplicationUser>();
+            var passWordResult = await passwordValidator.ValidateAsync(userManager, null, model.Password);
+            if (!passWordResult.Succeeded)
+            {
+                return BadRequest(passWordResult.Errors.First().Description);
+            }          
+
+            var dbUser = new ApplicationUser()
+            {
+                Email = model.Email,
+                EmailConfirmed = true,
+                Nationality = model.Natinonality,
+                NickName = model.NickName,
+                UserName = model.Email
+            };
+            IdentityResult result = await userManager.CreateAsync(dbUser);
+
+            if (result.Succeeded)
+            {
+                switch (model.Role)
+                {
+                    case Role.Customer:
+                        await userManager.AddToRoleAsync(dbUser, RoleNames.USER_ROLE);
+                        break;
+                    case Role.WebshopOwner:
+                        await userManager.AddToRoleAsync(dbUser, RoleNames.SHOP_OWNER_ROLE);
+                        break;
+                }                
+                await userManager.AddPasswordAsync(dbUser, model.Password);
+                return Ok();
+            }
+
+            var errorMessage = result.Errors != null && result.Errors.Any()
+                ? string.Join(',', result.Errors.Select(e => e.Description).ToList())
+                : "Registration failed";
+            return BadRequest(errorMessage);
         }
 
         [HttpPost("login")]
@@ -62,7 +109,7 @@ namespace ProductRating.Web.ApiControllers
             else
             {
                 return BadRequest(result.Errors);
-            }           
-        }       
+            }
+        }
     }
 }

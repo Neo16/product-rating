@@ -9,12 +9,14 @@ import { AccountService } from './services/account.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './services/token.service';
 import { SharedModule } from '../shared/shared.module';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
     LoginPageComponent,
     MenuComponent,
-    LayoutComponent
+    LayoutComponent,
+    RegisterComponent
   ],
   imports: [    
     SharedModule,
