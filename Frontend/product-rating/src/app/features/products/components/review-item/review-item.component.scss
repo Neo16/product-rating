@@ -1,6 +1,10 @@
 @import "~src/general"; 
 
 .review-item-container{
+    &.highLighted{
+        background-color: #ffb5b0;
+    }
+
     @extend %container-base;
     padding: 5px 5px;
     width: 100%;

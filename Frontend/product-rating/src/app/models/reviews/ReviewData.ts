@@ -11,4 +11,5 @@ export interface ReviewData
     points: number;
     authorName: string;
     createdAt: string;
+    highLighted: boolean;
 }

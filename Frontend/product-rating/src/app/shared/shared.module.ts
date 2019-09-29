@@ -11,9 +11,10 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { PopupComponent } from './popup/popup.component';
 import { ModalService } from './services/modal-service';
+import { LongPress } from './directives/long-press';
 
 @NgModule({
-  declarations: [EnumToArrayPipe, PopupComponent],
+  declarations: [EnumToArrayPipe, PopupComponent, LongPress],
   providers: [ModalService],
   imports: [
     Ng5SliderModule,
@@ -34,7 +35,8 @@ import { ModalService } from './services/modal-service';
     NgxDatatableModule,
     UiSwitchModule,
     NgbModule,
-    PopupComponent
+    PopupComponent,
+    LongPress
   ]
 })
 export class SharedModule {

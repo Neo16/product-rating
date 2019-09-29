@@ -1,4 +1,4 @@
-<div class="review-item-container">
+<div class="review-item-container" [class.highLighted]="review.highLighted">
   <div class="review-info">
     <div class="author-name">{{review.authorName}}</div>
     <div class="created">{{review.createdAt}}</div>
@@ -17,7 +17,8 @@
       <fa-icon [icon]="['fas', 'arrow-up']" size="xs"></fa-icon>
     </button>
     {{review.points}}
-    <button test="downvote" *ngIf="!review.isMine" [ngClass]="{voted : review.wasDownvotedByMe}" (click)="pressedDownvote()">
+    <button test="downvote" *ngIf="!review.isMine" [ngClass]="{voted : review.wasDownvotedByMe}"
+      (click)="pressedDownvote()">
       <fa-icon [icon]="['fas', 'arrow-down']" size="sm"></fa-icon>
     </button>
 

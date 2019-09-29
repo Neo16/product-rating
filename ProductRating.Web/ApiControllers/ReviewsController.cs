@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Review;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Common;
 using ProductRating.Web.WebServices;
 using System;
 using System.Threading.Tasks;
@@ -54,7 +55,7 @@ namespace ProductRating.Web.ApiControllers
         [HttpDelete("{reviewId}")]
         public async Task<IActionResult> DeleteTextReview(Guid reviewId)
         {
-            await reviewService.DeleteReview(currentUserService.User.Id, reviewId);
+            await reviewService.DeleteReview(currentUserService.User.Id, reviewId, User.IsInRole(RoleNames.ADMIN_ROLE));
             return Ok();
         }
 

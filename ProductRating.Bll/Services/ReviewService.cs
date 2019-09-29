@@ -87,11 +87,17 @@ namespace ProductRating.Bll.Services
             }
         }
 
-        public async Task DeleteReview(Guid userId, Guid reviewId)
+        public async Task DeleteReview(Guid userId, Guid reviewId, bool isAdmin)
         {
-            var dbReview = await context.Reviews
-              .Where(e => e.Id == reviewId)
-              .Where(e => e.AuthorId == userId)
+            var query = context.Reviews
+              .Where(e => e.Id == reviewId);
+
+            if (!isAdmin)
+            {
+                query = query.Where(e => e.AuthorId == userId);
+            }
+
+            var dbReview = await query
               .FirstOrDefaultAsync();
 
             context.Reviews.Remove(dbReview);

@@ -14,7 +14,7 @@ namespace ProductRating.Bll.ServiceInterfaces
 
         Task UpdateReview(Guid userId, Guid reviewId, CreateEditTextReviewDto textReview);
 
-        Task DeleteReview(Guid userId, Guid reviewId);
+        Task DeleteReview(Guid userId, Guid reviewId, bool isAdmin);
 
         Task<List<TextReviewDto>> GetReviewsOfProduct(Guid? userId, Guid productId);
 
