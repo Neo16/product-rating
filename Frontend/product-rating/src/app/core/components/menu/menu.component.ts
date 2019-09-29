@@ -18,6 +18,9 @@ export class MenuComponent implements OnInit {
   userName: string = null;
   roles: string[] = [];
 
+  isOwner: boolean = false;
+  isAdmin: boolean = false;
+
   //state
   getAccountState: Observable<AccountState>;
 
@@ -32,7 +35,8 @@ export class MenuComponent implements OnInit {
         console.log(accountState);
         this.userName = accountState.user.username;
         this.roles = accountState.user.roles;
-      }      
+        this.setRoleFlags(this.roles);
+      }
     });
     if (!this.isLoggedIn) {
       this.loginFromLocalStorage();
@@ -42,7 +46,8 @@ export class MenuComponent implements OnInit {
   loginFromLocalStorage() {
     var userToken = localStorage.getItem('productrating-token');
     var userName = localStorage.getItem('productrating-username');
-    var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as String[];
+    var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as string[];
+    this.setRoleFlags(userRoles);
 
     console.log(userName);
     if (userName && userToken) {
@@ -52,6 +57,11 @@ export class MenuComponent implements OnInit {
         userRoles: userRoles
       } as LoginResultData));
     }
+  }
+
+  setRoleFlags(roles: string[]) {   
+    this.isAdmin = roles.some(e => e == "ADMIN");
+    this.isOwner = roles.some(e => e == "SHOP_OWNER")
   }
 
   logout() {

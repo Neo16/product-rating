@@ -1,54 +1,59 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">  
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <!-- lefz align navigation links -->
+    <!-- left align navigation links -->
     <div class="navbar-nav mr-auto">
       <a routerLink='' class="nav-item nav-link ml-auto">Main page</a>
-      <ng-container *ngIf="isLoggedIn === true">
+      <ng-container *ngIf="isOwner || isAdmin">
         <li ngbDropdown class="nav-item">
           <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
             Manage Products
           </a>
-          <div ngbDropdownMenu  aria-labelledby="navbarDropdown">            
-              <a ngbDropdownItem routerLink='/manage-products' class="nav-item nav-link">Products</a>
-              <a ngbDropdownItem routerLink='/manage-products/new' class="nav-item nav-link">New product</a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown">
+            <a ngbDropdownItem routerLink='/manage-products' class="nav-item nav-link">Products</a>
+            <a ngbDropdownItem routerLink='/manage-products/new' class="nav-item nav-link">New product</a>
           </div>
-        </li>     
+        </li>
         <li ngbDropdown class="nav-item">
-            <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
-              Manage Categories
-            </a>
-            <div ngbDropdownMenu  aria-labelledby="navbarDropdown">            
-                <a ngbDropdownItem routerLink='/manage-categories' class="nav-item nav-link">All categories</a>
-                <a ngbDropdownItem routerLink='/manage-categories/new' class="nav-item nav-link">New category</a>
-            </div>
-          </li>       
-          <li ngbDropdown class="nav-item">
-              <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
-                Manage Brands
-              </a>
-              <div ngbDropdownMenu  aria-labelledby="navbarDropdown">            
-                  <a ngbDropdownItem routerLink='/manage-brands' class="nav-item nav-link">All brands</a>
-                  <a ngbDropdownItem routerLink='/manage-brands/new' class="nav-item nav-link">New brand</a>
-              </div>
-            </li>       
+          <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
+            Manage Categories
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown">
+            <a ngbDropdownItem routerLink='/manage-categories' class="nav-item nav-link">All categories</a>
+            <a ngbDropdownItem routerLink='/manage-categories/new' class="nav-item nav-link">New category</a>
+          </div>
+        </li>
+        <li ngbDropdown class="nav-item">
+          <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
+            Manage Brands
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown">
+            <a ngbDropdownItem routerLink='/manage-brands' class="nav-item nav-link">All brands</a>
+            <a ngbDropdownItem routerLink='/manage-brands/new' class="nav-item nav-link">New brand</a>
+          </div>
+        </li>
+        <li *ngIf="isAdmin" class="nav-item">
+          <a class="nav-link" routerLink='/manage-users' id="navbarDropdown" role="button">
+            Manage Users
+          </a>
+        </li>
       </ng-container>
     </div>
-    <!-- right align navigation links --> 
+    <!-- right align navigation links -->
     <div class="navbar-nav">
       <ng-container *ngIf="isLoggedIn === true">
-          <li ngbDropdown class="nav-item">
-              <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
-                Logged in as: {{userName}}
-              </a>
-              <div ngbDropdownMenu  aria-labelledby="navbarDropdown">            
-                  <a ngbDropdownItem routerLink='/profile' class="nav-item nav-link">Profile</a>
-                  <a href="javascript:void(0)" (click)="logout()" class="nav-item nav-link">Log out</a>
-              </div>
-          </li>   
+        <li ngbDropdown class="nav-item">
+          <a ngbDropdownToggle class="nav-link" href="javascript:void(0)" id="navbarDropdown" role="button">
+            Logged in as: {{userName}}
+          </a>
+          <div ngbDropdownMenu aria-labelledby="navbarDropdown">
+            <a ngbDropdownItem routerLink='/profile' class="nav-item nav-link">Profile</a>
+            <a href="javascript:void(0)" (click)="logout()" class="nav-item nav-link">Log out</a>
+          </div>
+        </li>
       </ng-container>
       <ng-container *ngIf="isLoggedIn === false">
         <a routerLink='/account/login' class="nav-item nav-link">Login</a>

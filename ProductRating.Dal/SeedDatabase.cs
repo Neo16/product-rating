@@ -69,6 +69,10 @@ namespace ProductRating.Dal
 
         private static ApplicationDbContext CreateUsers(this ApplicationDbContext context)
         {
+            var userRoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id;
+            var ownerRoleId = context.Roles.Where(e => e.Name == RoleNames.SHOP_OWNER_ROLE).Single().Id;
+            var adminRoleId = context.Roles.Where(e => e.Name == RoleNames.ADMIN_ROLE).Single().Id;
+
             PasswordHasher<ApplicationUser> passwordHasher = new PasswordHasher<ApplicationUser>();
             var user = new ApplicationUser()
             {
@@ -83,62 +87,79 @@ namespace ProductRating.Dal
                 Address = "9024, Győr, Arany János utca 11",
                 Introduction = "Etiam eget neque ac nisi sodales pellentesque. Donec suscipit enim feugiat tortor ultricies faucibus. Fusce eu ante mi. Fusce iaculis sed ipsum venenatis efficitur. Praesent dolor neque, maximus sit amet cursus vel, ornare et felis. Vestibulum auctor tellus odio, vel faucibus risus tincidunt sit amet.",
                 Nationality = "Hungarian",
-                Subscriptions = new List<Subscription>() { 
+                Subscriptions = new List<Subscription>() {
                     new Subscription() {
                          ApiKey = "123456",
                          SiteBaseUrl = "",
                          DayLimit = 200
                     }
                 }
-                
+
             };
             user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
             context.Users.Add(user);
 
-            var user2 = new ApplicationUser()
+            var customer = new ApplicationUser()
             {
-                Email = "user2@productrating.com",
-                NormalizedEmail = "USER2@PRODUCTRATING.COM",
-                UserName = "user2@productrating.com",
-                NormalizedUserName = "USER2@PRODUCTRATING.COM",
+                Email = "customer@productrating.com",
+                NormalizedEmail = "CUSTOMER@PRODUCTRATING.COM",
+                UserName = "customer@productrating.com",
+                NormalizedUserName = "CUSTOMER@PRODUCTRATING.COM",
                 EmailConfirmed = true,
-                SecurityStamp = "3543545345",
-                PhoneNumber = "+311124211",
-                NickName = "Dávid",
-                Subscriptions = new List<Subscription>() {
-                    new Subscription() {
-                         ApiKey = "123123",
-                         SiteBaseUrl = "",
-                         DayLimit = 200
-                    }
-                }                
+                SecurityStamp = "3345545345",
+                PhoneNumber = "+311345211",
+                NickName = "Mark Customer",
+                Nationality = "USA"
             };
-            user.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
-            context.Users.Add(user2);
+            customer.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
+            context.Users.Add(customer);
+
+            var owner = new ApplicationUser()
+            {
+                Email = "webshop-owner@productrating.com",
+                NormalizedEmail = "WEBSHOP-OWNER@PRODUCTRATING.COM",
+                UserName = "webshop-owner@productrating.com",
+                NormalizedUserName = "WEBSHOP-OWNER@PRODUCTRATING.COM",
+                EmailConfirmed = true,
+                SecurityStamp = "32345545345",
+                PhoneNumber = "+3234345211",
+                NickName = "David Owner",
+                Nationality = "Denmark"
+            };
+            owner.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
+            context.Users.Add(owner);
+
+            var admin = new ApplicationUser()
+            {
+                Email = "admin@productrating.com",
+                NormalizedEmail = "ADMIN@PRODUCTRATING.COM",
+                UserName = "admin@productrating.com",
+                NormalizedUserName = "ADMIN@PRODUCTRATING.COM",
+                EmailConfirmed = true,
+                SecurityStamp = "3345545345",
+                PhoneNumber = "+311345211",
+                NickName = "Joe Admin",
+                Nationality = "USA"
+            };
+            admin.PasswordHash = passwordHasher.HashPassword(user, "Asdf123!");
+            context.Users.Add(admin);
 
             context.SaveChanges();
+            var userRoles = new List<IdentityUserRole<Guid>>()
+            {
+                //"user" has all roles
+                new IdentityUserRole<Guid>(){ RoleId = userRoleId, UserId = user.Id  },
+                new IdentityUserRole<Guid>(){ RoleId = ownerRoleId, UserId = user.Id },
+                new IdentityUserRole<Guid>(){ RoleId = adminRoleId, UserId = user.Id },
+                //"customer" is only simple user
+                new IdentityUserRole<Guid>(){ RoleId = userRoleId, UserId = customer.Id  },
+                //"owner" is a webshop owner
+                new IdentityUserRole<Guid>(){ RoleId = ownerRoleId, UserId = owner.Id  },
+                //admin
+                 new IdentityUserRole<Guid>(){ RoleId = adminRoleId, UserId = admin.Id  },
+            };
 
-            context.UserRoles.Add(new IdentityUserRole<Guid>()
-            {
-                RoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id,
-                UserId = user.Id
-            });
-            context.UserRoles.Add(new IdentityUserRole<Guid>()
-            {
-                RoleId = context.Roles.Where(e => e.Name == RoleNames.ADMIN_ROLE).Single().Id,
-                UserId = user.Id
-            });
-            context.UserRoles.Add(new IdentityUserRole<Guid>()
-            {
-                RoleId = context.Roles.Where(e => e.Name == RoleNames.SHOP_OWNER_ROLE).Single().Id,
-                UserId = user.Id
-            });
-
-            context.UserRoles.Add(new IdentityUserRole<Guid>()
-            {
-                RoleId = context.Roles.Where(e => e.Name == RoleNames.USER_ROLE).Single().Id,
-                UserId = user2.Id
-            });
+            context.UserRoles.AddRange(userRoles);
 
             context.SaveChanges();
             webshopOwnderUser = user;
@@ -326,9 +347,9 @@ namespace ProductRating.Dal
 
         private static void AddDummyLaptops(this ApplicationDbContext context, int count)
         {
-            var r = new Random();        
+            var r = new Random();
             var processorValueId = context.ProductAttributeValues
-                .Include(e =>e.Attribute)
+                .Include(e => e.Attribute)
                 .Where(e => e.Attribute.Name == "Processor").First().Id;
 
             for (int i = 0; i < count; i++)
