@@ -3,6 +3,7 @@ import { UserManageHeaderData } from 'src/app/models/users/UserManageHeaderData'
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ManageUserFilterData } from 'src/app/models/users/ManageUserFilterData';
+import { RoleDisplay, Role } from 'src/app/models/Role';
 
 @Component({
   selector: 'app-users',
@@ -18,6 +19,9 @@ export class UsersComponent implements OnInit {
   @ViewChild('lockoutTml') lockoutTml: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
   columns = [];
+
+  roleDisplay = RoleDisplay;
+  role = Role;
 
   constructor(private manageUsersService: ManageUsersService) { }
 
@@ -45,6 +49,24 @@ export class UsersComponent implements OnInit {
       .subscribe(result => {
         this.users = result;
         console.log(this.users);
+      })
+  }
+
+  changeIsLockedOutFilter(value) {
+    this.filter.isLockedOut = value;
+  }
+
+  lockOut(userId) {
+    this.manageUsersService.lockoutUser(userId)
+      .subscribe(result => {
+        this.reload();
+      })
+  }
+
+  admit(userId) {
+    this.manageUsersService.admitUser(userId)
+      .subscribe(result => {
+        this.reload();
       })
   }
 

@@ -1,41 +1,49 @@
 <div>
   <div class="table-container">
-    <!-- <div class="row">
+    <div class="row">
       <div class="col-6 form-group">
-        <label>Name</label>
-        <input [(ngModel)]="filter.name" (keyup.enter)="reload()" class="form-control" name="name"
-          placeholder="categor name">
+        <label>Email</label>
+        <input [(ngModel)]="filter.email" (keyup.enter)="reload()" class="form-control" name="email"
+          placeholder="email">
       </div>
       <div class="col-6 form-group">
-        <label>created by me</label>
-        <ui-switch class="filter-toggle"       
-         color="#2d84cb"       
-         (valueChange)="onToggleChange($event)" [(ngModel)]="filter.isMine"></ui-switch>
+        <label>Nickname</label>
+        <input [(ngModel)]="filter.nickName" (keyup.enter)="reload()" class="form-control" name="nickName"
+          placeholder="nickname">
+      </div>
+      <div class="col-6 form-group">
+        <label>Role</label>
+        <select class="form-control" [(ngModel)]="filter.role" name="role">
+          <option *ngFor="let role of role | enumToArray" [value]="role">
+            {{roleDisplay[role]}}
+          </option>
+        </select>
+      </div>
+      <div class="col-6 form-group">
+        <label>Locked out</label>
+        <ui-switch class="filter-toggle" color="#2d84cb" (valueChange)="changeIsLockedOutFilter($event)"
+          [(ngModel)]="filter.isLockedOut"></ui-switch>
       </div>
       <div class="col-5 filter-div">
         <button class="btn btn-outline-primary" (click)="reload()">
           Filter
         </button>
       </div>
-    </div> -->
+    </div>
   </div>
   <div>
-    <ngx-datatable class="material"
-      [headerHeight]="50" 
-      [rowHeight]="'auto'"
-      [columnMode]="'force'" 
-      [rows]="users"
+    <ngx-datatable class="material" [headerHeight]="50" [rowHeight]="'auto'" [columnMode]="'force'" [rows]="users"
       [columns]="columns">
     </ngx-datatable>
   </div>
 </div>
 
-<ng-template #hdrTpl let-column="column" >
+<ng-template #hdrTpl let-column="column">
 </ng-template>
 
 <ng-template #lockoutTml let-value="value" let-row="row">
   <div class="action-cell">
-      <a [routerLink]= "['edit', value]" class="pointer">Edit</a>
-  </div>  
+    <a [routerLink]="" (click)="lockOut(value);" *ngIf="!row.isLockedOut" class="pointer">Lock out</a>
+    <a [routerLink]="" (click)="admit(value);" *ngIf="row.isLockedOut" class="pointer">End lock</a>
+  </div>
 </ng-template>
-

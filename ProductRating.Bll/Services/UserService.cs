@@ -23,10 +23,9 @@ namespace ProductRating.Bll.Services
 
         public async Task<List<UserManageHeaderDto>> AdminGetUsers(UserManageFilterDto filter, PaginationDto pagination)
         {
-            var ownerRole = await context.Set<ApplicationRole>().SingleAsync(e => e.Name == RoleNames.SHOP_OWNER_ROLE);
-            var customerRole = await context.Set<ApplicationRole>().SingleAsync(e => e.Name == RoleNames.USER_ROLE);         
+            var ownerRole = await context.Roles.SingleAsync(e => e.Name == RoleNames.SHOP_OWNER_ROLE);
+            var customerRole = await context.Roles.SingleAsync(e => e.Name == RoleNames.USER_ROLE);         
                         
-
             var query = context.Users
                 .Where(e => context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id || r.RoleId == customerRole.Id))
                 .AsQueryable();
@@ -44,8 +43,8 @@ namespace ProductRating.Bll.Services
             if (filter.IsLockedOut != null)
             {               
                 query = filter.IsLockedOut.Value
-                    ? query.Where(e => e.LockoutEnd < now)
-                    : query.Where(e => e.LockoutEnd >= now);
+                    ? query.Where(e => e.LockoutEnd != null && e.LockoutEnd > now)
+                    : query.Where(e => e.LockoutEnd == null || e.LockoutEnd <= now);
             }
 
             if (filter.Role != null)
@@ -60,7 +59,7 @@ namespace ProductRating.Bll.Services
                 Id = e.Id,
                 NickName = e.NickName,
                 Email = e.Email,
-                IsLockedOut = e.LockoutEnd < now,
+                IsLockedOut = e.LockoutEnd > now,
                 Role = context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id) 
                     ? Role.WebshopOwner.ToString()
                     : Role.Customer.ToString()
