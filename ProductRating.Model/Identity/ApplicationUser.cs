@@ -24,7 +24,9 @@ namespace ProductRating.Model.Identity
 
         public ICollection<TextReview> TextReviews { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> CreatedProducts { get; set; }
+
+        public ICollection<Offer> Sells { get; set; }
 
         public virtual ICollection<Subscription> Subscriptions { get; set; }
     }

@@ -27,6 +27,8 @@ namespace ProductRating.Dal
 
         public virtual DbSet<ProductAttributeValueConnection> ProductAttributeValueConnections { get; set; }
 
+        public virtual DbSet<Offer> Offers { get; set; }
+
         public virtual DbSet<Scorereview> Scores { get; set; }
 
         public virtual DbSet<TextReview> Reviews { get; set; }

@@ -2,6 +2,7 @@
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
+using ProductRating.Bll.Models;
 using ProductRating.Model.Entities;
 using ProductRating.Model.Entities.Products;
 using ProductRating.Model.Entities.Products.Attributes;
@@ -81,13 +82,15 @@ namespace ProductRating.Bll.Mappings
                .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name))
                .ForMember(e => e.ThumbnailImage, e => e.MapFrom(f => Convert.ToBase64String(f.ThumbnailPicture.Data)))
                .ForMember(e => e.Score, e => e.MapFrom(f => f.ScoreValue))
-               .ForMember(e => e.Price, e => e.MapFrom(f => f.Price));
+               .ForMember(e => e.Price, e => e.MapFrom(f => f.SmallestPrice));
 
-            this.CreateMap<Product, ProductManageHeaderDto>()
+            this.CreateMap<Product, ProductManageQueryModel>()
                .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
                .ForMember(e => e.BrandName, e => e.MapFrom(f => f.Brand.Name))
                .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name))
+               .ForMember(e => e.CreatorId, e => e.MapFrom(f => f.CreatorId))
+               .ForMember(e => e.SellerIds, e => e.MapFrom(f => f.Offers.Select(g => g.SellerId)))
                .ForMember(e => e.CreatedAt, e => e.MapFrom(f => f.CreatedAt.ToString("yyyy.MM.dd HH:mm")));            
 
             this.CreateMap<Brand, BrandHeaderDto>()

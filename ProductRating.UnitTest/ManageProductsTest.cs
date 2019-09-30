@@ -110,7 +110,7 @@ namespace ProductRating.UnitTest
             context.Database.EnsureDeleted();
             var insertedProductId = await productService.CreateProduct(MakeDtoForInsert());
 
-            await productService.DeleteProduct(insertedProductId);
+            await productService.DeleteProduct(insertedProductId, new Guid(), true);
             Assert.DoesNotContain(insertedProductId, context.Products.Select(e => e.Id));
         }
     }

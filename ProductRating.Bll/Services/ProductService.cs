@@ -7,6 +7,7 @@ using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.Exceptions;
+using ProductRating.Bll.Models;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
 using ProductRating.Model.Entities.Products;
@@ -36,9 +37,9 @@ namespace ProductRating.Bll.Services
         public async Task<SearchResultDto> Find(ProductFilterDto filter, PaginationDto pagination)
         {
             var baseQuery = context.Products
-                .Include(e => e.ThumbnailPicture)             
+                .Include(e => e.ThumbnailPicture)
                 .Include(e => e.Brand)
-                .Include(e => e.Category)               
+                .Include(e => e.Category)
                 .ThenInclude(e => e.Parent)
                 .ThenInclude(e => e.Parent)
                 .Include(e => e.PropertyValueConnections)
@@ -57,8 +58,7 @@ namespace ProductRating.Bll.Services
             var query = AddCategoryBrandPriceFilters(filter, baseQuery);
 
             var notFilteredForCategoryQuery = AddCategoryBrandPriceFilters(filter, baseQuery, true);
-            var notFilteredForBrandQuery = AddCategoryBrandPriceFilters(filter, baseQuery, false, true, false);
-            var notFilteredForPriceQuery = AddCategoryBrandPriceFilters(filter, baseQuery, false, false, true);
+            var notFilteredForBrandQuery = AddCategoryBrandPriceFilters(filter, baseQuery, false, true);
 
             //filter for attributes
             var attributeFilters = MapAttributeFilters(filter);
@@ -67,7 +67,7 @@ namespace ProductRating.Bll.Services
             var queryBeforeOrderAndPagination = query;
 
             //ordering 
-            Expression<Func<Product, ValueType>> orderByExpression = null; 
+            Expression<Func<Product, ValueType>> orderByExpression = null;
             if (filter.OrderBy != null)
             {
                 switch (filter.OrderBy.Value)
@@ -76,7 +76,7 @@ namespace ProductRating.Bll.Services
                         orderByExpression = e => e.ScoreValue;
                         break;
                     case ProductOrder.Price:
-                        orderByExpression = e => e.Price;
+                        orderByExpression = e => e.SmallestPrice;
                         break;
                     case ProductOrder.MostTextReview:
                         orderByExpression = e => e.Reviews.Count;
@@ -102,18 +102,11 @@ namespace ProductRating.Bll.Services
             var products = await query
                 .ToListAsync();
 
-            var maxPriceOption = (await notFilteredForPriceQuery.AnyAsync()) ? (await notFilteredForPriceQuery.MaxAsync(e => e.Price) + 100) : 1000;
-            if (maxPriceOption == 0)
-            {
-                maxPriceOption = 1000;
-            }
-
             var result = new SearchResultDto()
             {
                 Products = products.Select(e => mapper.Map<ProductHeaderDto>(e)).ToList(),
                 Brands = notFilteredForBrandQuery.Where(e => e.Brand != null).Select(e => e.Brand).Distinct().Select(e => mapper.Map<BrandHeaderDto>(e)).ToList(),
                 Categories = GetRootCategories(notFilteredForCategoryQuery.Select(e => e.Category)).Select(e => mapper.Map<CategoryHeaderDto>(e)).ToList(),
-                MaxPriceOption = maxPriceOption,
                 TotalNumOfResults = await queryBeforeOrderAndPagination.CountAsync()
             };
 
@@ -158,7 +151,7 @@ namespace ProductRating.Bll.Services
                   .Where(e => e.AuthorId == userId.Value)
                   .Select(e => e.Value)
                   .FirstOrDefaultAsync();
-            }         
+            }
 
             return productDo;
         }
@@ -209,7 +202,7 @@ namespace ProductRating.Bll.Services
 
             if (filter.MinimumPrice != null && filter.MaximumPrice != null)
             {
-                query = query.Where(e => e.Price >= filter.MinimumPrice && e.Price <= filter.MaximumPrice);
+                query = query.Where(e => e.SmallestPrice >= filter.MinimumPrice && e.SmallestPrice <= filter.MaximumPrice);
             }
             return query;
         }
@@ -218,8 +211,7 @@ namespace ProductRating.Bll.Services
             ProductFilterDto filter,
             IQueryable<Product> query,
             bool skipCategory = false,
-            bool skipBrand = false,
-            bool skipPrice = false)
+            bool skipBrand = false)
         {
             if (!skipCategory)
             {
@@ -229,10 +221,7 @@ namespace ProductRating.Bll.Services
             {
                 query = FilterForBrands(filter.BrandIds, query);
             }
-            if (!skipPrice)
-            {
-                query = FilterForPrice(filter, query);
-            }
+            query = FilterForPrice(filter, query);
             return query;
         }
 
@@ -291,12 +280,23 @@ namespace ProductRating.Bll.Services
             return dbProduct.Id;
         }
 
-        public async Task UpdateProduct(Guid productId, CreateEditProductDto product)
+        public async Task UpdateProduct(Guid productId, CreateEditProductDto product, Guid userId, bool IsAdmin)
         {
-            var oldDbProduct = await context.Products
+            var query = context.Products
               .Include(e => e.PropertyValueConnections)
-              .ThenInclude(e => e.ProductAttributeValue)             
-              .SingleOrDefaultAsync(e => e.Id == productId);
+              .ThenInclude(e => e.ProductAttributeValue)
+              .AsQueryable();
+
+            if (!IsAdmin)
+            {
+                query = query.Where(e => e.CreatorId == userId);
+            }
+
+            var oldDbProduct = await query.SingleOrDefaultAsync(e => e.Id == productId);
+            if (oldDbProduct == null)
+            {
+                throw new BusinessLogicException("Product does not exists or have no permission to edit it.");
+            }
 
             if (oldDbProduct == null)
             {
@@ -327,16 +327,26 @@ namespace ProductRating.Bll.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task DeleteProduct(Guid productId)
+        public async Task DeleteProduct(Guid productId, Guid userId, bool IsAdmin)
         {
-            var product = await context.Products
+            var query = context.Products
              .Include(e => e.PropertyValueConnections)
              .ThenInclude(e => e.ProductAttributeValue)
              .ThenInclude(e => e.ProductConnctions)
              .Include(e => e.PropertyValueConnections)
              .ThenInclude(e => e.ProductAttributeValue)
              .ThenInclude(e => e.Attribute)
-             .SingleOrDefaultAsync(e => e.Id == productId);
+             .AsQueryable();
+
+            if (!IsAdmin)
+            {
+                query = query.Where(e => e.CreatorId == userId);
+            }
+            var product = await query.SingleOrDefaultAsync(e => e.Id == productId);
+            if (product == null)
+            {
+                throw new BusinessLogicException("Product does not exists or have no permission to delete it.");
+            }
 
             foreach (var connection in product.PropertyValueConnections)
             {
@@ -360,7 +370,8 @@ namespace ProductRating.Bll.Services
         {
             var query = context.Products
               .Include(e => e.Brand)
-              .Include(e => e.Category)        
+              .Include(e => e.Category)
+              .Include(e => e.Offers)
               .AsQueryable();
 
             query = FilterForCategory(filter.CategoryId, query);
@@ -368,11 +379,15 @@ namespace ProductRating.Bll.Services
 
             if (!string.IsNullOrEmpty(filter.Name))
             {
-                query = query.Where(e => e.Name.ToUpper().Contains(filter.Name.ToUpper()));                
+                query = query.Where(e => e.Name.ToUpper().Contains(filter.Name.ToUpper()));
             }
-            if (filter.IsMine == true)
+            if (filter.IsCreatedByMe == true)
             {
                 query = query.Where(e => e.CreatorId == userId);
+            }
+            if (filter.IsSoldByMe == true)
+            {
+                query = query.Where(e => e.Offers.Any(s => s.SellerId == userId));
             }
 
             //pagination            
@@ -381,9 +396,22 @@ namespace ProductRating.Bll.Services
                 query = query.Skip(pagination.Start.Value - 1).Take(pagination.Length.Value);
             }
 
-            return await query
-                .ProjectTo<ProductManageHeaderDto>(mapperConfiguration)
+            var productModels = await query
+                .ProjectTo<ProductManageQueryModel>(mapperConfiguration)
                 .ToListAsync();
+
+            var productDtos = productModels.Select(e => new ProductManageHeaderDto()
+            {
+                BrandName = e.BrandName,
+                CategoryName = e.CategoryName,
+                CreatedAt = e.CreatedAt,
+                Id = e.Id,
+                IsCreatedByMe = e.CreatorId == userId,
+                IsSoldByMe = e.SellerIds.Any(i => i == userId),
+                Name = e.Name
+            }).ToList();
+
+            return productDtos;
         }
 
         private void AddIntAttributesToProduct(Product dbProduct, List<IntAttribute> intAttributes)
@@ -440,7 +468,50 @@ namespace ProductRating.Bll.Services
                     }
                 }
             }
-        }       
-    }
+        }
 
+        public async Task AddOffer(Guid userId, Guid productId, CreateEditOfferDto offer)
+        {
+            var dbOffer = new Offer()
+            {
+                Price = offer.Price,
+                ProductId = productId,
+                SellerId = userId,
+                Url = offer.Url
+            };
+
+            context.Offers.Add(dbOffer);
+            await context.SaveChangesAsync();
+        }
+
+        public async Task DeleteOffer(Guid userId, Guid productId)
+        {
+            var dbOffer = await context.Offers
+                .SingleOrDefaultAsync(
+                    e => e.SellerId == userId
+                    && e.ProductId == productId);
+
+            if (dbOffer != null)
+            {
+                context.Remove(dbOffer);
+            }
+            await context.SaveChangesAsync();
+        }
+
+        public async Task<List<OfferHeaderDto>> ListOffers(Guid productId)
+        {
+            return (await context.Offers
+                 .Where(e => e.ProductId == productId)
+                 .Include(e => e.Seller.Avatar)
+                 .ToListAsync())
+                 .Select(e => new OfferHeaderDto()
+                 {
+                     Price = e.Price,
+                     Url = e.Url,
+                     WebShopPicture = new PictureDto() { Id = e.Seller.AvatarId, Data = Convert.ToBase64String(e.Seller.Avatar.Data) }
+                 })
+                 .ToList();
+        }
+
+    }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProductRating.Bll.Dtos.Product
+namespace ProductRating.Bll.Models
 {
-    public class ProductHeaderDto
+    public class ProductManageQueryModel
     {
         public Guid Id { get; set; }
 
@@ -14,10 +14,10 @@ namespace ProductRating.Bll.Dtos.Product
 
         public string CategoryName { get; set; }
 
-        public string ThumbnailImage { get; set; }
+        public string CreatedAt { get; set; }
 
-        public long? Price { get; set; }
+        public Guid CreatorId { get; set; }
 
-        public long Score { get; set; }
+        public List<Guid> SellerIds { get; set; }
     }
 }

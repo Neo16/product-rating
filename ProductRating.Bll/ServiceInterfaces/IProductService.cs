@@ -16,9 +16,15 @@ namespace ProductRating.Bll.ServiceInterfaces
 
         Task<Guid> CreateProduct(CreateEditProductDto product);
 
-        Task UpdateProduct(Guid productId, CreateEditProductDto product);
+        Task UpdateProduct(Guid productId, CreateEditProductDto product, Guid userId, bool IsAdmin);
 
-        Task DeleteProduct(Guid productId);
+        Task DeleteProduct(Guid productId, Guid userId, bool IsAdmin);
+
+        Task AddOffer(Guid userId, Guid productId, CreateEditOfferDto offer);
+
+        Task DeleteOffer(Guid userId, Guid productId);
+
+        Task<List<OfferHeaderDto>> ListOffers(Guid productId);
 
         Task<List<ProductManageHeaderDto>> AdminGetProducts(ManageProductFilterDto filter, Guid UserId, PaginationDto pagination);
     }

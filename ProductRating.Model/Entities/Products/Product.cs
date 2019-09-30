@@ -7,11 +7,11 @@ using System.Text;
 namespace ProductRating.Model.Entities.Products
 {
     public class Product : IEntity
-    {       
+    {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
-   
+
         public Brand Brand { get; set; }
 
         public Guid? BrandId { get; set; }
@@ -38,10 +38,12 @@ namespace ProductRating.Model.Entities.Products
 
         public ICollection<ProductPicture> Pictures { get; set; }
 
-        public long Price { get; set; }
-
         public Guid? CreatorId { get; set; }
 
         public ApplicationUser Creator { get; set; }
+
+        public virtual ICollection<Offer> Offers { get; set; }
+
+        public long? SmallestPrice { get; set; }
     }
 }

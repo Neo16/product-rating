@@ -162,7 +162,7 @@ namespace ProductRating.Dal
             context.UserRoles.AddRange(userRoles);
 
             context.SaveChanges();
-            webshopOwnderUser = user;
+            webshopOwnderUser = owner;
             return context;
         }
 
@@ -252,7 +252,9 @@ namespace ProductRating.Dal
                 BrandId = context.Brands.Where(e => e.Name == "Apple").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
                 Name = "MacBook Air 13\"",
-                Price = 800,
+                Offers = new List<Offer>() {
+                    new Offer() {SellerId =  webshopOwnderUser.Id, Price = 800, Url = "http://google.com"}
+                },
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -272,7 +274,9 @@ namespace ProductRating.Dal
                 CreatedAt = DateTime.Now,
                 BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
-                Price = 600,
+                Offers = new List<Offer>() {
+                    new Offer() {SellerId =  webshopOwnderUser.Id, Price = 600, Url = "http://google.com"}
+                },
                 Name = "Z50",
                 Creator = webshopOwnderUser,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
@@ -295,7 +299,9 @@ namespace ProductRating.Dal
                 BrandId = context.Brands.Where(e => e.Name == "Huawei").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Phones").Single().Id,
                 Name = "Huawei P20 pro",
-                Price = 1100,
+                Offers = new List<Offer>() {
+                    new Offer() {SellerId =  webshopOwnderUser.Id, Price = 1100, Url = "http://google.com"}
+                },
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -315,7 +321,9 @@ namespace ProductRating.Dal
                 CreatedAt = DateTime.Now,
                 CategoryId = context.Categories.Where(e => e.Name == "Books").Single().Id,
                 Name = "The Order of the Phoenix",
-                Price = 5,
+                Offers = new List<Offer>() {
+                    new Offer() {SellerId =  webshopOwnderUser.Id, Price = 5, Url = "http://google.com"}
+                },
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -359,15 +367,14 @@ namespace ProductRating.Dal
                     CreatedAt = DateTime.Now,
                     BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
                     CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
-                    Price = r.Next(500, 1400),
                     Name = "Dummy Laptop " + i,
                     PropertyValueConnections = new List<ProductAttributeValueConnection>()
-                 {
-                     new ProductAttributeValueConnection()
-                     {
-                         ProductAttributeValueId = processorValueId
-                     }
-                }
+                    {
+                         new ProductAttributeValueConnection()
+                         {
+                             ProductAttributeValueId = processorValueId
+                         }
+                    }
                 };
                 context.Products.Add(computer);
             }
