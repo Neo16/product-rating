@@ -45,14 +45,25 @@ export class ProductFormComponent implements OnInit {
       .subscribe(result => {
         this.brands = result;
       });
+
+    if (this.product.id != null) {
+      this.onCategoryChange(this.product.categoryId);
+    }
   }
 
   onCategoryChange(categoryId) {
     this.helperService.getAttributesOf(categoryId)
       .subscribe(result => {
         this.attributes = result;
-        this.product.stringAttributes = [];
-        this.product.intAttributes = [];
+        if (this.product.id == null) {
+          this.product.stringAttributes = [];
+          this.product.intAttributes = [];
+        }
+        else {
+          //Load attr values to form   
+          this.loadIntAttributes(this.product.intAttributes);
+          this.loadStringAttributes(this.product.stringAttributes);
+        }
       });
   }
 
@@ -61,22 +72,34 @@ export class ProductFormComponent implements OnInit {
     if (attributeValueId != "-1") {
       //Add value to product's attribute list
       if (type == AttributeType.Int) {
-        var newAttr: CreateEditIntAttribute = {
-          attributeId: attributeId,
-          attributeName: null,
-          valueId: attributeValueId,
-          value: null
-        };
-        this.product.intAttributes.push(newAttr);
+        var productAttrInt = this.product.intAttributes.filter(e => e.attributeId == attributeId)[0];
+        if (productAttrInt) {
+          productAttrInt.valueId = attributeValueId;
+        }
+        else {
+          var newAttr: CreateEditIntAttribute = {
+            attributeId: attributeId,
+            attributeName: null,
+            valueId: attributeValueId,
+            value: null
+          };
+          this.product.intAttributes.push(newAttr);
+        }
       }
       if (type == AttributeType.String) {
-        var newAttr2: CreateEditStringAttribute = {
-          attributeId: attributeId,
-          attributeName: null,
-          valueId: attributeValueId,
-          value: null
-        };
-        this.product.stringAttributes.push(newAttr2);
+        var productAttrString = this.product.stringAttributes.filter(e => e.attributeId == attributeId)[0];
+        if (productAttrString) {
+          productAttrString.valueId = attributeValueId;
+        }
+        else {
+          var newAttr2: CreateEditStringAttribute = {
+            attributeId: attributeId,
+            attributeName: null,
+            valueId: attributeValueId,
+            value: null
+          };
+          this.product.stringAttributes.push(newAttr2);
+        }
       }
     }
     else {
@@ -90,22 +113,34 @@ export class ProductFormComponent implements OnInit {
     if (attributeValue != "") {
       //Add value to product's attribute list
       if (type == AttributeType.Int) {
-        var newAttr: CreateEditIntAttribute = {
-          attributeId: attributeId,
-          attributeName: null,
-          value: attributeValue,
-          valueId: null
-        };
-        this.product.intAttributes.push(newAttr);
+        var productAttrInt = this.product.intAttributes.filter(e => e.attributeId == attributeId)[0];
+        if (productAttrInt) {
+          productAttrInt.value = attributeValue;
+        }
+        else {
+          var newAttr: CreateEditIntAttribute = {
+            attributeId: attributeId,
+            attributeName: null,
+            value: attributeValue,
+            valueId: null
+          };
+          this.product.intAttributes.push(newAttr);
+        }
       }
       if (type == AttributeType.String) {
-        var newAttr2: CreateEditStringAttribute = {
-          attributeId: attributeId,
-          attributeName: null,
-          valueId: null,
-          value: attributeValue
-        };
-        this.product.stringAttributes.push(newAttr2);
+        var productAttrString = this.product.stringAttributes.filter(e => e.attributeId == attributeId)[0];
+        if (productAttrString) {
+          productAttrString.value = attributeValue;
+        }
+        else {
+          var newAttr2: CreateEditStringAttribute = {
+            attributeId: attributeId,
+            attributeName: null,
+            valueId: null,
+            value: attributeValue
+          };
+          this.product.stringAttributes.push(newAttr2);
+        }
       }
     }
     else {
@@ -119,5 +154,21 @@ export class ProductFormComponent implements OnInit {
       this.product.stringAttributes.filter(e => e.attributeId != attributeId);
     this.product.intAttributes =
       this.product.intAttributes.filter(e => e.attributeId != attributeId);
+  }
+
+  loadIntAttributes(intAttributes: CreateEditIntAttribute[]) {
+    intAttributes.forEach(attr => {
+      var formAttr = this.attributes.filter(e => e.attributeId == attr.attributeId)[0];     
+      formAttr.value = attr.value.toString();
+      formAttr.valueId = attr.valueId;
+    });
+  }
+
+  loadStringAttributes(stringAttributes: CreateEditStringAttribute[]) {
+    stringAttributes.forEach(attr => {    
+      var formAttr2 = this.attributes.filter(e => e.attributeId == attr.attributeId)[0];
+      formAttr2.value = attr.value.toString();
+      formAttr2.valueId = attr.valueId;
+    });
   }
 }

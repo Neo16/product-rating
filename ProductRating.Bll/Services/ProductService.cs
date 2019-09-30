@@ -282,55 +282,9 @@ namespace ProductRating.Bll.Services
 
             dbProduct.PropertyValueConnections = new List<ProductAttributeValueConnection>();
 
-            if (product.IntAttributes != null)
-            {
-                foreach (var attr in product.IntAttributes)
-                {
-                    if(attr.ValueId == null)
-                    {
-                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
-                        {
-                            ProductAttributeValue = new ProductAttributeIntValue()
-                            {
-                                AttributeId = attr.AttributeId,
-                                IntValue = attr.Value                               
-                            }
-                        });
-                    }
-                    else
-                    {
-                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
-                        {
-                            ProductAttributeValueId = attr.ValueId.Value                           
-                        });
-                    }                    
-                }
-            }
-          
-            if(product.StringAttributes != null)
-            {
-                foreach (var attr in product.StringAttributes)
-                {
-                    if (attr.ValueId == null)
-                    {
-                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
-                        {
-                            ProductAttributeValue = new ProductAttributeStringValue()
-                            {
-                                AttributeId = attr.AttributeId,
-                                StringValue = attr.Value                              
-                            }
-                        });
-                    }
-                    else
-                    {
-                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
-                        {
-                            ProductAttributeValueId = attr.ValueId.Value
-                        });
-                    }                    
-                }
-            }            
+
+            AddIntAttributesToProduct(dbProduct, product.IntAttributes);
+            AddStringAttributesToProduct(dbProduct, product.StringAttributes);
 
             context.Products.Add(dbProduct);
             await context.SaveChangesAsync();
@@ -363,7 +317,12 @@ namespace ProductRating.Bll.Services
             oldDbProduct.EndOfProduction = newDbProduct.EndOfProduction;
 
 
-            //2.: Todo Attribútum értékek frissítése 
+            //2. Attribútum értékek frissítése 
+            context.ProductAttributeValueConnections.RemoveRange(oldDbProduct.PropertyValueConnections);
+            await context.SaveChangesAsync();
+
+            AddIntAttributesToProduct(oldDbProduct, product.IntAttributes);
+            AddStringAttributesToProduct(oldDbProduct, product.StringAttributes);
 
             await context.SaveChangesAsync();
         }
@@ -426,5 +385,62 @@ namespace ProductRating.Bll.Services
                 .ProjectTo<ProductManageHeaderDto>(mapperConfiguration)
                 .ToListAsync();
         }
+
+        private void AddIntAttributesToProduct(Product dbProduct, List<IntAttribute> intAttributes)
+        {
+            if (intAttributes != null)
+            {
+                foreach (var attr in intAttributes)
+                {
+                    if (attr.ValueId == null)
+                    {
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                        {
+                            ProductAttributeValue = new ProductAttributeIntValue()
+                            {
+                                AttributeId = attr.AttributeId,
+                                IntValue = attr.Value
+                            }
+                        });
+                    }
+                    else
+                    {
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                        {
+                            ProductAttributeValueId = attr.ValueId.Value
+                        });
+                    }
+                }
+            }
+        }
+
+        private void AddStringAttributesToProduct(Product dbProduct, List<StringAttribute> stringAttributes)
+        {
+            if (stringAttributes != null)
+            {
+                foreach (var attr in stringAttributes)
+                {
+                    if (attr.ValueId == null)
+                    {
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                        {
+                            ProductAttributeValue = new ProductAttributeStringValue()
+                            {
+                                AttributeId = attr.AttributeId,
+                                StringValue = attr.Value
+                            }
+                        });
+                    }
+                    else
+                    {
+                        dbProduct.PropertyValueConnections.Add(new ProductAttributeValueConnection()
+                        {
+                            ProductAttributeValueId = attr.ValueId.Value
+                        });
+                    }
+                }
+            }
+        }       
     }
+
 }

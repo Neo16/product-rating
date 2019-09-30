@@ -1,4 +1,10 @@
 describe("Manage brands test", () => {
+    it("should login as a shop owner", () => {
+       cy.logoutIfLoggedIn();
+       cy.wait(200);
+       cy.login("webshop-owner@productrating.com", "Asdf123!");
+    });
+
     it("should visit brand list", () => {
         cy.visit("/manage-brands");
 

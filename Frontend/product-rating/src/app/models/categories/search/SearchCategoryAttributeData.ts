@@ -12,4 +12,8 @@ export class SearchCategoryAttributeData
     type: AttributeType;
 
     values: SearchCategoryAttributeValueData[] = [];
+
+    value: string;
+
+    valueId: string;
 }

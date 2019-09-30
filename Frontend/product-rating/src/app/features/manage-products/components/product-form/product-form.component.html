@@ -21,7 +21,7 @@
       <div class="form-group">
         <label>Brand</label>
         <select [(ngModel)]="product.brandId" name="brandId" class="form-control">
-          <option [value]="null" disabled>Choose a brand</option>
+          <option [value]="null">Does not have a brand</option>
           <option *ngFor="let brand of brands" [value]="brand.id">
             {{brand.name}}
           </option>
@@ -53,9 +53,8 @@
       <div *ngFor="let attribute of attributes">
         <div *ngIf="attribute.hasFixedValues == true">
           <label>{{attribute.attributeName}}</label>
-          <select name="attribute" class="form-control"
+          <select [attr.name]="attribute.id" class="form-control" [(ngModel)]="attribute.valueId" [ngModelOptions]="{standalone: true}"
             (change)="selectAttributeValue(attribute.attributeId, attribute.type, $event)">
-            <option [value]="-1">All</option>
             <option *ngFor="let value of attribute.values" [value]="value.valueId">
               {{value.displayValue}}
             </option>
@@ -63,7 +62,8 @@
         </div>
         <div *ngIf="attribute.hasFixedValues != true">
           <label>{{attribute.attributeName}}</label>
-          <input class="form-control" (change)="changeAttributeValue(attribute.attributeId, attribute.type, $event)">
+          <input class="form-control" [attr.name]="attribute.id" [(ngModel)]="attribute.value" [ngModelOptions]="{standalone: true}"
+            (change)="changeAttributeValue(attribute.attributeId, attribute.type, $event)">
           <div>
           </div>
         </div>

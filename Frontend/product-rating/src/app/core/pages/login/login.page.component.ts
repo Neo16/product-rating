@@ -12,9 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./login.page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
-
-  username: string = "user@productrating.com";
-  password: string = "Asdf123!";
+  username: string;
+  password: string;
   getState: Observable<AccountState>;
   returnUrl: string;
 

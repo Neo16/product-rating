@@ -33,6 +33,8 @@ describe("User profile test", () => {
 
         // logout 
         cy.get('a').contains('Logged in as').click({ force: true });
+        cy.wait(200);
+        cy.get('a').contains('Log out').click({ force: true });
 
         //log back in with new password
         cy.visit("/account/login");
