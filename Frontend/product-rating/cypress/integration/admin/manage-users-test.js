@@ -1,6 +1,7 @@
 describe("should test manage user features", () => {
-    it("should login as admin", () => {      
-        //cy.logoutIfLoggedIn();
+    it("should login as admin", () => {
+        cy.logoutIfLoggedIn();
+        cy.wait(200);
         //log in as admin             
         cy.login("admin@productrating.com", "Asdf123!");
         cy.wait(400);
@@ -34,7 +35,7 @@ describe("should test manage user features", () => {
         // logout 
         cy.logoutIfLoggedIn();
         //check - try to log in with locked out user
-        cy.wait(500); 
+        cy.wait(500);
         cy.login("user@productrating.com", "Asdf123!");
 
         //should stay on login page
@@ -42,7 +43,7 @@ describe("should test manage user features", () => {
     });
 
     it("should re-enable a user", () => {
-        cy.wait(500); 
+        cy.wait(500);
         cy.login("admin@productrating.com", "Asdf123!");
 
         cy.visit("/manage-users");
@@ -63,9 +64,22 @@ describe("should test manage user features", () => {
         cy.get('.product-cell').first().find('a').click({ force: true });
         cy.wait(200);
 
-        //long press a comment to delete
-        //TODO
-        //confirm delete 
-        //TODO
+        cy.get('.review-item-container').its('length').then(numOfComments => {
+
+            //long press a comment to delete
+            cy.get('.review-item-container').first().trigger('mousedown').wait(700);
+            cy.get('.review-item-container').first().trigger('mouseleave');
+            cy.wait(200);
+
+            //confirm delete 
+            cy.get('button').contains('Ok').click();
+            cy.wait(200);
+
+            //check - should be less comments then at frist 
+            cy.get('.review-item-container').its('length').should('lt',numOfComments);
+        })
+
+
+
     });
 });

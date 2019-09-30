@@ -1,5 +1,11 @@
 describe("Manage products test", () => {
   it("should visit product list", () => {
+
+    cy.logoutIfLoggedIn();
+    cy.wait(200);
+    cy.login("webshop-owner@productrating.com", "Asdf123!");
+    cy.wait(400);
+
     cy.visit("/manage-products");
 
     cy.get('body').should('contain', "Name");
@@ -18,14 +24,11 @@ describe("Manage products test", () => {
 
     //choose category 
     cy.get('select[name="categoryId"]')
-      .selectNth(1)
+      .selectNth(4);
 
-    //TODO:
     //select a brand 
-    // cy.get('select[name="brandId"]')
-    //   .selectNth(1);
-
-    //TODO: test setting attribute values
+    cy.get('select[name="brandId"]')
+      .selectNth(1);
 
     //Add start/end of production 
     cy.get('input[name="startOfProduction"]')
@@ -63,14 +66,45 @@ describe("Manage products test", () => {
                 .clear()
                 .type('P30 lite');
               cy.get('button').contains('Filter').click();
-              
+
               cy.get('.ngx-datatable').should('contain', "P30 lite");
             });
         });
       });
   });
 
-  //TODO: edit 
+  it("should edit a new product", () => {
+    cy.visit("/manage-products/");
+    cy.wait(200);
+
+    //Filter for product 
+    cy.get('input[name="name"]')
+      .clear()
+      .type('P30 lite');
+    cy.get('button').contains('Filter').click();
+    cy.wait(200);
+
+    //Navigate to edit page  
+    cy.get('a').contains('Edit').click();
+    cy.wait(200);
+
+    //edit product name
+    cy.get('input[name="product-name"]')
+      .clear()
+      .type('P30 lite edited');
+
+    //click save 
+    cy.get('button').contains('Save Product').click();
+
+    //check 
+    cy.get('input[name="name"]')
+      .clear()
+      .type('P30 lite');
+    cy.get('button').contains('Filter').click();
+
+    cy.get('.ngx-datatable').should('contain', "P30 lite edited");
+  });
+
 
   it("should delete a product", () => {
 
@@ -83,11 +117,10 @@ describe("Manage products test", () => {
 
     cy.wait(200);
     cy.get('button').contains('Ok').click();
-    cy.wait(200);
+    cy.wait(400);
 
     //check     
-    cy.get('.ngx-datatable').should('not.contain', 'P30 lite');
-
+    cy.get('.ngx-datatable').should('not.contain', 'P30 lite edited');
   });
 });
 

@@ -1,17 +1,32 @@
 describe("User profile test", () => {
-    // it("should change nickname and nationality", () => {
-    //     cy.visit("/profile");
+    it("should change nickname and nationality", () => {
+        cy.wait(400);
+        cy.visit("/profile");
+        cy.wait(500);
 
-    //     //start editing profile data  
-    //     cy.get('button').contains('Edit profile ').click();     
+        //start editing profile data  
+        cy.get('button').contains('Edit profile').click();
+        cy.wait(300);
 
-    //     //.... TODO
-    // });
+        cy.get('input[name="nickName"]')
+            .clear()
+            .type('Fekete Péter');
+
+        cy.get('input[name="nationality"]')
+            .clear()
+            .type('Dutch');
+
+        cy.get('button').contains('Save profile').click();
+
+        //check 
+        cy.wait(300);
+        cy.get('.username').should('contain', 'Fekete Péter')
+    });
 
     it("should change password", () => {
         //Navigate to /profile/security tab
         cy.visit("/profile");
-        cy.wait(200);
+        cy.wait(400);
         cy.get('a').contains('Security').click();
         cy.wait(200);
 
@@ -32,21 +47,13 @@ describe("User profile test", () => {
         cy.get("body").should('contain', 'Success');
 
         // logout 
-        cy.get('a').contains('Logged in as').click({ force: true });
+        cy.logoutIfLoggedIn();
         cy.wait(200);
-        cy.get('a').contains('Log out').click({ force: true });
 
         //log back in with new password
         cy.visit("/account/login");
-        cy.get('input[name="username"]')
-            .clear()
-            .type('user@productrating.com');
-
-        cy.get('input[name="password"]')
-            .clear()
-            .type('Asdf123.');
-
-        cy.get('.btn-primary').click();
+        cy.login("user@productrating.com", "Asdf123.");
+        cy.wait(400);
 
         //check
         cy.url().should('include', '/search')

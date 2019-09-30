@@ -19,7 +19,7 @@
   
     <div class="form-group">
       <label>Account type</label>
-      <select class="form-control" [(ngModel)]="user.type" name="type">
+      <select class="form-control" [(ngModel)]="user.role" name="type">
           <option *ngFor="let role of role | enumToArray" [value]="role">
               {{roleDisplay[role]}}
           </option>

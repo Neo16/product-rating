@@ -1,7 +1,6 @@
 export enum Role {
     Customer = 1,
-    WebshopOwner = 2,
-    Administrator = 3
+    WebshopOwner = 2  
 }
 
 export const RoleDisplay: { [index: number]: string } = {};

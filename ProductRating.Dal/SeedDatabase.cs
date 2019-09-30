@@ -294,7 +294,7 @@ namespace ProductRating.Dal
                 CreatedAt = DateTime.Now,
                 BrandId = context.Brands.Where(e => e.Name == "Huawei").Single().Id,
                 CategoryId = context.Categories.Where(e => e.Name == "Phones").Single().Id,
-                Name = "Huawei P30 pro",
+                Name = "Huawei P20 pro",
                 Price = 1100,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
