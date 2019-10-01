@@ -19,5 +19,7 @@ namespace ProductRating.Bll.Dtos.Product
         public bool? IsCreatedByMe { get; set; }
 
         public bool? IsSoldByMe { get; set; }
+
+
     }
 }

@@ -32,8 +32,7 @@ export class MyCategoriesComponent implements OnInit {
     this.pagination.start = 1;
 
     this.manageCatService.getCategories(this.filter, this.pagination)
-      .subscribe(result => {
-        console.log(result);
+      .subscribe(result => {      
         this.categories = result;
       })
   }

@@ -1,46 +1,54 @@
 <div>
-    <div class="table-container">
-      <div class="row">
-        <div class="col-6 form-group">
-          <label>Name</label>
-          <input [(ngModel)]="filter.name" (keyup.enter)="reload()" class="form-control" name="name"
-            placeholder="prouct name">
-        </div>
-        <div class="col-6 form-group">
-          <label>created by me</label>
-          <ui-switch class="filter-toggle" color="#2d84cb" (valueChange)="onToggleChange($event)" [(ngModel)]="filter.isMine"></ui-switch>
-        </div>
-        <div class="col-5 filter-div">
-          <button class="btn btn-outline-primary" (click)="reload()">
-            Filter
-          </button>
-        </div>
+  <div class="table-container">
+    <div class="row">
+      <div class="col-6 form-group">
+        <label>Name</label>
+        <input [(ngModel)]="filter.name" (keyup.enter)="reload()" class="form-control" name="name"
+          placeholder="prouct name">
+      </div>
+      <div class="col-6 form-group">
+        <label>Created by me</label>
+        <ui-switch class="filter-toggle" color="#2d84cb" (valueChange)="onToggleCreatedByMe($event)"
+          [(ngModel)]="filter.isCreatedBybe"></ui-switch>
+      </div>
+      <div class="col-6 form-group">
+        <label>Sold by me</label>
+        <ui-switch class="filter-toggle" color="#2d84cb" (valueChange)="onToggleSoldByMe($event)"
+          [(ngModel)]="filter.isSoldByMe"></ui-switch>
+      </div>
+      <div class="col-5 filter-div">
+        <button class="btn btn-outline-primary" (click)="reload()">
+          Filter
+        </button>
       </div>
     </div>
-    <div>
-      <ngx-datatable class="material"
-        [headerHeight]="50" 
-        [rowHeight]="'auto'"
-        [columnMode]="'force'" 
-        [rows]="products"       
-        [columns]="columns"
-        [footerHeight]="50"
-        [limit]="10">
-      </ngx-datatable>
-    </div>
   </div>
-  
-  <ng-template #hdrTpl let-column="column" >
-  </ng-template>
-  
-  <ng-template #editTmpl let-value="value" let-row="row">
-    <div class="action-cell">
-        <a [routerLink]= "['edit', value]" class="pointer">Edit</a>
-    </div>  
-  </ng-template>
+  <div>
+    <ngx-datatable class="material" [headerHeight]="50" [rowHeight]="50" [columnMode]="ColumnMode.force"
+      [rows]="products" [columns]="columns" [footerHeight]="50" [limit]="10">
+    </ngx-datatable>
+  </div>
+</div>
 
-  <ng-template #deleteTmpl let-value="value" let-row="row">
-      <div class="action-cell">
-          <a (click)="delete(value)" href="javascript:void(0)" class="pointer">Delete</a>
-      </div>  
-  </ng-template>
+<ng-template #hdrTpl let-column="column">
+</ng-template>
+
+<ng-template #actionTempl let-value="value" let-row="row">
+  <div class="action-cell">
+    <ng-container *ngIf="row.isCreatedByMe">
+      <a [routerLink]="['edit', value]" class="pointer">Edit</a>
+      <a (click)="delete(value)" href="javascript:void(0)" class="pointer">Delete</a>
+    </ng-container>
+  </div>
+</ng-template>
+
+<ng-template #sellTempl let-value="value" let-row="row">
+  <div class="action-cell">
+    <ng-container *ngIf="!row.isSoldByMe">
+      <a href="javascript:void(0)" (click)="openOfferForm(value,row.isSoldByMe)" class="pointer">Start selling</a>
+    </ng-container>
+    <ng-container *ngIf="row.isSoldByMe">
+      <a href="javascript:void(0)" (click)="openOfferForm(value,row.isSoldByMe)" class="pointer">Edit offer</a>
+    </ng-container>
+  </div>
+</ng-template>

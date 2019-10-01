@@ -1,0 +1,19 @@
+<div class="row">
+  <form class="col-sm-24 login-container" (ngSubmit)="login()" #loginForm="ngForm">
+    <div class="form-group">
+      <label>Price</label>
+      <input [(ngModel)]="price" type="number" name="price" class="form-control" placeholder="0">
+    </div>
+    <div class="form-group">
+      <label>Webshop product URL</label>
+      <input [(ngModel)]="url" name="url" class="form-control" placeholder="example.com/products/123123">
+    </div>
+    <ng-container *ngIf="!alreadyExists">
+      <button (click)="makeOffer()" type="button" class="btn btn-primary">Active offer</button>
+    </ng-container>
+    <ng-container *ngIf="alreadyExists">
+      <button (click)="makeOffer()" type="button" class="btn btn-primary">Save Offer</button>
+      <button (click)="deleteOffer()" type="button" class="btn btn-primary">Delete Offer</button>
+    </ng-container>
+  </form>
+</div>

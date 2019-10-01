@@ -11,6 +11,7 @@ import { ManageProductsService } from './services/manage-products.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/app/core/services/token.service';
 import { PictureService } from './services/picture-service';
+import { OfferFormComponent } from './components/offer-form/offer-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PictureService } from './services/picture-service';
     MyProductsComponent,
     EditProductComponent,
     ProductFormComponent,
-    PictureUploaderComponent
+    PictureUploaderComponent,
+    OfferFormComponent
   ],
   imports: [
     CommonModule,

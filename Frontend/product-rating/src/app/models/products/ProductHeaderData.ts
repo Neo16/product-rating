@@ -1,12 +1,16 @@
 export class ProductManageHeaderData
 {
-    Id: string;
+    id: string;
 
-    Name: string;
+    name: string;
 
-    BrandName: string;
+    brandName: string;
 
-    CategoryName: string;
+    categoryName: string;
 
-    CreatedAt: string;
+    createdAt: string;
+
+    isCreatedBybe: boolean;
+
+    isSoldbyMe: boolean;  
 }

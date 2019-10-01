@@ -5,6 +5,9 @@ import { ManageProductFilterData } from 'src/app/models/products/ManageProductFi
 import { ProductManageHeaderData } from 'src/app/models/products/ProductHeaderData';
 import { ManageProductsService } from '../../services/manage-products.service';
 import { ModalService } from 'src/app/shared/services/modal-service';
+import { ColumnMode } from '@swimlane/ngx-datatable';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { OfferFormComponent } from '../../components/offer-form/offer-form.component';
 
 @Component({
   selector: 'app-my-products',
@@ -13,7 +16,8 @@ import { ModalService } from 'src/app/shared/services/modal-service';
 })
 export class MyProductsComponent implements OnInit {
 
-  @ViewChild('editTmpl') editTmpl: TemplateRef<any>;
+  @ViewChild('actionTempl') actionTempl: TemplateRef<any>;
+  @ViewChild('sellTempl') sellTempl: TemplateRef<any>;
   @ViewChild('hdrTpl') hdrTpl: TemplateRef<any>;
 
   @ViewChild('deleteTmpl') deleteTmpl: TemplateRef<any>;
@@ -23,9 +27,11 @@ export class MyProductsComponent implements OnInit {
   products: ProductManageHeaderData[];
 
   columns = [];
+  ColumnMode = ColumnMode;
 
   constructor(private manageProductService: ManageProductsService,
-    private modalService: ModalService) { }
+    private modalService: ModalService,
+    private ngModalService: NgbModal) { }
 
   listCategories() {
     //Todo: use server side paging.
@@ -34,7 +40,6 @@ export class MyProductsComponent implements OnInit {
 
     this.manageProductService.getProducts(this.filter, this.pagination)
       .subscribe(result => {
-        console.log(result);
         this.products = result;
       })
   }
@@ -45,16 +50,22 @@ export class MyProductsComponent implements OnInit {
       { prop: 'brandName' },
       { prop: 'categoryName' },
       { prop: 'createdAt' },
-      { name: 'id', cellTemplate: this.editTmpl, headerTemplate: this.hdrTpl },
-      { name: 'id', cellTemplate: this.deleteTmpl, headerTemplate: this.hdrTpl }
+      { name: 'id', cellTemplate: this.sellTempl, headerTemplate: this.hdrTpl },
+      { name: 'id', cellTemplate: this.actionTempl, headerTemplate: this.hdrTpl },
     ];
     this.listCategories();
   }
 
-  onToggleChange(isMine: boolean) {
-    this.filter.isMine = isMine;
+  onToggleCreatedByMe(isCreatedBybe: boolean) {
+    this.filter.isCreatedByMe = isCreatedBybe;
     this.reload();
   }
+
+  onToggleSoldByMe(isSoldByMe: boolean) {
+    this.filter.isSoldbyMe = isSoldByMe;
+    this.reload();
+  }
+
 
   reload() {
     this.listCategories();
@@ -68,5 +79,12 @@ export class MyProductsComponent implements OnInit {
             this.reload();
           });
       })
+  }
+
+  openOfferForm(productId: string, hasAlready: boolean) {   
+    var modalRef = this.ngModalService.open(OfferFormComponent);
+    (modalRef.componentInstance as OfferFormComponent).alreadyExists = hasAlready;
+    (modalRef.componentInstance as OfferFormComponent).productId = productId;
+    return modalRef.result;
   }
 }

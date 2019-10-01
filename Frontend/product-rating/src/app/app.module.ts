@@ -18,6 +18,7 @@ import { GlobalErrorHandler } from './global-error-handler';
 import { ManageBrandsModule } from './features/manage-brands/manage-brands.module';
 import { PopupComponent } from './shared/popup/popup.component';
 import { ManageUsersModule } from './features/manage-users/manage-users.module';
+import { OfferFormComponent } from './features/manage-products/components/offer-form/offer-form.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,6 @@ import { ManageUsersModule } from './features/manage-users/manage-users.module';
   ],
   providers: [{provide: ErrorHandler, useClass: GlobalErrorHandler}],
   bootstrap: [AppComponent],
-  entryComponents: [PopupComponent]
+  entryComponents: [PopupComponent, OfferFormComponent]
 })
 export class AppModule { }
