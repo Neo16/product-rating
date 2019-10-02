@@ -42,6 +42,14 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok();
         }
 
+        [HttpGet("{productId}/get-offer")]
+        public async Task<IActionResult> GetOffer(Guid productId)
+        {
+            var offer = await productService.GetOfferForProduct(currentUserService.User.Id, productId);
+            return Ok(offer);
+        }
+
+
         [HttpPost("{productId}/add-offer")]
         public async Task<IActionResult> AddOffer(Guid productId, [FromBody] CreateEditOfferDto offer)
         {

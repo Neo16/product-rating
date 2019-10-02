@@ -470,9 +470,31 @@ namespace ProductRating.Bll.Services
             }
         }
 
+        public async Task<OfferHeaderDto> GetOfferForProduct(Guid userId, Guid productId)
+        {
+            return (await context.Offers
+               .Where(e => e.SellerId == userId)
+               .Where(e => e.ProductId == productId)   
+               .ToListAsync())
+               .Select(e => new OfferHeaderDto()
+               {
+                   Price = e.Price,
+                   Url = e.Url                   
+               })
+               .SingleOrDefault();
+        }
+
         public async Task AddOffer(Guid userId, Guid productId, CreateEditOfferDto offer)
         {
-            var dbOffer = new Offer()
+            var oldDbOffer = await context.Offers
+               .Where(e => e.SellerId == userId)
+               .Where(e => e.ProductId == productId) 
+               .SingleOrDefaultAsync();
+
+            context.Offers.Remove(oldDbOffer);
+            await context.SaveChangesAsync();
+
+            var newDbOffer = new Offer()
             {
                 Price = offer.Price,
                 ProductId = productId,
@@ -480,7 +502,7 @@ namespace ProductRating.Bll.Services
                 Url = offer.Url
             };
 
-            context.Offers.Add(dbOffer);
+            context.Offers.Add(newDbOffer);
             await context.SaveChangesAsync();
         }
 

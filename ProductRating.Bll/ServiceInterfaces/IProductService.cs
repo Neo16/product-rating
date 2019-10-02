@@ -27,5 +27,7 @@ namespace ProductRating.Bll.ServiceInterfaces
         Task<List<OfferHeaderDto>> ListOffers(Guid productId);
 
         Task<List<ProductManageHeaderDto>> AdminGetProducts(ManageProductFilterDto filter, Guid UserId, PaginationDto pagination);
+
+        Task<OfferHeaderDto> GetOfferForProduct(Guid userId, Guid productId);
     }
 }

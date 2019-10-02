@@ -5,6 +5,8 @@ import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ProductManageHeaderData } from 'src/app/models/products/ProductHeaderData';
 import { ManageProductFilterData } from 'src/app/models/products/ManageProductFilterData';
 import { CreateEditProductData } from 'src/app/models/products/CreateEditProductData';
+import { OfferHeaderData } from 'src/app/models/products/OfferData';
+import { CreateEditOfferData } from 'src/app/models/products/CreateEditOfferData';
 
 @Injectable()
 export class ManageProductsService {
@@ -45,4 +47,23 @@ export class ManageProductsService {
         const url = `${this.BASE_URL}/manage-products/${productId}/delete`;
         return this.http.delete<any>(url);
     }
+
+    getOffer(productId: string): Observable<OfferHeaderData>{
+        const url = `${this.BASE_URL}/manage-products/${productId}/get-offer`;
+        return this.http.get<any>(url);
+    }
+
+    addOffer(productId: string, data: CreateEditOfferData): Observable<any>{
+        const url = `${this.BASE_URL}/manage-products/${productId}/add-offer`;
+        return this.http.post<CreateEditOfferData>(url, JSON.stringify(data));
+    }
+
+    deletetOffer(productId: string): Observable<any>{
+        const url = `${this.BASE_URL}/manage-products/${productId}/delete-offer`;
+        return this.http.delete<any>(url);
+    }
+
+
+
+
 }
