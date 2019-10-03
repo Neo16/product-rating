@@ -11,5 +11,7 @@ namespace ProductRating.Bll.Dtos.Account
         public string UserName { get; set; }
 
         public List<string> UserRoles { get; set; }
+
+        public Guid UserId { get; set; }
     }
 }

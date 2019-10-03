@@ -81,7 +81,7 @@ export class MyProductsComponent implements OnInit {
       })
   }
 
-  openOfferForm(productId: string, hasAlready: boolean) {   
+  openOfferForm(productId: string, hasAlready: boolean) {
     var modalRef = this.ngModalService.open(OfferFormComponent);
     (modalRef.componentInstance as OfferFormComponent).alreadyExists = hasAlready;
     (modalRef.componentInstance as OfferFormComponent).productId = productId;

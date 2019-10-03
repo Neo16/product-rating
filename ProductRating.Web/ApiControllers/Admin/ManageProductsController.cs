@@ -85,14 +85,6 @@ namespace ProductRating.Web.ApiControllers.Admin
         {
             await productService.DeleteProduct(productId, currentUserService.User.Id, User.IsInRole(RoleNames.ADMIN_ROLE));
             return Ok();
-        }
-
-        [HttpGet("{productId}/list-offes")]
-        public async Task<IActionResult> ListOffers(Guid productId)
-        {
-            var offers = await productService.ListOffers(productId);
-            return Ok(offers);
-        }
-
+        }    
     }
 }

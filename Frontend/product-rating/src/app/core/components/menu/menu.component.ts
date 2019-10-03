@@ -47,14 +47,15 @@ export class MenuComponent implements OnInit {
     var userToken = localStorage.getItem('productrating-token');
     var userName = localStorage.getItem('productrating-username');
     var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as string[];
+    var userId = JSON.parse(localStorage.getItem('productrating-userid'));
     this.setRoleFlags(userRoles);
 
-    console.log(userName);
     if (userName && userToken) {
       this.acccountStore.dispatch(new LoadedLoginDataAction({
         userToken: userToken,
         userName: userName,
-        userRoles: userRoles
+        userRoles: userRoles,
+        userId: userId
       } as LoginResultData));
     }
   }

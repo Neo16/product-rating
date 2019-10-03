@@ -5,7 +5,7 @@ import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ProductManageHeaderData } from 'src/app/models/products/ProductHeaderData';
 import { ManageProductFilterData } from 'src/app/models/products/ManageProductFilterData';
 import { CreateEditProductData } from 'src/app/models/products/CreateEditProductData';
-import { OfferHeaderData } from 'src/app/models/products/OfferData';
+import { OfferHeaderData } from 'src/app/models/products/OfferHeaderData';
 import { CreateEditOfferData } from 'src/app/models/products/CreateEditOfferData';
 
 @Injectable()

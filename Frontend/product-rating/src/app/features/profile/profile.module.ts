@@ -11,6 +11,8 @@ import { ProfileDataComponent } from './components/profile-data/profile-data.com
 import { ChangePasswordFormComponent } from './components/change-password-form/change-password-form.component';
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { SubscriptionItemComponent } from './components/subscription-item/subscription-item.component';
+import { UserReviewsComponent } from './components/user-reviews/user-reviews.component';
+import { UserReviewItemComponent } from './components/user-review-item/user-review-item.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { SubscriptionItemComponent } from './components/subscription-item/subscr
     ProfileDataComponent,
     ChangePasswordFormComponent,
     SubscriptionsComponent,
-    SubscriptionItemComponent
+    SubscriptionItemComponent,
+    UserReviewsComponent,
+    UserReviewItemComponent
   ],
   providers: [
     ProfileService,

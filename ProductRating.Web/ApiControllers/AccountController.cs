@@ -92,7 +92,8 @@ namespace ProductRating.Web.ApiControllers
             {
                 UserToken = token,
                 UserName = user.UserName,
-                UserRoles = roles.ToList()
+                UserRoles = roles.ToList(),
+                UserId = user.Id
             });
         }
 

@@ -24,6 +24,6 @@ namespace ProductRating.Bll.ServiceInterfaces
 
         Task DownVoteReview(Guid userId, Guid reviewId);
 
-        Task<double?> GetScoreOfProduct(Guid productId);
+        Task<double?> GetScoreOfProduct(Guid productId);       
     }
 }

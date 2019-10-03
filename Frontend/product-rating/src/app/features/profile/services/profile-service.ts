@@ -6,6 +6,7 @@ import { EditProfileData } from 'src/app/models/profile/EditProdileData';
 import { ChangePasswordData } from 'src/app/models/ChangePasswordData';
 import { RequireSubscriptionData } from 'src/app/models/profile/RequireSubscriptionData';
 import { SubscriptionData } from 'src/app/models/profile/SubscriptionData';
+import { TextReviewWithProductInfoData } from 'src/app/models/profile/TextReviewWithProductInfoData';
 
 @Injectable()
 export class ProfileService {
@@ -21,6 +22,11 @@ export class ProfileService {
     getProfileById(userId: string): Observable<ProfileData> {
         const url = `${this.BASE_URL}/profile/${userId}`;
         return this.http.get<ProfileData>(url);
+    }
+
+    getReviewsMadeByUser(userId: string): Observable<TextReviewWithProductInfoData[]>{
+        const url = `${this.BASE_URL}/profile/${userId}/reviews`;
+        return this.http.get<TextReviewWithProductInfoData[]>(url);
     }
 
     editProfile(profile: EditProfileData): Observable<any> {

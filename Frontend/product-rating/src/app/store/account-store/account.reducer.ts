@@ -1,5 +1,5 @@
 import { initialState, AccountState } from './account.state';
-import { AccountActions, AccountActionTypes } from './account.actions';
+import { AccountActions, AccountActionTypes, LogInSuccessAction } from './account.actions';
 import { LoginResultData } from 'src/app/models/LoginResultData';
 
 
@@ -22,7 +22,8 @@ export function accountReducer(state: AccountState = initialState, action: Accou
           user: {
             token: loginResponse.userToken,
             username: loginResponse.userName,
-            roles: loginResponse.userRoles
+            roles: loginResponse.userRoles,
+            id: loginResponse.userId
           },
           errorMessage: null,
           loginReturnUrl: state.loginReturnUrl
@@ -37,7 +38,8 @@ export function accountReducer(state: AccountState = initialState, action: Accou
           user: {
             token: loginResponse.userToken,
             username: loginResponse.userName,
-            roles: loginResponse.userRoles
+            roles: loginResponse.userRoles,
+            id: loginResponse.userId
           },
           errorMessage: null,
           loginReturnUrl: null

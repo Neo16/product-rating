@@ -50,16 +50,16 @@
       </ng-template>
     </ngb-tab>
     <ngb-tab *ngIf="profile.isMine" title="Subscriptions">
-        <ng-template ngbTabContent>
-          <div class="detail-tab">
-            <app-subscriptions></app-subscriptions>
-          </div>
-        </ng-template>
-      </ngb-tab>
+      <ng-template ngbTabContent>
+        <div class="detail-tab">
+          <app-subscriptions></app-subscriptions>
+        </div>
+      </ng-template>
+    </ngb-tab>
     <ngb-tab title="Activity">
       <ng-template ngbTabContent>
         <div class="detail-tab">
-          <p>TODO show revies given by user</p>
+          <app-user-reviews *ngIf="userId!=null" [userId]="userId"></app-user-reviews>
         </div>
       </ng-template>
     </ngb-tab>

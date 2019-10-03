@@ -47,7 +47,8 @@ export class AcccountEffects {
         tap((result : [LogInSuccessAction, AccountState]) => {               
           localStorage.setItem('productrating-token', result[0].payload.userToken);   
           localStorage.setItem('productrating-username', result[0].payload.userName); 
-          localStorage.setItem('productrating-userroles', JSON.stringify(result[0].payload.userRoles));          
+          localStorage.setItem('productrating-userroles', JSON.stringify(result[0].payload.userRoles));  
+          localStorage.setItem('productrating-userid', JSON.stringify(result[0].payload.userId));                  
           this.router.navigateByUrl(result[1].loginReturnUrl);
         })
       );

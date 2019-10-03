@@ -71,6 +71,6 @@ namespace ProductRating.Web.ApiControllers
         {
             await reviewService.DownVoteReview(currentUserService.User.Id, reviewId.Id);
             return Ok();
-        }
+        }      
     }
 }

@@ -106,20 +106,21 @@ namespace ProductRating.Bll.Services
 
         public async Task<List<TextReviewWithProductInfoDto>> GetReviewsMadeByUser(Guid userId)
         {
-            return await context.Reviews
+            return (await context.Reviews
               .Include(e => e.Product)
               .Include(e => e.Product.Brand)
-              .Include(e => e.Product.Category)
               .Where(e => e.AuthorId == userId)
+              .ToListAsync())
               .Select(e => new TextReviewWithProductInfoDto()
               {
                   Id = e.Id,
-                  Text = e.Text,
+                  Text = e.Text.Substring(0, 80) + (e.Text.Length > 100 ? "..." : ""),
+                  ProductId = e.ProductId,
                   ProductBrandName = e.Product.Brand.Name,
-                  ProductCategoryName = e.Product.Category.Name,
-                  ProductName = e.Product.Name
+                  ProductName = e.Product.Name,
+                  Date = e.CreatedAt.ToString("yyyy.MM.dd")
               })
-              .ToListAsync();
+              .ToList();
         }
 
         public async Task<List<TextReviewDto>> GetReviewsOfProduct(Guid? userId, Guid productId)
@@ -180,7 +181,7 @@ namespace ProductRating.Bll.Services
                     UserId = userId,
                     TextReviewId = dbReview.Id,
                     VoteType = VoteType.Up
-                };                
+                };
                 context.ReviewVotes.Add(vote);
             }
 
@@ -212,7 +213,7 @@ namespace ProductRating.Bll.Services
             {
                 context.Remove(upVoteByMe);
             }
-            
+
             if (downVoteByMe == null && upVoteByMe == null)
             {
                 var vote = new ReviewVote()
@@ -220,7 +221,7 @@ namespace ProductRating.Bll.Services
                     UserId = userId,
                     TextReviewId = dbReview.Id,
                     VoteType = VoteType.Down
-                };               
+                };
                 context.ReviewVotes.Add(vote);
             }
             dbReview.Points--;

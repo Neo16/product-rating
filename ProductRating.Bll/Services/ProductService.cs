@@ -198,8 +198,7 @@ namespace ProductRating.Bll.Services
         }
 
         private static IQueryable<Product> FilterForPrice(ProductFilterDto filter, IQueryable<Product> query)
-        {
-
+        {          
             if (filter.MinimumPrice != null && filter.MaximumPrice != null)
             {
                 query = query.Where(e => e.SmallestPrice >= filter.MinimumPrice && e.SmallestPrice <= filter.MaximumPrice);
@@ -474,12 +473,12 @@ namespace ProductRating.Bll.Services
         {
             return (await context.Offers
                .Where(e => e.SellerId == userId)
-               .Where(e => e.ProductId == productId)   
+               .Where(e => e.ProductId == productId)
                .ToListAsync())
                .Select(e => new OfferHeaderDto()
                {
                    Price = e.Price,
-                   Url = e.Url                   
+                   Url = e.Url
                })
                .SingleOrDefault();
         }
@@ -488,11 +487,14 @@ namespace ProductRating.Bll.Services
         {
             var oldDbOffer = await context.Offers
                .Where(e => e.SellerId == userId)
-               .Where(e => e.ProductId == productId) 
+               .Where(e => e.ProductId == productId)
                .SingleOrDefaultAsync();
 
-            context.Offers.Remove(oldDbOffer);
-            await context.SaveChangesAsync();
+            if (oldDbOffer != null)
+            {
+                context.Offers.Remove(oldDbOffer);
+                await context.SaveChangesAsync();
+            }        
 
             var newDbOffer = new Offer()
             {
@@ -503,6 +505,14 @@ namespace ProductRating.Bll.Services
             };
 
             context.Offers.Add(newDbOffer);
+            await context.SaveChangesAsync();
+
+            //update smallest price
+            var dbProduct = await context.Products
+               .Include(e => e.Offers)
+               .SingleAsync(e => e.Id == productId);
+
+            dbProduct.SmallestPrice = dbProduct.Offers.Select(z => z.Price).OrderBy(p => p).FirstOrDefault();
             await context.SaveChangesAsync();
         }
 
@@ -517,6 +527,14 @@ namespace ProductRating.Bll.Services
             {
                 context.Remove(dbOffer);
             }
+            await context.SaveChangesAsync();
+
+            //update smallest price
+            var dbProduct = await context.Products
+              .Include(e => e.Offers)
+              .SingleAsync(e => e.Id == productId);
+
+            dbProduct.SmallestPrice = dbProduct.Offers.Select(z => z.Price).OrderBy(p => p).FirstOrDefault();
             await context.SaveChangesAsync();
         }
 

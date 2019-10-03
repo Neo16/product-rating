@@ -255,6 +255,7 @@ namespace ProductRating.Dal
                 Offers = new List<Offer>() {
                     new Offer() {SellerId =  webshopOwnderUser.Id, Price = 800, Url = "http://google.com"}
                 },
+                SmallestPrice = 800,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -277,6 +278,7 @@ namespace ProductRating.Dal
                 Offers = new List<Offer>() {
                     new Offer() {SellerId =  webshopOwnderUser.Id, Price = 600, Url = "http://google.com"}
                 },
+                SmallestPrice = 600,
                 Name = "Z50",
                 Creator = webshopOwnderUser,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
@@ -302,6 +304,7 @@ namespace ProductRating.Dal
                 Offers = new List<Offer>() {
                     new Offer() {SellerId =  webshopOwnderUser.Id, Price = 1100, Url = "http://google.com"}
                 },
+                SmallestPrice = 1100,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
@@ -324,6 +327,7 @@ namespace ProductRating.Dal
                 Offers = new List<Offer>() {
                     new Offer() {SellerId =  webshopOwnderUser.Id, Price = 5, Url = "http://google.com"}
                 },
+                SmallestPrice = 5,
                 PropertyValueConnections = new List<ProductAttributeValueConnection>()
                 {
                     new ProductAttributeValueConnection()
