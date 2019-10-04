@@ -542,13 +542,17 @@ namespace ProductRating.Bll.Services
         {
             return (await context.Offers
                  .Where(e => e.ProductId == productId)
+                 .Include(e => e.Seller)
                  .Include(e => e.Seller.Avatar)
                  .ToListAsync())
                  .Select(e => new OfferHeaderDto()
                  {
                      Price = e.Price,
                      Url = e.Url,
-                     WebShopPicture = new PictureDto() { Id = e.Seller.AvatarId, Data = Convert.ToBase64String(e.Seller.Avatar.Data) }
+                     ShopName = e.Seller.NickName,
+                     WebShopPicture = e.Seller.Avatar != null ?
+                        new PictureDto() { Id = e.Seller.AvatarId, Data = Convert.ToBase64String(e.Seller.Avatar.Data) }
+                        : null
                  })
                  .ToList();
         }

@@ -6,6 +6,7 @@ import { SearchParams } from 'src/app/models/search/SearchParams';
 import { SearchResult } from 'src/app/models/search/SearchResult';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ProductDetailsData } from 'src/app/models/products/ProductDetailsData';
+import { OfferHeaderData } from 'src/app/models/products/OfferHeaderData';
 
 @Injectable()
 export class ProductService {
@@ -13,7 +14,7 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProductDetails(productId: string){    
+  getProductDetails(productId: string): Observable<ProductDetailsData> {    
     const url = `${this.BASE_URL}/products/${productId}`;
     return this.http.get<ProductDetailsData>(url);
   }
@@ -35,4 +36,8 @@ export class ProductService {
     return this.http.post<SearchResult>(url, searchParams, {params: queryParams});
   }
 
+  getOffers(productId: string): Observable<OfferHeaderData[]>{    
+    const url = `${this.BASE_URL}/products/${productId}/list-offes`;
+    return this.http.get<OfferHeaderData[]>(url);
+  }
 }

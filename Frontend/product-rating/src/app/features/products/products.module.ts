@@ -14,6 +14,8 @@ import { ReviewItemComponent } from './components/review-item/review-item.compon
 import { ReviewService } from './services/review.service';
 import { BarRatingModule } from "ngx-bar-rating";
 import { ScoringComponent } from './components/scoring/scoring.component';
+import { OfferListComponent } from './components/offer-list/offer-list.component';
+import { OfferItemComponent } from './components/offer-item/offer-item.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ScoringComponent } from './components/scoring/scoring.component';
     ProductDetailsComponent,
     ReviewsComponent,
     ReviewItemComponent,
-    ScoringComponent    
+    ScoringComponent,
+    OfferListComponent,
+    OfferItemComponent    
   ],
   imports: [    
     CommonModule,

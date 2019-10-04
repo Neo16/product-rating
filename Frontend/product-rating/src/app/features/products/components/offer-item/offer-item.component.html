@@ -1,0 +1,11 @@
+<div class="offer-item">
+  <div class="shop-info">
+      <span class="image-container">
+          <img *ngIf="offer.webShopPicture == null" src="https://via.placeholder.com/300x200">
+          <img *ngIf="offer.webShopPicture != null" [src]="'data:image/png;base64,' + product.webShopPicture">
+      </span>
+      <span class="shopName">{{offer.shopName}}</span>
+  </div>
+  <div class="price">${{offer.price}}</div>
+  <div><a [attr.href]="offer.url">Visit shop</a></div>
+</div>

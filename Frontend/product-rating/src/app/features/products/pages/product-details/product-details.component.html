@@ -1,51 +1,49 @@
-<div *ngIf="product" class="row product-detail-container">
-  <div class="col-6">
+<div *ngIf="product" class="product-detail-container">
+  <div class="row">
+    <div class="col-6">
       <img *ngIf="product.thumbnailImage == null" src="https://via.placeholder.com/300x200">
       <img *ngIf="product.thumbnailImage != null" [src]="'data:image/png;base64,' + product.thumbnailImage">
-  </div>
-  <div class="col-18">
-    <div *ngIf="product != null">
-      <h2>
-        {{product.name}}
-      </h2>
-      <div class="score-row">
-        <bar-rating style="margin-top: -21px;" [(rate)]="product.scoreValue" [readOnly]="true" [max]="5"></bar-rating>
-        ( {{product.scoreValue}} )
+    </div>
+    <div class="col-18">
+      <div *ngIf="product != null">
+        <h2>
+          {{product.name}}
+        </h2>
+        <div class="score-row">
+          <bar-rating style="margin-top: -21px;" [(rate)]="product.scoreValue" [readOnly]="true" [max]="5"></bar-rating>
+          ( {{product.scoreValue}} )
 
-        <p class="ml-3" *ngIf="isLoggedIn && product.scoreByMe != null">
-          you scored this product: {{product.scoreByMe}}
-        </p>
-        <app-scoring *ngIf="isLoggedIn" class="ml-3" [scored]="product.scoreByMe" (addScore)="addScore($event)">
-        </app-scoring>
-        <a *ngIf="!isLoggedIn" class="ml-3" [routerLink]="['/account/login']" [queryParams]="{return: router.url}">
-          Score this product
-        </a>
+          <p class="ml-3" *ngIf="isLoggedIn && product.scoreByMe != null">
+            you scored this product: {{product.scoreByMe}}
+          </p>
+          <app-scoring *ngIf="isLoggedIn" class="ml-3" [scored]="product.scoreByMe" (addScore)="addScore($event)">
+          </app-scoring>
+          <a *ngIf="!isLoggedIn" class="ml-3" [routerLink]="['/account/login']" [queryParams]="{return: router.url}">
+            Score this product
+          </a>
+        </div>
+
+        <!-- Todo -->
+        <p>price: {{product.price}}</p>
+        <p>category: {{product.categoryName}}</p>
+        <p>brand: {{product.brandName}}</p>
       </div>
-
-      <!-- Todo -->
-      <p>price: {{product.price}}</p>
-      <p>category: {{product.categoryName}}</p>
-      <p>brand: {{product.brandName}}</p>
-
-
+    </div>
+    <div class="col-24">
+      <!-- dynamic attributes -->
+      <table class="product-attribute-table">
+        <ng-container *ngFor="let attribute of product.attributes">
+          <tr>
+            <td>{{attribute.attributeName}}:</td>
+            <td>{{attribute.value}}</td>
+          </tr>
+        </ng-container>
+      </table>
     </div>
   </div>
-  <div class="col-24">
-    <!-- dynamic attributes -->
-    <table class="product-attribute-table">
-      <ng-container *ngFor="let attribute of product.attributes">
-        <tr>
-          <td>{{attribute.attributeName}}:</td>
-          <td>{{attribute.value}}</td>
-        </tr>
-      </ng-container>
-    </table>
-  </div>
-
 </div>
 
-
-
 <div *ngIf="product != null">
+  <app-offer-list [productId]="product.id"></app-offer-list>
   <app-reviews [productId]="product.id"></app-reviews>
 </div>
