@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Brand;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Common;
 using ProductRating.Web.WebServices;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 namespace ProductRating.Web.ApiControllers.Admin
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = RoleNames.ADMIN_ROLE + "," + RoleNames.SHOP_OWNER_ROLE)]
     [Route("manage-brands")]
     public class ManageBrandsController : Controller
     {

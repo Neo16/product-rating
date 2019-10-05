@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ProductRating.Web.ApiControllers.Admin
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = RoleNames.ADMIN_ROLE + "," + RoleNames.SHOP_OWNER_ROLE)]
     [Route("manage-products")]
     public class ManageProductsController : Controller
     {

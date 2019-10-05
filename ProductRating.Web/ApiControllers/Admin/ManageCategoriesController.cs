@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Common;
 using ProductRating.Web.WebServices;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ using System.Threading.Tasks;
 namespace ProductRating.Web.ApiControllers.Admin
 {
     [ApiController]
-    [Authorize]
     [Route("manage-categories")]
+    [Authorize(Roles = RoleNames.ADMIN_ROLE + "," + RoleNames.SHOP_OWNER_ROLE)]
     public class ManageCategoriesController : Controller
     {
         private readonly ICategoryService categoryService;

@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Users;
 using ProductRating.Bll.ServiceInterfaces;
+using ProductRating.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers.Admin
 {
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = RoleNames.ADMIN_ROLE + "," + RoleNames.SHOP_OWNER_ROLE)]
     [Route("manage-users")]
     public class ManageUsersController : Controller
     {
