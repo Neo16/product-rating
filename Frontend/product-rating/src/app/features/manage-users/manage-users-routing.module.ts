@@ -4,11 +4,15 @@ import { AuthGuard } from '../../core/guards/auth.guard';
 import { UsersComponent } from './pages/users/users.component';
 
 const routes: Routes = [
-  { path: '', component: UsersComponent, canActivate: [AuthGuard] }
+  {
+    path: '', component: UsersComponent, canActivate: [AuthGuard], data: {
+      expectedRoles: ['ADMIN']
+    }
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]  
+  exports: [RouterModule]
 })
 export class ManageUsersRoutingModule { }

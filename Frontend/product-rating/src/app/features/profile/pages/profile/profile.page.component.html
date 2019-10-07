@@ -13,8 +13,9 @@
       <p class="userrole">{{profile.role}}</p>
     </div>
     <div class="action-row">
-      <button *ngIf="profile.isMine && !isEditing" (click)="isEditing = !isEditing" class="btn btn-outline-primary">Edit
-        profile</button>
+      <button *ngIf="profile.isMine && !isEditing" (click)="isEditing = !isEditing" class="btn btn-outline-primary">
+        Edit profile
+      </button>
 
       <input hidden #uploader accept="image/*" (change)="processAvatar(uploader)" type="file" />
 
@@ -42,14 +43,14 @@
         </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab *ngIf="profile.isMine" title="Security">
+    <ngb-tab *ngIf="profile != null && profile.isMine" title="Security">
       <ng-template ngbTabContent>
         <div class="detail-tab">
           <app-change-password-form></app-change-password-form>
         </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab *ngIf="profile.isMine" title="Subscriptions">
+    <ngb-tab *ngIf="profile != null && profile.isMine" title="Subscriptions">
       <ng-template ngbTabContent>
         <div class="detail-tab">
           <app-subscriptions></app-subscriptions>

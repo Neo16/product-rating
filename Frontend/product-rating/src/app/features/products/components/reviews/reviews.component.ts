@@ -70,6 +70,11 @@ export class ReviewsComponent implements OnInit {
     }
   }
 
+  cancelReview(){
+    this.showForm = false;
+    this.newReview = new CreateReviewData();
+  }
+
   addReview() {
     this.reviewService.addNewReview(this.newReview)
       .subscribe((r: ReviewData) => {

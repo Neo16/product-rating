@@ -6,13 +6,13 @@ import { MyProductsComponent } from './pages/my-products/my-products.component';
 import { EditProductComponent } from './pages/edit-product/edit-product.component';
 
 const routes: Routes = [
-  { path: 'edit/:id', component: EditProductComponent, canActivate: [AuthGuard] },
-  { path: 'new', component: NewProductComponent, canActivate: [AuthGuard] },
-  { path: '', component: MyProductsComponent, canActivate: [AuthGuard] }
+  { path: 'edit/:id', component: EditProductComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']} },
+  { path: 'new', component: NewProductComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']} },
+  { path: '', component: MyProductsComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']} }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]  
+  exports: [RouterModule]
 })
 export class ManageProductsRoutingModule { }

@@ -6,9 +6,9 @@ import { NewBrandComponent } from './pages/new-brand/new-brand.component';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'edit/:id', component: EditBrandComponent, canActivate: [AuthGuard]},  
-  { path: 'new', component: NewBrandComponent, canActivate: [AuthGuard]},  
-  { path: '', component: MyBrandsComponent,canActivate: [AuthGuard]} 
+  { path: 'edit/:id', component: EditBrandComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']}},  
+  { path: 'new', component: NewBrandComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']}},  
+  { path: '', component: MyBrandsComponent,canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']}} 
 ];
 
 @NgModule({
