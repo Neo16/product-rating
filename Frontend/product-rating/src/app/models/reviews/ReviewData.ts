@@ -3,6 +3,7 @@ import { ReviewMood } from './ReviewMood';
 export interface ReviewData
 {
     id: string;
+    authorId: string;
     text: string;
     isMine: boolean;
     wasUpvotedByMe: boolean;

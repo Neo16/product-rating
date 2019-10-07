@@ -59,8 +59,10 @@
     </ngb-tab>
     <ngb-tab title="Activity">
       <ng-template ngbTabContent>
-        <div class="detail-tab">
-          <app-user-reviews *ngIf="userId!=null" [userId]="userId"></app-user-reviews>
+        <div class="row" style="background-color: #ebebeb">
+          <div class="col-sm-24">
+            <app-user-reviews *ngIf="userId!=null" [userId]="userId"></app-user-reviews>
+          </div>
         </div>
       </ng-template>
     </ngb-tab>

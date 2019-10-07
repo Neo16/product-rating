@@ -1,6 +1,6 @@
 <div class="review-item-container" [class.highLighted]="review.highLighted">
   <div class="review-info">
-    <div class="author-name">{{review.authorName}}</div>
+    <div class="author-name"><a [routerLink]="['/profile', review.authorId]">{{review.authorName}}</a></div>
     <div class="created">{{review.createdAt}}</div>
   </div>
   <!-- if not editing, show comment text -->

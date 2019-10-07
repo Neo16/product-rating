@@ -57,8 +57,7 @@
     background-color: $container-color;   
 
     .detail-tab{
-        @extend %container-base;
-
+        @extend %container-base;       
         .label{
             font-weight: 500;
         }

@@ -14,6 +14,7 @@ import { LoginResultData } from 'src/app/models/LoginResultData';
 export class MenuComponent implements OnInit {
 
   //component data
+  isNavbarCollapsed = true;
   isLoggedIn: boolean = false;
   userName: string = null;
   roles: string[] = [];
@@ -60,7 +61,7 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  setRoleFlags(roles: string[]) {   
+  setRoleFlags(roles: string[]) {
     this.isAdmin = roles.some(e => e == "ADMIN");
     this.isOwner = roles.some(e => e == "SHOP_OWNER")
   }

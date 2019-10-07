@@ -1,5 +1,5 @@
 <div class="review-item">
-  <div>{{review.date}}</div>
-  <div class="revew-text">Commented on {{review.productBrandName}} {{review.productName}}: "{{review.text}}"</div>
-  <div class="last-item"><a [routerLink]="['/products', review.productId]">Visit product</a></div>   
+  <div>{{review.date}} commented on {{review.productBrandName}} {{review.productName}}:</div>
+  <div class="review-text">"{{review.text}}"</div>
+  <div class="last-item"><a [routerLink]="['/products', review.productId]">Visit comment</a></div>   
 </div>

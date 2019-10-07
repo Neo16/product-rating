@@ -1,58 +1,60 @@
-@import "~src/general"; 
+@import "~src/general";
 
-.review-item-container{
-    &.highLighted{
-        background-color: #ffb5b0;
+.review-item-container {
+  &.highLighted {
+    background-color: #ffb5b0;
+  }
+
+  @extend %container-base;
+  padding: 5px 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .review-info {
+    padding: 12px;
+    .author-name {   
+      a, a:hover, a:active {
+        font-weight: 600;
+        font-size: 18px;
+        color: #212529;
+        text-decoration: none;
+      }
     }
-
-    @extend %container-base;
-    padding: 5px 5px;
+    .created {
+      font-style: italic;
+      font-size: 13px;
+    }
+  }
+  .review-body {
+    padding: 12px;
     width: 100%;
-    display: flex;
-    justify-content: space-between; 
-    .review-info{
-        padding: 12px;      
-        .author-name{
-            font-weight: 600;
-            font-size: 18px;
-        }    
-        .created{
-            font-style: italic;
-            font-size: 13px;
-        }        
-    }
-    .review-body {
-        padding: 12px;     
-        width: 100%;
-        
-        textarea{
-            width: 100%;
-            resize: none;
-        }        
-    }
-    .review-like-container{
-        
-        .own-comment-actions{
-           position: absolute;
-           bottom: 0;
-        }
-        min-height: 93px;
-        position: relative;
-        padding: 12px;
-        width: 60px;
-        button{
-            background: transparent;            
-            color: $app-mild-gray;
-            border: 0px;
 
-            &:focus{
-                outline: 0px;
-            }
-
-            &.voted{
-               color: $brand-blue;            
-            }            
-        }
+    textarea {
+      width: 100%;
+      resize: none;
     }
+  }
+  .review-like-container {
+    .own-comment-actions {
+      position: absolute;
+      bottom: 0;
+    }
+    min-height: 93px;
+    position: relative;
+    padding: 12px;
+    width: 60px;
+    button {
+      background: transparent;
+      color: $app-mild-gray;
+      border: 0px;
+
+      &:focus {
+        outline: 0px;
+      }
+
+      &.voted {
+        color: $brand-blue;
+      }
+    }
+  }
 }
-

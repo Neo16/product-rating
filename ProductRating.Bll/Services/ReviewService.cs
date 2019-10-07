@@ -114,9 +114,9 @@ namespace ProductRating.Bll.Services
               .Select(e => new TextReviewWithProductInfoDto()
               {
                   Id = e.Id,
-                  Text = e.Text.Substring(0, 80) + (e.Text.Length > 100 ? "..." : ""),
+                  Text = e.Text.Substring(0, 100) + (e.Text.Length > 100 ? "..." : ""),
                   ProductId = e.ProductId,
-                  ProductBrandName = e.Product.Brand.Name,
+                  ProductBrandName = e.Product?.Brand?.Name,
                   ProductName = e.Product.Name,
                   Date = e.CreatedAt.ToString("yyyy.MM.dd")
               })
@@ -133,6 +133,7 @@ namespace ProductRating.Bll.Services
                .Select(e => new TextReviewDto()
                {
                    Id = e.Id,
+                   AuthorId = e.Author.Id,
                    IsMine = userId != null ? (Guid?)e.AuthorId == userId : false,
                    Text = e.Text,
                    Mood = e.Mood,

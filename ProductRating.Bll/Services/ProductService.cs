@@ -550,6 +550,7 @@ namespace ProductRating.Bll.Services
                      Price = e.Price,
                      Url = e.Url,
                      ShopName = e.Seller.NickName,
+                     ShopId = e.Seller.Id,
                      WebShopPicture = e.Seller.Avatar != null ?
                         new PictureDto() { Id = e.Seller.AvatarId, Data = Convert.ToBase64String(e.Seller.Avatar.Data) }
                         : null
