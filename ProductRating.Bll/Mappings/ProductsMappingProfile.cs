@@ -3,9 +3,9 @@ using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.Models;
-using ProductRating.Model.Entities;
-using ProductRating.Model.Entities.Products;
-using ProductRating.Model.Entities.Products.Attributes;
+using ProductRating.Dal.Model.Entities;
+using ProductRating.Dal.Model.Entities.Products;
+using ProductRating.Dal.Model.Entities.Products.Attributes;
 using System;
 using System.Linq;
 

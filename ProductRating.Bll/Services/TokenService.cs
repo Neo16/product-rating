@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ProductRating.Bll.Models;
 using ProductRating.Bll.ServiceInterfaces;
-using ProductRating.Common;
 using ProductRating.Dal;
-using ProductRating.Model.Identity;
+using ProductRating.Dal.Model.Identity;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

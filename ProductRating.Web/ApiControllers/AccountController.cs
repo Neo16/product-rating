@@ -4,7 +4,7 @@ using ProductRating.Bll.Dtos.Account;
 using ProductRating.Bll.Dtos.Enum;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Common;
-using ProductRating.Model.Identity;
+using ProductRating.Dal.Model.Identity;
 using ProductRating.Web.WebServices;
 using System.Linq;
 using System.Threading.Tasks;

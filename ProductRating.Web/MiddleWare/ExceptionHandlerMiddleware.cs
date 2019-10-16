@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using log4net;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ProductRating.Bll.Dtos;
@@ -11,22 +12,24 @@ namespace ProductRating.Web.MiddleWare
 {
     public class ExceptionHandlerMiddleware
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate next;
+        private ILog logger;
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+        public ExceptionHandlerMiddleware(RequestDelegate next, ILog logger)
         {
-            _next = next;
+            this.next = next;
+            this.logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
-        {
-            // TODO: log 
+        {         
             try
             {
-                await _next(context);
+                await next(context);
             }
             catch (BusinessLogicException bEx)
             {
+                logger.Error("BusinessLogic exception: ", bEx);
                 await WriteAsJsonAsync(context, (HttpStatusCode)bEx.ErrorCode, new ErrorDto
                 {
                     ErrorCode = bEx.ErrorCode,
@@ -35,6 +38,7 @@ namespace ProductRating.Web.MiddleWare
             }
             catch (Exception ex)
             {
+                logger.Error("An exception happened: ", ex);
                 await WriteAsJsonAsync(context, HttpStatusCode.InternalServerError, null);
             }
         }

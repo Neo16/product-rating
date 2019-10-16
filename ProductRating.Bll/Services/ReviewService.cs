@@ -2,7 +2,7 @@
 using ProductRating.Bll.Dtos.Review;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
-using ProductRating.Model.Entities.Reviews;
+using ProductRating.Dal.Model.Entities.Reviews;
 using System;
 using System.Collections.Generic;
 using System.Linq;

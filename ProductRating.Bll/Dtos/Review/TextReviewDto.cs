@@ -1,4 +1,4 @@
-﻿using ProductRating.Model.Entities.Reviews;
+﻿using ProductRating.Dal.Model.Entities.Reviews;
 using System;
 
 namespace ProductRating.Bll.Dtos.Review

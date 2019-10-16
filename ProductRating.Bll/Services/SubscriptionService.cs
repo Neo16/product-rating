@@ -2,7 +2,7 @@
 using ProductRating.Bll.Dtos.Account;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
-using ProductRating.Model.Identity;
+using ProductRating.Dal.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;

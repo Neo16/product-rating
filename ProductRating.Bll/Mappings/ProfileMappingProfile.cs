@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProductRating.Bll.Dtos.Profile;
-using ProductRating.Model.Identity;
+using ProductRating.Dal.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;

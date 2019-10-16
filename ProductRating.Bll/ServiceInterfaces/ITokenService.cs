@@ -1,7 +1,4 @@
-﻿using ProductRating.Model.Identity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ProductRating.Dal.Model.Identity;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.ServiceInterfaces

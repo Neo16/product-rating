@@ -5,7 +5,7 @@ using ProductRating.Bll.Dtos.Brand;
 using ProductRating.Bll.Exceptions;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
-using ProductRating.Model.Entities.Products;
+using ProductRating.Dal.Model.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;

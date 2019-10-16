@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProductRating.Model.Entities.Products;
+using ProductRating.Dal.Model.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Text;

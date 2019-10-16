@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -10,8 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductRating.Common\ProductRating.Common.csproj" />
-    <ProjectReference Include="..\ProductRating.Model\ProductRating.Model.csproj" />
+    <ProjectReference Include="..\ProductRating.Common\ProductRating.Common.csproj" />   
   </ItemGroup>
 
 </Project>

@@ -9,11 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Bll", "Produc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Dal", "ProductRating.Dal\ProductRating.Dal.csproj", "{53CED049-195B-4D94-9BA3-238358C6A6C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Model", "ProductRating.Model\ProductRating.Model.csproj", "{6E756154-6D7D-470E-AFCD-013DF7E053F2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.Common", "ProductRating.Common\ProductRating.Common.csproj", "{9948716D-09B0-4902-A061-2FB7AABD8193}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductRating.UnitTest", "ProductRating.UnitTest\ProductRating.UnitTest.csproj", "{4E1E3881-3831-41CC-ABC9-A517658D4897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductRating.UnitTest", "ProductRating.UnitTest\ProductRating.UnitTest.csproj", "{4E1E3881-3831-41CC-ABC9-A517658D4897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +31,6 @@ Global
 		{53CED049-195B-4D94-9BA3-238358C6A6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53CED049-195B-4D94-9BA3-238358C6A6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53CED049-195B-4D94-9BA3-238358C6A6C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E756154-6D7D-470E-AFCD-013DF7E053F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E756154-6D7D-470E-AFCD-013DF7E053F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E756154-6D7D-470E-AFCD-013DF7E053F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E756154-6D7D-470E-AFCD-013DF7E053F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9948716D-09B0-4902-A061-2FB7AABD8193}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9948716D-09B0-4902-A061-2FB7AABD8193}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9948716D-09B0-4902-A061-2FB7AABD8193}.Release|Any CPU.ActiveCfg = Release|Any CPU

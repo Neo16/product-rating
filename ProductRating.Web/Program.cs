@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore;
+﻿using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Autofac.Extensions.DependencyInjection;
 
 namespace ProductRating.Web
 {
@@ -8,7 +8,7 @@ namespace ProductRating.Web
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();              
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

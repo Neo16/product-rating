@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ProductRating.Model.Entities;
-using ProductRating.Model.Entities.Products;
-using ProductRating.Model.Entities.Products.Attributes;
-using ProductRating.Model.Entities.Reviews;
-using ProductRating.Model.Identity;
+using ProductRating.Dal.Model.Entities;
+using ProductRating.Dal.Model.Entities.Products;
+using ProductRating.Dal.Model.Entities.Products.Attributes;
+using ProductRating.Dal.Model.Entities.Reviews;
+using ProductRating.Dal.Model.Identity;
 using System;
 using System.Linq;
 using System.Reflection;

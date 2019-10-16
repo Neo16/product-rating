@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using ProductRating.Model.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using ProductRating.Dal.Model.Identity;
 using System.Threading.Tasks;
 
 namespace ProductRating.Web.WebServices

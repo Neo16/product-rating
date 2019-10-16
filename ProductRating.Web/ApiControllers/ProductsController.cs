@@ -35,7 +35,7 @@ namespace ProductRating.Web.ApiControllers
 
         [HttpGet("{productId}")]
         public async Task<IActionResult> Details(Guid productId)
-        {
+        {  
             Guid? userId = null;
 
             if (currentUserService.User != null)

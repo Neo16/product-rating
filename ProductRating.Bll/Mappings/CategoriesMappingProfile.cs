@@ -3,8 +3,8 @@ using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Category.CategoryAttributes;
 using ProductRating.Bll.Dtos.Product;
 using ProductRating.Bll.Dtos.Product.Attributes;
-using ProductRating.Model.Entities.Products;
-using ProductRating.Model.Entities.Products.Attributes;
+using ProductRating.Dal.Model.Entities.Products;
+using ProductRating.Dal.Model.Entities.Products.Attributes;
 using System.Linq;
 
 namespace ProductRating.Bll.Mappings

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ProductRating.Bll.Dtos.Brand;
-using ProductRating.Model.Entities.Products;
+using ProductRating.Dal.Model.Entities.Products;
 using System.Linq;
 
 namespace ProductRating.Bll.Mappings

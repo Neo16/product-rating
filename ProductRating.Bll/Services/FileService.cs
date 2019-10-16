@@ -4,7 +4,7 @@ using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Exceptions;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Dal;
-using ProductRating.Model.Entities;
+using ProductRating.Dal.Model.Entities;
 using System;
 using System.IO;
 using System.Threading.Tasks;
