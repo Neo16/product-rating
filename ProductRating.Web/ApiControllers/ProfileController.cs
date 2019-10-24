@@ -82,7 +82,7 @@ namespace ProductRating.Web.ApiControllers
             return Ok();
         }
 
-        [HttpDelete("delete-subscription/{subscriptionId}")]
+        [HttpDelete("subscriptions/{subscriptionId}")]
         public async Task<IActionResult> DeleteSubscription(Guid subscriptionId)
         {
             await subscriptionService.DeleteSubscription(subscriptionId);

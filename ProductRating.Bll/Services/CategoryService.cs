@@ -133,10 +133,10 @@ namespace ProductRating.Bll.Services
 
                 if (oldAttr != null)
                 {
+                    //3.1 Attribútum név frisítése  
+                    oldAttr.Name = attr.Name;
                     if (attr.HasFixedValues)
-                    {
-                        //3.1 Attribútum név frisítése
-                        oldAttr.Name = attr.Name;
+                    {                                         
                         UpdateAttributeValues(oldAttr, attr);
                     }                    
                 }

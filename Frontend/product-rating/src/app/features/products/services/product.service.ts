@@ -37,7 +37,7 @@ export class ProductService {
   }
 
   getOffers(productId: string): Observable<OfferHeaderData[]>{    
-    const url = `${this.BASE_URL}/products/${productId}/list-offes`;
+    const url = `${this.BASE_URL}/products/${productId}/offers`;
     return this.http.get<OfferHeaderData[]>(url);
   }
 }

@@ -16,11 +16,11 @@ export class ScoringComponent implements OnInit {
 
   constructor(private modalService: NgbModal) { }
 
-  open(content) {
-    this.modalService.open(content, { centered: true }).result.then((result) => {
+  open(content: any) {
+    this.modalService.open(content, { centered: true }).result.then(
+    //on fulfilled 
+    () => {     
       this.addScore.emit(this.newScore);
-    }, (reason) => {
-
     });
   }
 

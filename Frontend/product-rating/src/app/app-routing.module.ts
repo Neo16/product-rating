@@ -9,6 +9,7 @@ import { ManageProductsModule } from './features/manage-products/manage-products
 import { ManageCategoriesModule } from './features/manage-categories/manage-categories.module';
 import { ManageBrandsModule } from './features/manage-brands/manage-brands.module';
 import { ManageUsersModule } from './features/manage-users/manage-users.module';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -39,7 +40,9 @@ const routes: Routes = [
   {
     path: 'manage-categories',
     component: LayoutComponent,
-    loadChildren: () => ManageCategoriesModule
+    loadChildren: () => ManageCategoriesModule,
+    canActivateChild : [AuthGuard],
+    data: { expectedRoles: ['SHOP_OWNER']}
   },
   {
     path: 'manage-brands',

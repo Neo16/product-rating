@@ -15,7 +15,7 @@ export class ManageCategoriesService {
   constructor(private http: HttpClient) { }
 
   getCategories(filter: ManageCategoryFilterData, pagination: PaginationParams): Observable<CategoryManageHeaderData[]> {
-    const url = `${this.BASE_URL}/manage-categories/list`;
+    const url = `${this.BASE_URL}/manage-categories/find`;
 
     // pagination query parameters 
     let queryParams = new HttpParams();
@@ -28,22 +28,22 @@ export class ManageCategoriesService {
   }
 
   getCategory(categoryId: string): Observable<CreateEditCategoryData> {
-    const url = `${this.BASE_URL}/manage-categories/get-for-update/${categoryId}`;
+    const url = `${this.BASE_URL}/manage-categories/${categoryId}/for-update`;
     return this.http.get<CreateEditCategoryData>(url);
   }
 
   createCategory(category: CreateEditCategoryData): Observable<any> {
-    const url = `${this.BASE_URL}/manage-categories/create`;
+    const url = `${this.BASE_URL}/manage-categories`;
     return this.http.post<any>(url, JSON.stringify(category));
   }
 
   updateCategory(categoryId: string, category: CreateEditCategoryData): Observable<any> {
-    const url = `${this.BASE_URL}/manage-categories/${categoryId}/update`;  
+    const url = `${this.BASE_URL}/manage-categories/${categoryId}`;  
     return this.http.put<any>(url, JSON.stringify(category));
   }
 
   deleteCategory(categoryId:string) : Observable<any>{
-    const url = `${this.BASE_URL}/manage-categories/${categoryId}/delete`;  
+    const url = `${this.BASE_URL}/manage-categories/${categoryId}`;  
     return this.http.delete<any>(url);
   }
 }

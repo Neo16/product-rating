@@ -11,8 +11,7 @@ export interface SearchState {
    pagination: PaginationParams,
    products: ProductCellData[],
    categories: CategoryHeader[],
-   brands: BrandHeader[],
-   maxPrice: number | null,   
+   brands: BrandHeader[]
 }
 
 export const initialState: SearchState = {
@@ -34,8 +33,7 @@ export const initialState: SearchState = {
    },
    products: [],
    categories: [],
-   brands: [],
-   maxPrice: 10000,
+   brands: []  
 };
 
 

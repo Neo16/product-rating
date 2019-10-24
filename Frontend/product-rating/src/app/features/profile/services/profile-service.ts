@@ -48,7 +48,7 @@ export class ProfileService {
         return this.http.post<any>(url, JSON.stringify(request));
     }
     deleteSubscription(subscriptionId: string): Observable<any> {
-        const url = `${this.BASE_URL}/profile/delete-subscription/${subscriptionId}`;
+        const url = `${this.BASE_URL}/profile/subscriptions/${subscriptionId}`;
         return this.http.delete<any>(url);
     }
 }

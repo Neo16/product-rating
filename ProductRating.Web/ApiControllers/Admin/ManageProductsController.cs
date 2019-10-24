@@ -27,7 +27,7 @@ namespace ProductRating.Web.ApiControllers.Admin
             this.currentUserService = currentUserService;
         }
 
-        [HttpPost("list")]
+        [HttpPost("find")]
         [ProducesResponseType(typeof(List<ProductManageHeaderDto>), 200)]
         public async Task<IActionResult> ListProducts([FromBody] ManageProductFilterDto filter, [FromQuery] PaginationDto pagination)
         {
@@ -35,14 +35,14 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok(products);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateEditProductDto product)
         {
             await productService.CreateProduct(product);
             return Ok();
         }
 
-        [HttpGet("{productId}/get-offer")]
+        [HttpGet("{productId}/offer")]
         public async Task<IActionResult> GetOffer(Guid productId)
         {
             var offer = await productService.GetOfferForProduct(currentUserService.User.Id, productId);
@@ -50,7 +50,7 @@ namespace ProductRating.Web.ApiControllers.Admin
         }
 
 
-        [HttpPost("{productId}/add-offer")]
+        [HttpPost("{productId}/offer")]
         public async Task<IActionResult> AddOffer(Guid productId, [FromBody] CreateEditOfferDto offer)
         {
             await productService.AddOffer(currentUserService.User.Id, productId, offer);
@@ -58,7 +58,7 @@ namespace ProductRating.Web.ApiControllers.Admin
 
         }
 
-        [HttpDelete("{productId}/delete-offer")]
+        [HttpDelete("{productId}/offer")]
         public async Task<IActionResult> DeletedOffer(Guid productId)
         {
             await productService.DeleteOffer(currentUserService.User.Id, productId);
@@ -66,21 +66,21 @@ namespace ProductRating.Web.ApiControllers.Admin
         }
 
 
-        [HttpGet("get-for-update/{productId}")]
+        [HttpGet("{productId}/for-update")]
         public async Task<IActionResult> GetForUpdate(Guid productId)
         {
             var product = await productService.GetProductForUpdate(productId);
             return Ok(product);
         }
 
-        [HttpPut("{productId}/update")]
+        [HttpPut("{productId}")]
         public async Task<IActionResult> UpdateProduct(Guid productId, CreateEditProductDto product)
         {
             await productService.UpdateProduct(productId, product, currentUserService.User.Id, User.IsInRole(RoleNames.ADMIN_ROLE));
             return Ok();
         }
 
-        [HttpDelete("{productId}/delete")]
+        [HttpDelete("{productId}")]
         public async Task<IActionResult> DeleteProduct(Guid productId)
         {
             await productService.DeleteProduct(productId, currentUserService.User.Id, User.IsInRole(RoleNames.ADMIN_ROLE));

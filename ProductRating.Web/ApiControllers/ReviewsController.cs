@@ -45,7 +45,7 @@ namespace ProductRating.Web.ApiControllers
             return Ok(review);
         }
 
-        [HttpPut("{reviewId}/update")]
+        [HttpPut("{reviewId}")]
         public async Task<IActionResult> UpdateTextReview(Guid reviewId, CreateEditTextReviewDto textReview)
         {
             await reviewService.UpdateReview(currentUserService.User.Id, reviewId, textReview);

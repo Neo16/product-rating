@@ -27,36 +27,36 @@ namespace ProductRating.Web.ApiControllers.Admin
             this.currentUserService = currentUserService;
         }
 
-        [HttpPost("list")]
+        [HttpPost("find")]
         [ProducesResponseType(typeof(List<CategoryManageHeaderDto>), 200)]
         public async Task<IActionResult> ListCategories([FromBody] ManageCategoryFilterDto filter, [FromQuery] PaginationDto pagination)
-        {
+        {            
             var categories = await categoryService.AdminGetCategories(filter, currentUserService.User.Id, pagination);
             return Ok(categories);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateEditCategoryDto category)
         {
             var id =  await categoryService.CreateCategory(category);
             return Ok(id);
         }
 
-        [HttpGet("get-for-update/{categoryId}")]
+        [HttpGet("{categoryId}/for-update")]
         public async Task<IActionResult> GetForUpdate(Guid categoryId)
         {
             var category = await categoryService.GetCategoryForUpdate(categoryId);
             return Ok(category);
         }
 
-        [HttpPut("{categoryId}/update")]
+        [HttpPut("{categoryId}")]
         public async Task<IActionResult> UpdateCategory(Guid categoryId, CreateEditCategoryDto category)
         {
             await categoryService.UpdateCategory(categoryId, category);
             return Ok();
         }
 
-        [HttpDelete("{categoryId}/delete")]
+        [HttpDelete("{categoryId}")]
         public async Task<IActionResult> DeleteCategory(Guid categoryId)
         {
             await categoryService.DeleteCategory(categoryId);

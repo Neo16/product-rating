@@ -31,16 +31,16 @@ namespace ProductRating.Bll.Services
             this.userManager = userManager;
             this.accessTokenHandler = new JwtSecurityTokenHandler
             {
-                TokenLifetimeInMinutes = (int)(TimeSpan.FromDays(1)).TotalMinutes
+                TokenLifetimeInMinutes = (int)(TimeSpan.FromDays(5)).TotalMinutes
             };
             this.tokenConfiguration = tokenConfiguration.Value;
         }
 
         public async Task<string> GetTokenForUserAsync(ApplicationUser user)
-        {
+        {           
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Issuer = "productraing.example",
+                Issuer = "productraing.example.com",
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfiguration.SigningKey)), SecurityAlgorithms.HmacSha256),
                 Subject = new ClaimsIdentity((await signInManager.CreateUserPrincipalAsync(user)).Claims),
             };

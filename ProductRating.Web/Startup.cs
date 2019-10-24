@@ -55,16 +55,16 @@ namespace ProductRating.Web
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
-                {
+                {                  
                     options.RequireHttpsMetadata = false;
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(ConfigurationSectionToken.Get<TokenConfiguration>().SigningKey)
-                        ),
+                        ),                                            
                         ValidateAudience = false,
-                        ValidIssuer = "productraing.example"
+                        ValidIssuer = "productraing.example.com"
                     };
                 });
 
@@ -83,7 +83,7 @@ namespace ProductRating.Web
                 };
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey"

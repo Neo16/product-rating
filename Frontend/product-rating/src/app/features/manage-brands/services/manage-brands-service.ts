@@ -14,7 +14,7 @@ export class ManageBrandsService {
 
   getBrands(filter: ManageBrandFilterData, pagination: PaginationParams): Observable<BrandManageHeaderData[]> {
 
-    const url = `${this.BASE_URL}/manage-brands/list`;
+    const url = `${this.BASE_URL}/manage-brands/find`;
 
     // pagination query parameters 
     let queryParams = new HttpParams();
@@ -27,22 +27,22 @@ export class ManageBrandsService {
   }
 
   getBrand(brandId: string): Observable<CreateEditBrandData> {
-    const url = `${this.BASE_URL}/manage-brands/get-for-update/${brandId}`;   
+    const url = `${this.BASE_URL}/manage-brands/${brandId}/for-update`;   
     return this.http.get<CreateEditBrandData>(url);
   }
 
   createBrand(brand: CreateEditBrandData): Observable<any> {
-    const url = `${this.BASE_URL}/manage-brands/create`;
+    const url = `${this.BASE_URL}/manage-brands`;
     return this.http.post<any>(url, JSON.stringify(brand));
   }
 
   updateBrand(brandId: string, brand: CreateEditBrandData): Observable<any> {
-    const url = `${this.BASE_URL}/manage-brands/${brandId}/update`;
+    const url = `${this.BASE_URL}/manage-brands/${brandId}`;
     return this.http.put<any>(url, JSON.stringify(brand));
   }
 
   deleteBrand(brandId: string): Observable<any> {
-    const url = `${this.BASE_URL}/manage-brands/${brandId}/delete`;
+    const url = `${this.BASE_URL}/manage-brands/${brandId}`;
     return this.http.delete<any>(url);
   }
 }

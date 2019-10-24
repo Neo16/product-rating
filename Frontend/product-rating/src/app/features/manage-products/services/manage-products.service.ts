@@ -15,7 +15,7 @@ export class ManageProductsService {
     constructor(private http: HttpClient) { }
 
     getProducts(filter: ManageProductFilterData, pagination: PaginationParams): Observable<ProductManageHeaderData[]> {
-        const url = `${this.BASE_URL}/manage-products/list`;
+        const url = `${this.BASE_URL}/manage-products/find`;
 
         // pagination query parameters 
         let queryParams = new HttpParams();
@@ -26,7 +26,7 @@ export class ManageProductsService {
     }
 
     getProduct(productId: string): Observable<CreateEditProductData> {
-        const url = `${this.BASE_URL}/manage-products/get-for-update/${productId}`;
+        const url = `${this.BASE_URL}/manage-products/${productId}/for-update`;
         return this.http.get<CreateEditProductData>(url);
     }
 
@@ -34,32 +34,32 @@ export class ManageProductsService {
         var toUpload = { ...product };
         toUpload.thumbnailPicture.data = null;
 
-        const url = `${this.BASE_URL}/manage-products/create`;
+        const url = `${this.BASE_URL}/manage-products`;
         return this.http.post<any>(url, JSON.stringify(toUpload));
     }
 
     updateProduct(productId: string, product: CreateEditProductData): Observable<any> {
-        const url = `${this.BASE_URL}/manage-products/${productId}/update`;
+        const url = `${this.BASE_URL}/manage-products/${productId}`;
         return this.http.put<any>(url, JSON.stringify(product));
     }
 
     deleteProduct(productId: string): Observable<any> {
-        const url = `${this.BASE_URL}/manage-products/${productId}/delete`;
+        const url = `${this.BASE_URL}/manage-products/${productId}`;
         return this.http.delete<any>(url);
     }
 
     getOffer(productId: string): Observable<OfferHeaderData>{
-        const url = `${this.BASE_URL}/manage-products/${productId}/get-offer`;
+        const url = `${this.BASE_URL}/manage-products/${productId}/offer`;
         return this.http.get<any>(url);
     }
 
     addOffer(productId: string, data: CreateEditOfferData): Observable<any>{
-        const url = `${this.BASE_URL}/manage-products/${productId}/add-offer`;
+        const url = `${this.BASE_URL}/manage-products/${productId}/offer`;
         return this.http.post<CreateEditOfferData>(url, JSON.stringify(data));
     }
 
     deletetOffer(productId: string): Observable<any>{
-        const url = `${this.BASE_URL}/manage-products/${productId}/delete-offer`;
+        const url = `${this.BASE_URL}/manage-products/${productId}/offer`;
         return this.http.delete<any>(url);
     }
 

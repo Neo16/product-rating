@@ -8,29 +8,20 @@ import { AccountService } from './account.service';
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
   private authService: AccountService;
-  constructor(private injector: Injector) {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> { 
-    this.authService = this.injector.get(AccountService);
+  constructor(private injector: Injector) { }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    var needContentType =  request.url.indexOf("upload-picture") == -1;    
+    this.authService = this.injector.get(AccountService);     
+    const token: string = this.authService.getToken();
+    var needContentType = request.url.indexOf("upload-picture") == -1;
 
-    const token: string = this.authService.getToken();   
+    request = request.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${token}`,
+        'content-type': (needContentType ? 'application/json' : '')
+      }
+    });
 
-    if (needContentType){
-      request = request.clone({
-        setHeaders: {
-          'Authorization': `Bearer ${token}`,
-          'content-type': 'application/json'
-         }
-      });
-    }
-    else{
-      request = request.clone({
-        setHeaders: {
-          'Authorization': `Bearer ${token}`        
-         }
-      });
-    }   
     return next.handle(request);
   }
 }

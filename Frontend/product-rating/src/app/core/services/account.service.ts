@@ -9,20 +9,25 @@ import { RegisterData } from 'src/app/models/RegisterData';
 export class AccountService {
   private BASE_URL = 'https://localhost:44394';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getToken(): string {
     return localStorage.getItem('productrating-token');
   }
 
-  logIn(username: string, password: string): Observable<LoginResultData> {  
+  logIn(username: string, password: string): Observable<LoginResultData> {
     const url = `${this.BASE_URL}/account/login`;
-    return this.http.post<LoginResultData>(url, JSON.stringify({username, password}));
+    return this.http.post<LoginResultData>(url, JSON.stringify({ username, password }));
   }
 
-  register(data: RegisterData): Observable<any> {  
+  register(data: RegisterData): Observable<any> {
     const url = `${this.BASE_URL}/account/register`;
     return this.http.post<any>(url, JSON.stringify(data));
+  }
+
+  getUserRoles(): string[] {
+    var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as string[];
+    return userRoles;
   }
 
 }

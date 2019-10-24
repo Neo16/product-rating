@@ -1,8 +1,8 @@
 export interface ProductCellData {
    id: string;
    name: string;
-   score: number; //Todo backendre is kell 
-   numberOfReviews: number; //Todo backendre is kell 
+   score: number; 
+   numberOfReviews: number; 
    thumbnailImage: string;
    price: number;
 }

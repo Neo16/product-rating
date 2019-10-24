@@ -12,7 +12,7 @@ export class ManageUsersService {
     constructor(private http: HttpClient) { }
 
     getUsers(filter: ManageUserFilterData, pagination: PaginationParams): Observable<UserManageHeaderData[]> {
-        const url = `${this.BASE_URL}/manage-users/list`;
+        const url = `${this.BASE_URL}/manage-users/find`;
 
         // pagination query parameters 
         let queryParams = new HttpParams();

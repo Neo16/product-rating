@@ -22,7 +22,7 @@ namespace ProductRating.Web.ApiControllers.Admin
             this.userService = userService;
         }
    
-        [HttpPost("list")]
+        [HttpPost("find")]
         [ProducesResponseType(typeof(List<UserManageHeaderDto>), 200)]
         public async Task<IActionResult> Listusers([FromBody] UserManageFilterDto filter, [FromQuery] PaginationDto pagination)
         {

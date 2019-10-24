@@ -27,7 +27,7 @@ namespace ProductRating.Web.ApiControllers.Admin
             this.currentUserService = currentUserService;
         }
 
-        [HttpPost("list")]
+        [HttpPost("find")]
         [ProducesResponseType(typeof(List<BrandManageHeaderDto>), 200)]
         public async Task<IActionResult> ListBrands([FromBody] ManageBrandFilterDto filter, [FromQuery] PaginationDto pagination)
         {
@@ -35,7 +35,7 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok(brands);
         }
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<IActionResult> CreateBrand(CreateEditBrandDto brand)
         {
             var creatorId = (await currentUserService.GetCurrentUser()).Id;
@@ -43,21 +43,21 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok(id);
         }
 
-        [HttpGet("get-for-update/{brandId}")]
+        [HttpGet("{brandId}/for-update")]
         public async Task<IActionResult> GetForUpdate(Guid brandId)
         {
             var brand = await brandService.GetBrandForUpdate(brandId);
             return Ok(brand);
         }
 
-        [HttpPut("{brandId}/update")]
+        [HttpPut("{brandId}")]
         public async Task<IActionResult> UpdateBrand(Guid brandId, CreateEditBrandDto brand)
         {
             await brandService.UpdateBrand(brandId, brand);
             return Ok();
         }
 
-        [HttpDelete("{brandId}/delete")]
+        [HttpDelete("{brandId}")]
         public async Task<IActionResult> DeleteBrand(Guid brandId)
         {
             await brandService.DeleteBrand(brandId);

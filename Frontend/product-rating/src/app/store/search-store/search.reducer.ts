@@ -161,8 +161,7 @@ export function searchReducer(state: SearchState = initialState, action: any): S
       var newState = {
         ...state,
         products: result.products,
-        brands: result.brands,
-        maxPrice: result.maxPriceOption,
+        brands: result.brands,      
         pagination: {
           ...state.pagination,
           totalNumOfResults: result.totalNumOfResults

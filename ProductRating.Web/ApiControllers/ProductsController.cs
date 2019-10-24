@@ -73,7 +73,7 @@ namespace ProductRating.Web.ApiControllers
             return Ok(score);
         }
 
-        [HttpGet("{productId}/list-offes")]
+        [HttpGet("{productId}/offers")]
         public async Task<IActionResult> ListOffers(Guid productId)
         {
             var offers = await productService.ListOffers(productId);

@@ -38,7 +38,7 @@ export class ReviewService {
   }
 
   editReview(reviewId: string, text: string, mood: ReviewMood): Observable<any> {
-    const url = `${this.BASE_URL}/reviews/${reviewId}/update`;
+    const url = `${this.BASE_URL}/reviews/${reviewId}`;
 
     var editedReview: CreateReviewData = {
       mood: mood,

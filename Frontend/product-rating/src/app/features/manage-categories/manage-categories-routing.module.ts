@@ -6,9 +6,9 @@ import { MyCategoriesComponent } from './pages/my-categories/my-categories.compo
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 
 const routes: Routes = [
-  { path: 'edit/:id', component: EditCategoryComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']}},  
-  { path: 'new', component: NewCategoryComponent, canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']}},  
-  { path: '', component: MyCategoriesComponent,canActivate: [AuthGuard], data: { expectedRoles: ['SHOP_OWNER']}} 
+  { path: 'edit/:id', component: EditCategoryComponent},  
+  { path: 'new', component: NewCategoryComponent},  
+  { path: '', component: MyCategoriesComponent} 
 ];
   
 @NgModule({

@@ -1,12 +1,16 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { CanActivate, CanActivateChild, Router, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AccountService } from '../services/account.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
 
-    constructor(private router: Router) {
+    private authService: AccountService;
+
+    constructor(private router: Router, private injector: Injector) {
+        this.authService = this.injector.get(AccountService);     
     }
 
     canActivate(
@@ -15,26 +19,22 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     ): Observable<boolean> | Promise<boolean> | boolean {
 
         const expectedRoles = next.data.expectedRoles;
-        var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as string[];
+        var userRoles = this.authService.getUserRoles();
 
         var hasExpectedRole = false;
         if (userRoles) {
             expectedRoles.forEach((role: string) => {
-                if (hasExpectedRole = userRoles.some(e => e == role)) {
+                if (userRoles.some(e => e == role)) {
                    hasExpectedRole = true;
                 }
             });
         }
-
-        if (hasExpectedRole) {
-            return true;
-        }
-        else {
+        if (!hasExpectedRole) {
             this.router.navigate(['account', 'login']);
-            return false;
-        }
-
+        }                   
+        return hasExpectedRole;    
     }
+    
     canActivateChild(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot

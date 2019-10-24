@@ -113,11 +113,11 @@ namespace ProductRating.Bll.Services
             return result;
         }
 
-        private List<Category> GetRootCategories(IEnumerable<Category> caegories)
+        private List<Category> GetRootCategories(IEnumerable<Category> categories)
         {
             List<Category> result = new List<Category>();
 
-            foreach (var category in caegories)
+            foreach (var category in categories)
             {
                 var currentCategory = category;
                 while (currentCategory.Parent != null)
@@ -164,16 +164,16 @@ namespace ProductRating.Bll.Services
             {
                 foreach (StringAttribute stringFilterAttr in filter.StringAttributes)
                 {
-                    filters.Add(e => e is ProductAttributeStringValue && e.Attribute.Id == stringFilterAttr.AttributeId
-                            && ((e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value || e.Id == stringFilterAttr.ValueId));
+                    filters.Add(e => (e.Attribute.Id == stringFilterAttr.AttributeId && (e as ProductAttributeStringValue).StringValue == stringFilterAttr.Value)
+                                     || e.Id == stringFilterAttr.ValueId);
                 }
             }
             if (filter.IntAttributes != null)
             {
                 foreach (IntAttribute intFilterAttr in filter.IntAttributes)
                 {
-                    filters.Add(e => e is ProductAttributeIntValue && e.Attribute.Id == intFilterAttr.AttributeId
-                            && ((e as ProductAttributeIntValue).IntValue == intFilterAttr.Value || e.Id == intFilterAttr.ValueId));
+                    filters.Add(e => (e.Attribute.Id == intFilterAttr.AttributeId && (e as ProductAttributeIntValue).IntValue == intFilterAttr.Value)
+                                     || e.Id == intFilterAttr.ValueId);
                 }
             }
 
@@ -198,7 +198,7 @@ namespace ProductRating.Bll.Services
         }
 
         private static IQueryable<Product> FilterForPrice(ProductFilterDto filter, IQueryable<Product> query)
-        {          
+        {
             if (filter.MinimumPrice != null && filter.MaximumPrice != null)
             {
                 query = query.Where(e => e.SmallestPrice >= filter.MinimumPrice && e.SmallestPrice <= filter.MaximumPrice);
@@ -494,7 +494,7 @@ namespace ProductRating.Bll.Services
             {
                 context.Offers.Remove(oldDbOffer);
                 await context.SaveChangesAsync();
-            }        
+            }
 
             var newDbOffer = new Offer()
             {

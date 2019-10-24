@@ -15,7 +15,7 @@ describe("should test admin review features", () => {
 
             //long press a comment to delete
             cy.get('.review-item-container').first().trigger('mousedown').wait(700);
-            cy.get('.review-item-container').first().trigger('mouseleave', {force: true});
+              cy.get('.review-item-container').first().trigger('mouseleave', {force: true});
             cy.wait(200);
 
             //confirm delete 
