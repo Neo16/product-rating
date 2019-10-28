@@ -1,6 +1,6 @@
 <div class="product-list-container">
   <div class="row">   
-    <div *ngFor="let product of productCells" class="col-md-8">
+    <div *ngFor="let product of products" class="col-md-8">
         <app-product-cell [product]="product"></app-product-cell>
     </div>  
     <div *ngIf="totalNumOfResults > pageSize" class="col-24 pagination-container">

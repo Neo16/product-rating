@@ -51,8 +51,9 @@
     <div class="col-12">
       <p class="review-class">Negative reveiws:</p>
       <div class="review-item-list-container">
-        <app-review-item *ngFor="let review of negativeReviews" [review]="review" (upvote)="upvote($event)"
-          (downvote)="downvote($event)" long-press (onLongPress)="adminDelete(review)">
+        <app-review-item *ngFor="let review of negativeReviews" [review]="review" (upvoteEvent)="upvote($event)"
+          (downvoteEvent)="downvote($event)" (editEvent)="edit($event)" (deleteEvent)="delete($event)" long-press
+          (onLongPress)="adminDelete(review)">
         </app-review-item>
       </div>
     </div>

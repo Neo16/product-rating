@@ -16,22 +16,29 @@ export class LoginPageComponent implements OnInit {
   password: string;
   getState: Observable<AccountState>;
   returnUrl: string;
+  errorMessage: string = null;
 
   constructor(private acountStore: Store<AccountState>,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute) {
     this.getState = this.acountStore.select(selectAccountState);
   }
 
   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams['return'] || '/';
+
+    this.getState.subscribe((accountState) => {
+      if (accountState.errorMessage) {        
+        this.errorMessage = accountState.errorMessage;
+      }
+    });
   }
 
-  login(): void {         
+  login(): void {
     const payload = {
       username: this.username,
       password: this.password,
       returnUrl: this.returnUrl
-    };    
+    };
     this.acountStore.dispatch(new LogInAction(payload));
   }
 }

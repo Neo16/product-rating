@@ -4,6 +4,8 @@
   </div>
   <div [ngClass]="{'col-19': showPropertySearch === true, 'col-24': showPropertySearch === false}">
     <app-search-bar></app-search-bar>
-    <app-product-list></app-product-list>   
+    <app-product-list [products]="productList" [pageSize]="pageSize" [totalNumOfResults]="totalNumOfResults"
+      (onPageChange)="pageChange($event)">
+    </app-product-list>
   </div>
 </div>

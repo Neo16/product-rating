@@ -34,8 +34,7 @@ export class AcccountEffects {
           .map((loginResult: LoginResultData) => {                                   
             return new LogInSuccessAction(loginResult);
           })
-          .catch((error) => {
-            console.log(error);
+          .catch((error) => {           
             return Observable.of(new LogInFailureAction({ error: error }));
           });
       }));

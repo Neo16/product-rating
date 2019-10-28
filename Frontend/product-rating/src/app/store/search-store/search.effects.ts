@@ -30,8 +30,7 @@ export class SearchEffects {
       map((actionAndState) => actionAndState[1]),
       switchMap((payload: SearchState) => {
         return this.productService.searchProducts(payload.filter, payload.pagination)
-          .map((result: SearchResult) => { 
-            console.log(result.products);
+          .map((result: SearchResult) => {          
             return new SearchSuccessAction(result);
           })
           .catch((error) => { 
