@@ -1,7 +1,7 @@
 <div *ngIf="profile" class="profile-header">
   <div class="avatar-wrapper">
     <ng-container *ngIf="profile.avatar != null">
-      <img [src]="'data:image/png;base64,' + profile.avatar.data" />
+      <img [src]="'data:image/png;base64,' + profile.avatar" />
     </ng-container>
     <ng-container *ngIf="profile.avatar == null">
       <img src="http://cdn.patch.com/assets/contrib/images/placeholder-user-photo.png" />
@@ -50,7 +50,7 @@
         </div>
       </ng-template>
     </ngb-tab>
-    <ngb-tab *ngIf="profile != null && profile.isMine" title="Subscriptions">
+    <ngb-tab *ngIf="profile != null && profile.isMine && isOwner" title="Subscriptions">
       <ng-template ngbTabContent>
         <div class="detail-tab">
           <app-subscriptions></app-subscriptions>

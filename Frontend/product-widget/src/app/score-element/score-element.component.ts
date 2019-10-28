@@ -18,8 +18,7 @@ export class ScoreElementComponent implements OnInit {
    @Input() key: string;
    score: number = 0;
 
-  ngOnInit() {
-    console.log(this.productid);
+  ngOnInit() { 
     this.service.getProductScore(this.productid, this.key)
       .subscribe(result => {
           this.score = result;

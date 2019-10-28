@@ -57,6 +57,7 @@ namespace ProductRating.Bll.Services
 
             return brands
                 .Select(e => mapper.Map<BrandManageHeaderDto>(e))
+                .Select(e => { e.IsCreatedByMe = e.CreatorId == userId; return e; })
                 .ToList();
         }
 

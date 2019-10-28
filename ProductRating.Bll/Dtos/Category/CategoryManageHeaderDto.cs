@@ -12,5 +12,9 @@ namespace ProductRating.Bll.Dtos.Category
         public string AttributeNames { get; set; }
 
         public string ParentName { get; set; }
+
+        public Guid CreatorId { get; set; }
+
+        public bool? IsCreatedByMe { get; set; }
     }
 }

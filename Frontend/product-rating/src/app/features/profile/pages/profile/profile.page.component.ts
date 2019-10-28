@@ -22,6 +22,7 @@ export class ProfilePageComponent implements OnInit {
   editModel: EditProfileData = null;
   isEditing: boolean = false;
   profileId: string;
+  isOwner: boolean = false;
 
   getAccountState: Observable<AccountState>;  
 
@@ -49,6 +50,9 @@ export class ProfilePageComponent implements OnInit {
         });
         this.loadMyProfile();
       }
+
+      var userRoles = JSON.parse(localStorage.getItem('productrating-userroles')) as string[];
+      this.isOwner = userRoles.some(e => e == "SHOP_OWNER")
     });      
   }
 
@@ -87,7 +91,7 @@ export class ProfilePageComponent implements OnInit {
 
     reader.addEventListener('load', (event: any) => {
       this.pictureservice.uploadImage(file).subscribe(
-        (res) => {
+        (res) => {         
           this.profile.avatar = res.data;
           this.editModel.pictureId = res.id;
         },

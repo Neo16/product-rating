@@ -96,7 +96,7 @@ namespace ProductRating.Bll.Services
             //pagination            
             if (pagination.Start != null && pagination.Length != null)
             {
-                query = query.Skip(pagination.Start.Value - 1).Take(pagination.Length.Value);
+                query = query.Skip(pagination.Start.Value).Take(pagination.Length.Value);
             }
 
             var products = await query

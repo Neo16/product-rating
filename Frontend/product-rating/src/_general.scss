@@ -1,44 +1,47 @@
-@import 'variables';
+@import "variables";
 
-body{
-    background-color: $app-background-color;    
+body {
+  background-color: $app-background-color;
 }
-%container-base{
-    background-color: $container-color;   
-    padding: 1rem;
-    margin-top: 1rem;       
-}
-
-.basic-container{
-    @extend %container-base;
+%container-base {
+  background-color: $container-color;
+  padding: 1rem;
+  margin-top: 1rem;
 }
 
-.no-padding{
-    padding: 0px;
+.basic-container {
+  @extend %container-base;
 }
 
-.pointer{
-    cursor: pointer;
+.no-padding {
+  padding: 0px;
 }
 
-.max-width{
-    width: 100%;
+.pointer {
+  cursor: pointer;
+}
+
+.max-width {
+  width: 100%;
 }
 .bg-light {
-    background-image: linear-gradient(to right, #1974c8e8, #2d96c5, #6dc3d8, #36c5c9, #86ccbd);
+  background-image: linear-gradient(to right, #1974c8e8, #2d96c5, #6dc3d8, #36c5c9, #86ccbd);
 }
 
-.dropdown-menu{
- background-color: $brand-blue;
+.dropdown-menu {
+  background-color: $brand-blue;
 }
 
-.navbar-light .navbar-nav .nav-link:hover
-{
-    background-color: $brand-green;
+.navbar-light .navbar-nav .nav-link:hover {
+  background-color: $brand-green;
 }
 
-.btn{
-    background-color: $brand-blue;
-    color: white;
-    font-weight: 500;
+.btn {
+  background-color: $brand-blue;
+  color: white;
+  font-weight: 500;
+}
+
+span.switch.switch-medium {
+  background-color: whitesmoke;
 }

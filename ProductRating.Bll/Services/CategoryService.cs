@@ -300,8 +300,11 @@ namespace ProductRating.Bll.Services
             var categories = await query.ToListAsync();
 
             return categories
-                .Select(e => mapper.Map<CategoryManageHeaderDto>(e))
-                .ToList();              
+                .Select(e => mapper.Map<CategoryManageHeaderDto>(e))     
+                .Select(e => { e.IsCreatedByMe = e.CreatorId == userId; return e; })
+                .ToList();     
+            
+
         }
     }
 }

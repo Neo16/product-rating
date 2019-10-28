@@ -6,13 +6,13 @@ import { MyCategoriesComponent } from './pages/my-categories/my-categories.compo
 import { EditCategoryComponent } from './pages/edit-category/edit-category.component';
 
 const routes: Routes = [
-  { path: 'edit/:id', component: EditCategoryComponent},  
-  { path: 'new', component: NewCategoryComponent},  
-  { path: '', component: MyCategoriesComponent} 
+  { path: 'edit/:id', component: EditCategoryComponent, data: { expectedRoles: ['SHOP_OWNER'] } },
+  { path: 'new', component: NewCategoryComponent, data: { expectedRoles: ['SHOP_OWNER'] } },
+  { path: '', component: MyCategoriesComponent }
 ];
-  
+
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class ManageCategoriesRoutingModule { }

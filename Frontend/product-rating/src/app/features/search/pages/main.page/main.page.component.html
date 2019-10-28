@@ -1,10 +1,9 @@
 <div class="row">
-   <div *ngIf="showPropertySearch" class="col-sm-5 no-padding">
-        <app-property-search></app-property-search>
-   </div> 
+  <div *ngIf="showPropertySearch" class="col-sm-5 no-padding">
+    <app-property-search></app-property-search>
+  </div>
   <div [ngClass]="{'col-19': showPropertySearch === true, 'col-24': showPropertySearch === false}">
     <app-search-bar></app-search-bar>
-    <app-product-list></app-product-list>
+    <app-product-list></app-product-list>   
   </div>
 </div>
-
