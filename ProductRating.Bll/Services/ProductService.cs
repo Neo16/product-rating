@@ -558,5 +558,19 @@ namespace ProductRating.Bll.Services
                  .ToList();
         }
 
+        public async Task<List<ProductHeaderDto>> ListFirstTen()
+        {
+            return await context.Products.Take(10)       
+                .Select(e => new ProductHeaderDto() { 
+                    Id = e.Id,
+                    BrandName = null,
+                    Name = e.Name,
+                    CategoryName = null,
+                    Price = 0,
+                    Score = e.ScoreValue,
+                    ThumbnailImage = null
+                })
+                .ToListAsync();
+        }
     }
 }

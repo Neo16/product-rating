@@ -26,7 +26,7 @@ namespace ProductRating.Web.ApiControllers.Admin
             this.brandService = brandService;
             this.currentUserService = currentUserService;
         }
-
+    
         [HttpPost("find")]
         [ProducesResponseType(typeof(List<BrandManageHeaderDto>), 200)]
         public async Task<IActionResult> ListBrands([FromBody] ManageBrandFilterDto filter, [FromQuery] PaginationDto pagination)

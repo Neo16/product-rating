@@ -79,5 +79,18 @@ namespace ProductRating.Web.ApiControllers
             var offers = await productService.ListOffers(productId);
             return Ok(offers);
         }
+
+        [HttpGet("dummy-json")]
+        public IActionResult DummyJson()
+        {           
+            return Ok();
+        }
+
+        [HttpGet("db-list")]
+        public async Task<IActionResult> DbList()
+        {
+            var products = await productService.ListFirstTen();
+            return Ok(products);
+        }
     }
 }

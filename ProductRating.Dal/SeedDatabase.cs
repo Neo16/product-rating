@@ -27,11 +27,15 @@ namespace ProductRating.Dal
                 context
                     .CreateRoles()
                     .CreateUsers()
-                    .CreateCategories()
-                    .CreateBrands()
-                    .CreateProducts()
-                    .CreateReviews(200)
-                    .CreateScrores(10);
+                    //.CreateCategories()
+                    .MassCreateBrands(500)
+                    .MassCreateCategories(500)
+                    .MassCreateFixedValues(2) //value per fixed attr
+                                              //  .CreateBrands()
+                                              //  .CreateProducts()
+                    .MassCreateProducts(100000)
+                    .CreateReviews(200);
+                    //CreateScrores(1);
             }
         }
 
@@ -224,6 +228,84 @@ namespace ProductRating.Dal
             return context;
         }
 
+
+        private static ApplicationDbContext MassCreateFixedValues(this ApplicationDbContext context, int count)
+        {
+            var categories = context.Categories
+                .Include(e => e.Attributes)
+                .ToList();
+
+            foreach (var category in categories)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var attributeId = category.Attributes.Single(e => e.Name == "fixed string").Id;
+                    var attributeValue = new ProductAttributeStringValue()
+                    {
+                        StringValue = "fixed " + i.ToString(),
+                        AttributeId = attributeId
+                    };
+
+                    context.ProductAttributeValues.Add(attributeValue);
+
+                    if (i % 200 == 0)
+                    {
+                        context.SaveChanges();
+                    }
+                }
+            }
+
+            context.SaveChanges();
+            return context;
+        }
+
+        private static ApplicationDbContext MassCreateCategories(this ApplicationDbContext context, int count)
+        {
+            var categories = new List<Category>();
+            for (int i = 0; i < count; i++)
+            {
+                var category = new Category()
+                {
+                    Name = "Category " + (i + 1),
+                    Creator = webshopOwnderUser,
+                    Attributes = new List<ProductAttribute>()
+                    {
+                        new ProductAttributeString() {Name = "fixed string" },
+                        new ProductAttributeString() {Name = "non-fixed string" },
+                    }
+                };
+
+                categories.Add(category);
+               
+
+                if (i % 100 == 0)
+                {
+                    context.Categories.AddRange(categories);
+                    context.SaveChanges();
+                    categories = new List<Category>();
+                }
+            }
+            context.SaveChanges();
+            return context;
+        }
+
+        private static ApplicationDbContext MassCreateBrands(this ApplicationDbContext context, int count)
+        {
+            var brands = new List<Brand>();
+            for (int i = 0; i < count; i++)
+            {
+                var brand = new Brand()
+                {
+                    Name = "Brand " + (i + 1)
+                };
+                brands.Add(brand);
+            }
+
+            context.Brands.AddRange(brands);           
+            context.SaveChanges();
+            return context;
+        }
+
         private static ApplicationDbContext CreateBrands(this ApplicationDbContext context)
         {
             var brands = new List<Brand>()
@@ -349,39 +431,70 @@ namespace ProductRating.Dal
                 }
             };
             context.Products.Add(book1);
-
-            context.SaveChanges();
-            context.AddDummyLaptops(30);
-
             context.SaveChanges();
             return context;
         }
 
-        private static void AddDummyLaptops(this ApplicationDbContext context, int count)
+        private static ApplicationDbContext MassCreateProducts(this ApplicationDbContext context, int count)
         {
             var r = new Random();
-            var processorValueId = context.ProductAttributeValues
-                .Include(e => e.Attribute)
-                .Where(e => e.Attribute.Name == "Processor").First().Id;
+            var creatorId = context.Users.Single(e => e.NickName == "David Owner").Id;
 
             for (int i = 0; i < count; i++)
             {
-                var computer = new Product()
+                int catCount = context.Categories.Count();
+                int randomCatIndex = r.Next(0, catCount - 1);
+                var category = context.Categories
+                    .Include(e => e.Attributes)
+                    .Skip(randomCatIndex).First();
+
+                var fixedAttrId = category.Attributes.Single(e => e.Name == "fixed string").Id;
+                var fixedAttrValues = context.ProductAttributeValues.Where(e => e.AttributeId == fixedAttrId).ToList();
+                var chosenFixedAttrValue = fixedAttrValues.Skip(r.Next(0, fixedAttrValues.Count() - 1)).First();
+
+                int brandCount = context.Brands.Count();
+                int randomBrandIndex = r.Next(0, brandCount - 1);
+                var brand = context.Brands.Skip(randomBrandIndex).First();
+
+                var productsToBeAdded = new List<Product>();
+                var product = new Product()
                 {
                     CreatedAt = DateTime.Now,
-                    BrandId = context.Brands.Where(e => e.Name == "Lenovo").Single().Id,
-                    CategoryId = context.Categories.Where(e => e.Name == "Laptops").Single().Id,
-                    Name = "Dummy Laptop " + i,
+                    BrandId = brand.Id,
+                    CategoryId = category.Id,
+                    Name = "Dummy Product " + (i + 1),
                     PropertyValueConnections = new List<ProductAttributeValueConnection>()
                     {
+                         //a non fixed value attr
                          new ProductAttributeValueConnection()
                          {
-                             ProductAttributeValueId = processorValueId
+                             ProductAttributeValue = new ProductAttributeStringValue()
+                             {
+                                 StringValue = r.Next(0,100000).ToString(),
+                                 AttributeId = category.Attributes.Single(e => e.Name == "non-fixed string").Id
+                             }
+                         },
+                         // a fixed value attr 
+                         new ProductAttributeValueConnection()
+                         {
+                              ProductAttributeValueId = chosenFixedAttrValue.Id
                          }
-                    }
+                    },
+                    CreatorId = creatorId,                 
+                    SmallestPrice = r.Next(0, 1000)
                 };
-                context.Products.Add(computer);
+                productsToBeAdded.Add(product);
+
+                if (i % 200 == 0)
+                {
+                    context.AddRange(productsToBeAdded);                    
+                    context.SaveChanges();
+                    productsToBeAdded = new List<Product>();
+                }
             }
+
+            context.SaveChanges();
+            return context;
         }
 
         private static ApplicationDbContext CreateReviews(this ApplicationDbContext context, int numberOfReviews)

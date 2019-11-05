@@ -18,6 +18,6 @@ namespace ProductRating.Bll.Dtos.Product
 
         public long? Price { get; set; }
 
-        public long Score { get; set; }
+        public double Score { get; set; }
     }
 }
