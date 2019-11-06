@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Enum;
 using ProductRating.Bll.Dtos.Users;
 using ProductRating.Bll.ServiceInterfaces;
 using ProductRating.Common;
 using ProductRating.Dal;
-using ProductRating.Dal.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.Services
@@ -24,8 +21,8 @@ namespace ProductRating.Bll.Services
         public async Task<List<UserManageHeaderDto>> AdminGetUsers(UserManageFilterDto filter, PaginationDto pagination)
         {
             var ownerRole = await context.Roles.SingleAsync(e => e.Name == RoleNames.SHOP_OWNER_ROLE);
-            var customerRole = await context.Roles.SingleAsync(e => e.Name == RoleNames.USER_ROLE);         
-                        
+            var customerRole = await context.Roles.SingleAsync(e => e.Name == RoleNames.USER_ROLE);
+
             var query = context.Users
                 .Where(e => context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id || r.RoleId == customerRole.Id))
                 .AsQueryable();
@@ -41,7 +38,7 @@ namespace ProductRating.Bll.Services
                 query = query.Where(e => e.NickName.ToUpper().Contains(filter.NickName.ToUpper()));
             }
             if (filter.IsLockedOut != null)
-            {               
+            {
                 query = filter.IsLockedOut.Value
                     ? query.Where(e => e.LockoutEnd != null && e.LockoutEnd > now)
                     : query.Where(e => e.LockoutEnd == null || e.LockoutEnd <= now);
@@ -50,7 +47,7 @@ namespace ProductRating.Bll.Services
             if (filter.Role != null)
             {
                 query = filter.Role == Role.WebshopOwner
-                    ? query.Where(e => context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id ))
+                    ? query.Where(e => context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id))
                     : query.Where(e => context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == customerRole.Id));
             }
 
@@ -60,7 +57,7 @@ namespace ProductRating.Bll.Services
                 NickName = e.NickName,
                 Email = e.Email,
                 IsLockedOut = e.LockoutEnd > now,
-                Role = context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id) 
+                Role = context.UserRoles.Where(d => d.UserId == e.Id).Any(r => r.RoleId == ownerRole.Id)
                     ? Role.WebshopOwner.ToString()
                     : Role.Customer.ToString()
             }).ToListAsync();

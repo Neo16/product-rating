@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProductRating.Bll.Dtos.Profile;
 using ProductRating.Bll.Exceptions;
@@ -9,25 +7,23 @@ using ProductRating.Common;
 using ProductRating.Dal;
 using ProductRating.Dal.Model.Identity;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.Services
 {
     public class ProfileService : ServiceBase, IProfileService
     {
-      
+
         private readonly MapperConfiguration mapperConfiguration;
-        private readonly IMapper mapper; 
+        private readonly IMapper mapper;
 
         public ProfileService(
             IMapper mapper,
             ApplicationDbContext context,
             MapperConfiguration mapperConfiguration)
-            :base(context)
-        {          
+            : base(context)
+        {
             this.mapperConfiguration = mapperConfiguration;
             this.mapper = mapper;
         }
@@ -38,7 +34,7 @@ namespace ProductRating.Bll.Services
             var adminRole = await context.Set<ApplicationRole>().SingleAsync(e => e.Name == RoleNames.ADMIN_ROLE);
 
             var user = await context.Users
-                .Include(e => e.Avatar)                
+                .Include(e => e.Avatar)
                 .Where(e => e.Id == UserId)
                 .SingleOrDefaultAsync();
 
@@ -47,12 +43,13 @@ namespace ProductRating.Bll.Services
                 return null;
             }
 
-            var profile = mapper.Map<ProfileDto>(user); 
+            var profile = mapper.Map<ProfileDto>(user);
             if (context.UserRoles.Where(d => d.UserId == user.Id).Any(e => e.RoleId == adminRole.Id))
             {
                 profile.Role = "Administrator";
             }
-            else if(context.UserRoles.Where(d => d.UserId == user.Id).Any(e => e.RoleId == ownerRole.Id)) {
+            else if (context.UserRoles.Where(d => d.UserId == user.Id).Any(e => e.RoleId == ownerRole.Id))
+            {
                 profile.Role = "Webshop owner";
             }
             else
@@ -60,12 +57,12 @@ namespace ProductRating.Bll.Services
                 profile.Role = "Customer";
             }
 
-            return profile;                    
+            return profile;
         }
 
         public async Task UpdateProfile(Guid UserId, EditProfileDto profile)
         {
-            var user = await context.Users             
+            var user = await context.Users
                 .SingleAsync(e => e.Id == UserId);
 
             if (user == null)
@@ -75,9 +72,10 @@ namespace ProductRating.Bll.Services
 
             user.NickName = profile.NickName;
             user.Email = profile.Email;
-            if (profile.PictureId != null){
+            if (profile.PictureId != null)
+            {
                 user.AvatarId = profile.PictureId;
-            }      
+            }
             user.Nationality = profile.Nationality;
             user.Introduction = profile.Introduction;
 

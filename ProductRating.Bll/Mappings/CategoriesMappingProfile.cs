@@ -12,7 +12,7 @@ namespace ProductRating.Bll.Mappings
     public class CategoriesMappingProfile : Profile
     {
         public CategoriesMappingProfile()
-        {    
+        {
             this.CreateMap<Category, CategoryHeaderDto>()
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
@@ -21,7 +21,7 @@ namespace ProductRating.Bll.Mappings
             this.CreateMap<Category, CategoryManageHeaderDto>()
                 .ForMember(e => e.CreatorId, e => e.MapFrom(f => f.CreatorId))
                 .ForMember(e => e.ParentName, e => e.MapFrom(f => f.Parent.Name))
-                .ForMember(e => e.AttributeNames, e => e.MapFrom(f => string.Join(", ",f.Attributes.Select(a => a.Name).ToArray())))              
+                .ForMember(e => e.AttributeNames, e => e.MapFrom(f => string.Join(", ", f.Attributes.Select(a => a.Name).ToArray())))
                 .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
                 .ForMember(e => e.Name, e => e.MapFrom(f => f.Name))
                 .ForMember(e => e.NumOfProducts, e => e.MapFrom(f => f.Products.Count));

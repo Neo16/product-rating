@@ -125,7 +125,7 @@ namespace ProductRating.Bll.Services
             }
 
             //3. Régi attribútumok frissítése.
-            foreach(var attr in updatedDbCategory.Attributes)
+            foreach (var attr in updatedDbCategory.Attributes)
             {
                 var oldAttr = oldDbCategory.Attributes
                     .Where(e => e.Id == attr.Id)
@@ -136,9 +136,9 @@ namespace ProductRating.Bll.Services
                     //3.1 Attribútum név frisítése  
                     oldAttr.Name = attr.Name;
                     if (attr.HasFixedValues)
-                    {                                         
+                    {
                         UpdateAttributeValues(oldAttr, attr);
-                    }                    
+                    }
                 }
             }
 
@@ -268,8 +268,8 @@ namespace ProductRating.Bll.Services
             mappedCategory.Attributes.SelectMany(e => e.Values)
                 .Select(e => e.Editable = false);
 
-            return mappedCategory;              
-              
+            return mappedCategory;
+
         }
 
         public async Task<List<CategoryManageHeaderDto>> AdminGetCategories(ManageCategoryFilterDto filter, Guid userId, PaginationDto pagination)
@@ -300,10 +300,10 @@ namespace ProductRating.Bll.Services
             var categories = await query.ToListAsync();
 
             return categories
-                .Select(e => mapper.Map<CategoryManageHeaderDto>(e))     
+                .Select(e => mapper.Map<CategoryManageHeaderDto>(e))
                 .Select(e => { e.IsCreatedByMe = e.CreatorId == userId; return e; })
-                .ToList();     
-            
+                .ToList();
+
 
         }
     }

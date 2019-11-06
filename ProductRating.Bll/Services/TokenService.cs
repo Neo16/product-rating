@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ProductRating.Bll.Services
 {
-    public class TokenService : ServiceBase, ITokenService 
+    public class TokenService : ServiceBase, ITokenService
     {
         private readonly JwtSecurityTokenHandler accessTokenHandler;
         private readonly UserManager<ApplicationUser> userManager;
@@ -37,7 +37,7 @@ namespace ProductRating.Bll.Services
         }
 
         public async Task<string> GetTokenForUserAsync(ApplicationUser user)
-        {           
+        {
             var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Issuer = "productraing.example.com",
@@ -60,5 +60,5 @@ namespace ProductRating.Bll.Services
                 return null;
             }
         }
-    }   
+    }
 }

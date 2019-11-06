@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Bll.Dtos.Review
 {
-    public class TextReviewWithProductInfoDto 
+    public class TextReviewWithProductInfoDto
     {
         public Guid Id { get; set; }
 

@@ -3,5 +3,5 @@
     public class ProductAttributeIntValue : ProductAttributeValue
     {
         public int IntValue { get; set; }
-    }   
+    }
 }

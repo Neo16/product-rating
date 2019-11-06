@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProductRating.Dal.Model.Entities.Products;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Dal.Configure
 {
@@ -17,7 +14,7 @@ namespace ProductRating.Dal.Configure
             builder
               .HasMany(e => e.ProductConnctions)
               .WithOne(e => e.ProductAttributeValue)
-              .HasForeignKey(e => e.ProductAttributeValueId);          
+              .HasForeignKey(e => e.ProductAttributeValueId);
         }
     }
 }

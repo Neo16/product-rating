@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
 {
@@ -9,7 +8,7 @@ namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
     /// - Create Category with attributes 
     /// </summary>
     public class CreateEditCategoryAttributeDto
-    {      
+    {
         public string AttributeName { get; set; }
 
         public bool HasFixedValues { get; set; }

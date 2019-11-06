@@ -47,8 +47,8 @@ namespace ProductRating.UnitTest
 
         public ManageCategoriesTest(
             ApplicationDbContext context,
-            ICategoryService categoryService): base(context)
-        {            
+            ICategoryService categoryService) : base(context)
+        {
             this.categoryService = categoryService;
         }
 
@@ -148,7 +148,7 @@ namespace ProductRating.UnitTest
                .ThenInclude(e => e.Values)
                .Single(e => e.Id == insertedCategoryId);
 
-            Assert.Contains(updatedDbCategory.Attributes, e => e.Name == "New Attribute");   
+            Assert.Contains(updatedDbCategory.Attributes, e => e.Name == "New Attribute");
             Assert.Contains(context.ProductAttributeValues.OfType<ProductAttributeStringValue>(),
                 e => e.StringValue == "New Value Option");
         }

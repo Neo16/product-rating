@@ -10,7 +10,7 @@ namespace ProductRating.Bll
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(ProductService).Assembly)                 
+            builder.RegisterAssemblyTypes(typeof(ProductService).Assembly)
                   .Where(t => t.IsSubclassOf(typeof(ServiceBase)))
                   .AsImplementedInterfaces();
 
@@ -19,7 +19,8 @@ namespace ProductRating.Bll
                 .Where(t => typeof(Profile).IsAssignableFrom(t) && !t.IsAbstract && t.IsPublic)
                 .As<Profile>();
 
-            builder.Register(c => new MapperConfiguration(cfg => {
+            builder.Register(c => new MapperConfiguration(cfg =>
+            {
                 foreach (var profile in c.Resolve<IEnumerable<Profile>>())
                 {
                     cfg.AddProfile(profile);

@@ -23,7 +23,7 @@ namespace ProductRating.Bll.Mappings
                .ForMember(e => e.StartOfProduction, e => e.MapFrom(f => f.StartOfProduction))
                .ForMember(e => e.EndOfProduction, e => e.MapFrom(f => f.EndOfProduction))
                .ForMember(e => e.Pictures, e => e.MapFrom(f => f.Pictures.Select(g => g.Picture)))
-               .ForMember(e => e.ThumbnailPicture, e => e.MapFrom(f => f.ThumbnailPicture))           
+               .ForMember(e => e.ThumbnailPicture, e => e.MapFrom(f => f.ThumbnailPicture))
                .ForMember(e => e.IntAttributes,
                     e => e.MapFrom(f => f.PropertyValueConnections
                         .Select(g => g.ProductAttributeValue)
@@ -62,10 +62,10 @@ namespace ProductRating.Bll.Mappings
                 .ForMember(e => e.ThumbnailImage, e => e.MapFrom(f => Convert.ToBase64String(f.ThumbnailPicture.Data)))
                 .ForMember(e => e.ScoreValue, e => e.MapFrom(f => f.ScoreValue));
 
-             this.CreateMap<ProductAttributeValue, AttributeBase>()
-                 .ForMember(e => e.AttributeName, e => e.MapFrom(f => f.Attribute.Name))
-                 .ForMember(e => e.AttributeId, e => e.MapFrom(f => f.Attribute.Id))
-                 .ForMember(e => e.ValueId, e => e.MapFrom(f => f.Id));
+            this.CreateMap<ProductAttributeValue, AttributeBase>()
+                .ForMember(e => e.AttributeName, e => e.MapFrom(f => f.Attribute.Name))
+                .ForMember(e => e.AttributeId, e => e.MapFrom(f => f.Attribute.Id))
+                .ForMember(e => e.ValueId, e => e.MapFrom(f => f.Id));
 
             this.CreateMap<ProductAttributeIntValue, IntAttribute>()
                .IncludeBase<ProductAttributeValue, AttributeBase>()
@@ -91,11 +91,11 @@ namespace ProductRating.Bll.Mappings
                .ForMember(e => e.CategoryName, e => e.MapFrom(f => f.Category.Name))
                .ForMember(e => e.CreatorId, e => e.MapFrom(f => f.CreatorId))
                .ForMember(e => e.SellerIds, e => e.MapFrom(f => f.Offers.Select(g => g.SellerId)))
-               .ForMember(e => e.CreatedAt, e => e.MapFrom(f => f.CreatedAt.ToString("yyyy.MM.dd HH:mm")));            
+               .ForMember(e => e.CreatedAt, e => e.MapFrom(f => f.CreatedAt.ToString("yyyy.MM.dd HH:mm")));
 
             this.CreateMap<Brand, BrandHeaderDto>()
                .ForMember(e => e.Id, e => e.MapFrom(f => f.Id))
-               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name));              
+               .ForMember(e => e.Name, e => e.MapFrom(f => f.Name));
         }
     }
 }

@@ -14,14 +14,14 @@ namespace ProductRating.Dal
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
-        
+
         public virtual DbSet<Product> Products { get; set; }
 
         public virtual DbSet<Brand> Brands { get; set; }
 
         public virtual DbSet<Category> Categories { get; set; }
 
-        public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }    
+        public virtual DbSet<ProductAttribute> ProductAttributes { get; set; }
 
         public virtual DbSet<ProductAttributeValue> ProductAttributeValues { get; set; }
 
@@ -79,7 +79,7 @@ namespace ProductRating.Dal
                 builder.ApplyConfiguration(configurationInstance);
             }
             #endregion
-            
+
         }
     }
 }

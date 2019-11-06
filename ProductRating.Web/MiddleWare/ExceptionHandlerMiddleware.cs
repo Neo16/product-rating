@@ -22,7 +22,7 @@ namespace ProductRating.Web.MiddleWare
         }
 
         public async Task Invoke(HttpContext context)
-        {         
+        {
             try
             {
                 await next(context);

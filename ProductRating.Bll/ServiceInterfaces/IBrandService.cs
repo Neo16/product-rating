@@ -9,7 +9,7 @@ namespace ProductRating.Bll.ServiceInterfaces
     public interface IBrandService
     {
         Task<List<BrandManageHeaderDto>> AdminGetBrands(ManageBrandFilterDto filter, Guid userId, PaginationDto pagination);
-           
+
         Task<CreateEditBrandDto> GetBrandForUpdate(Guid brandId);
 
         Task<Guid> CreateBrand(CreateEditBrandDto brand, Guid creatorId);

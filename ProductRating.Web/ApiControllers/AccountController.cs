@@ -32,7 +32,7 @@ namespace ProductRating.Web.ApiControllers
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (!ModelState.IsValid)
-            {                
+            {
                 return BadRequest("Mandatory fields should be filled.");
             }
             var passwordValidator = new PasswordValidator<ApplicationUser>();
@@ -40,7 +40,7 @@ namespace ProductRating.Web.ApiControllers
             if (!passWordResult.Succeeded)
             {
                 return BadRequest(passWordResult.Errors.First().Description);
-            }          
+            }
 
             var dbUser = new ApplicationUser()
             {
@@ -62,7 +62,7 @@ namespace ProductRating.Web.ApiControllers
                     case Role.WebshopOwner:
                         await userManager.AddToRoleAsync(dbUser, RoleNames.SHOP_OWNER_ROLE);
                         break;
-                }                
+                }
                 await userManager.AddPasswordAsync(dbUser, model.Password);
                 return Ok();
             }

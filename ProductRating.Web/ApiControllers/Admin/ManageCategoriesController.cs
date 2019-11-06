@@ -17,7 +17,7 @@ namespace ProductRating.Web.ApiControllers.Admin
     public class ManageCategoriesController : Controller
     {
         private readonly ICategoryService categoryService;
-        private readonly CurrentUserService currentUserService;    
+        private readonly CurrentUserService currentUserService;
 
         public ManageCategoriesController(
             ICategoryService categoryService,
@@ -30,7 +30,7 @@ namespace ProductRating.Web.ApiControllers.Admin
         [HttpPost("find")]
         [ProducesResponseType(typeof(List<CategoryManageHeaderDto>), 200)]
         public async Task<IActionResult> ListCategories([FromBody] ManageCategoryFilterDto filter, [FromQuery] PaginationDto pagination)
-        {            
+        {
             var categories = await categoryService.AdminGetCategories(filter, currentUserService.User.Id, pagination);
             return Ok(categories);
         }
@@ -38,7 +38,7 @@ namespace ProductRating.Web.ApiControllers.Admin
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateEditCategoryDto category)
         {
-            var id =  await categoryService.CreateCategory(category);
+            var id = await categoryService.CreateCategory(category);
             return Ok(id);
         }
 

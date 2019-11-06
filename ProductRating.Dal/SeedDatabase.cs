@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProductRating.Common;
-using ProductRating.Dal.Model.Entities;
 using ProductRating.Dal.Model.Entities.Products;
 using ProductRating.Dal.Model.Entities.Products.Attributes;
 using ProductRating.Dal.Model.Entities.Reviews;
@@ -9,7 +8,6 @@ using ProductRating.Dal.Model.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ProductRating.Dal
 {
@@ -35,7 +33,7 @@ namespace ProductRating.Dal
                                               //  .CreateProducts()
                     .MassCreateProducts(100000)
                     .CreateReviews(200);
-                    //CreateScrores(1);
+                //CreateScrores(1);
             }
         }
 
@@ -276,7 +274,7 @@ namespace ProductRating.Dal
                 };
 
                 categories.Add(category);
-               
+
 
                 if (i % 100 == 0)
                 {
@@ -285,6 +283,7 @@ namespace ProductRating.Dal
                     categories = new List<Category>();
                 }
             }
+            context.Categories.AddRange(categories);
             context.SaveChanges();
             return context;
         }
@@ -301,7 +300,7 @@ namespace ProductRating.Dal
                 brands.Add(brand);
             }
 
-            context.Brands.AddRange(brands);           
+            context.Brands.AddRange(brands);
             context.SaveChanges();
             return context;
         }
@@ -440,6 +439,7 @@ namespace ProductRating.Dal
             var r = new Random();
             var creatorId = context.Users.Single(e => e.NickName == "David Owner").Id;
 
+            var productsToBeAdded = new List<Product>();
             for (int i = 0; i < count; i++)
             {
                 int catCount = context.Categories.Count();
@@ -456,7 +456,7 @@ namespace ProductRating.Dal
                 int randomBrandIndex = r.Next(0, brandCount - 1);
                 var brand = context.Brands.Skip(randomBrandIndex).First();
 
-                var productsToBeAdded = new List<Product>();
+
                 var product = new Product()
                 {
                     CreatedAt = DateTime.Now,
@@ -480,19 +480,20 @@ namespace ProductRating.Dal
                               ProductAttributeValueId = chosenFixedAttrValue.Id
                          }
                     },
-                    CreatorId = creatorId,                 
+                    CreatorId = creatorId,
                     SmallestPrice = r.Next(0, 1000)
                 };
                 productsToBeAdded.Add(product);
-
-                if (i % 200 == 0)
+                if (i % 500 == 0)
                 {
-                    context.AddRange(productsToBeAdded);                    
+                    Console.WriteLine($"Added {i} products");
+                    context.AddRange(productsToBeAdded);
                     context.SaveChanges();
                     productsToBeAdded = new List<Product>();
                 }
             }
 
+            context.AddRange(productsToBeAdded);
             context.SaveChanges();
             return context;
         }

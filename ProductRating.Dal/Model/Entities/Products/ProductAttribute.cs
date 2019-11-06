@@ -11,9 +11,9 @@ namespace ProductRating.Dal.Model.Entities.Products
 
         public Guid CategoryId { get; set; }
 
-        public string Name  { get; set; }
+        public string Name { get; set; }
 
-        public bool HasFixedValues  { get; set; }
+        public bool HasFixedValues { get; set; }
 
         public ICollection<ProductAttributeValue> Values { get; set; }
     }

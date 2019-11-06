@@ -1,8 +1,5 @@
 ﻿using ProductRating.Dal;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
 
 namespace ProductRating.UnitTest
 {
@@ -12,7 +9,7 @@ namespace ProductRating.UnitTest
 
         public DatabaseFixture(ApplicationDbContext context)
         {
-            this.context = context;           
+            this.context = context;
         }
 
         public void Dispose()

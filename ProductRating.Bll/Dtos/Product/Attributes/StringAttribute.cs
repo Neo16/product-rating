@@ -2,6 +2,6 @@
 {
     public class StringAttribute : AttributeBase
     {
-        public string Value  { get; set; }
+        public string Value { get; set; }
     }
 }

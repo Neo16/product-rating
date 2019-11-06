@@ -35,7 +35,7 @@ namespace ProductRating.Web.ApiControllers
             var isMine = userId == null;
             if (isMine)
             {
-                userId = currentUserService.User.Id;                
+                userId = currentUserService.User.Id;
             }
 
             var profile = await profileService.GetProfileByUserId(userId.Value);
@@ -47,7 +47,7 @@ namespace ProductRating.Web.ApiControllers
 
             return Ok(profile);
         }
-       
+
 
         [HttpPut("update-profile")]
         public async Task<IActionResult> UpdateMyProfile([FromBody] EditProfileDto profile)
@@ -59,7 +59,7 @@ namespace ProductRating.Web.ApiControllers
             }
             return BadRequest();
         }
-       
+
 
         [HttpGet("{userId}/reviews")]
         public async Task<IActionResult> Reviews(Guid userId)

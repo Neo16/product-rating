@@ -8,7 +8,7 @@ namespace ProductRating.Dal.Configure
     {
         public void Configure(EntityTypeBuilder<ProductAttributeValueConnection> builder)
         {
-            builder.HasKey(e => new { e.ProductAttributeValueId, e.ProductId });           
+            builder.HasKey(e => new { e.ProductAttributeValueId, e.ProductId });
         }
     }
 }

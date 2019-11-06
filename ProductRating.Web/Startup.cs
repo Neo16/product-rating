@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -55,14 +54,14 @@ namespace ProductRating.Web
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
-                {                  
+                {
                     options.RequireHttpsMetadata = false;
                     options.SaveToken = true;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(ConfigurationSectionToken.Get<TokenConfiguration>().SigningKey)
-                        ),                                            
+                        ),
                         ValidateAudience = false,
                         ValidIssuer = "productraing.example.com"
                     };
@@ -135,7 +134,7 @@ namespace ProductRating.Web
                        .AllowCredentials()
                        .AllowAnyOrigin()
             );
-            app.UseStaticFiles();        
+            app.UseStaticFiles();
             app.UseMiddleware<ApiKeyMiddleware>();
             app.UseMiddleware<ExceptionHandlerMiddleware>();
             app.UseCookiePolicy();

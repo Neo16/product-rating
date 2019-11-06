@@ -1,7 +1,4 @@
-﻿using ProductRating.Bll.Dtos.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace ProductRating.Bll.Dtos.Users
 {

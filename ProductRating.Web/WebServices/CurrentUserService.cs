@@ -8,7 +8,7 @@ namespace ProductRating.Web.WebServices
     public class CurrentUserService
     {
         private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly UserManager<ApplicationUser> userManager; 
+        private readonly UserManager<ApplicationUser> userManager;
         public ApplicationUser User { get; }
 
         public CurrentUserService(
@@ -17,14 +17,14 @@ namespace ProductRating.Web.WebServices
         {
             this.httpContextAccessor = httpContextAccessor;
             this.userManager = userManager;
-            
-            this.User = GetCurrentUser().Result;          
+
+            this.User = GetCurrentUser().Result;
         }
 
         public async Task<ApplicationUser> GetCurrentUser()
         {
             var userClaimsPrincipal = httpContextAccessor.HttpContext.User;
-            return await userManager.GetUserAsync(userClaimsPrincipal);          
+            return await userManager.GetUserAsync(userClaimsPrincipal);
         }
     }
 }

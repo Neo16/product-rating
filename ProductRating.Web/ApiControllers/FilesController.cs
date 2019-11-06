@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ProductRating.Bll.ServiceInterfaces;
-using System.Net;
-using System.Threading.Tasks;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProductRating.Bll.Dtos;
+using ProductRating.Bll.ServiceInterfaces;
+using System.Threading.Tasks;
 
 namespace ProductRating.Web.ApiControllers
 {
-    [ApiController] 
+    [ApiController]
     [Route("files")]
     public class FilesController : Controller
     {

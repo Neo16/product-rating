@@ -18,14 +18,14 @@ namespace ProductRating.UnitTest
     [UseAutofacTestFramework]
     public class ManageProductsTest : DatabaseFixture
     {
-        private readonly IProductService productService;    
- 
+        private readonly IProductService productService;
+
 
         public ManageProductsTest(
             ApplicationDbContext context,
-            IProductService productService ) :base(context)
-        {        
-            this.productService = productService;          
+            IProductService productService) : base(context)
+        {
+            this.productService = productService;
         }
 
         private CreateEditProductDto MakeDtoForInsert()
@@ -50,7 +50,7 @@ namespace ProductRating.UnitTest
             {
                 CategoryId = category.Id,
                 //TODO:
-                EndOfProduction = new Bll.Dtos.SimpleDateData() {Day = now.Day, Month = now.Month, Year = now.Year },
+                EndOfProduction = new Bll.Dtos.SimpleDateData() { Day = now.Day, Month = now.Month, Year = now.Year },
                 StartOfProduction = new Bll.Dtos.SimpleDateData() { Day = start.Day, Month = start.Month, Year = start.Year },
                 Name = "ExampleProduct",
                 StringAttributes = new List<StringAttribute>() {
@@ -101,7 +101,7 @@ namespace ProductRating.UnitTest
         {
             context.Database.EnsureDeleted();
             var insertedProductId = await productService.CreateProduct(MakeDtoForInsert());
-            var productToChangeDto = await productService.GetProductForUpdate(insertedProductId);           
+            var productToChangeDto = await productService.GetProductForUpdate(insertedProductId);
         }
 
         [Fact]

@@ -11,7 +11,7 @@ namespace ProductRating.Bll.Dtos.Category.CategoryAttributes
     {
         public Guid AttributeId { get; set; }
 
-        public string AttributeName { get; set; } 
+        public string AttributeName { get; set; }
 
         public bool HasFixedValues { get; set; }
 

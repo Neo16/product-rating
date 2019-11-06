@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using ProductRating.Dal.Model.Entities;
 using ProductRating.Dal.Model.Entities.Products;
 using ProductRating.Dal.Model.Entities.Reviews;
+using System;
+using System.Collections.Generic;
 
 namespace ProductRating.Dal.Model.Identity
 {
@@ -20,7 +19,7 @@ namespace ProductRating.Dal.Model.Identity
 
         public string Introduction { get; set; }
 
-        public string Address { get; set; }      
+        public string Address { get; set; }
 
         public ICollection<TextReview> TextReviews { get; set; }
 

@@ -17,7 +17,7 @@ namespace ProductRating.Web.ApiControllers.Admin
     public class ManageBrandsController : Controller
     {
         private readonly IBrandService brandService;
-        private readonly CurrentUserService currentUserService;    
+        private readonly CurrentUserService currentUserService;
 
         public ManageBrandsController(
             IBrandService brandService,
@@ -26,7 +26,7 @@ namespace ProductRating.Web.ApiControllers.Admin
             this.brandService = brandService;
             this.currentUserService = currentUserService;
         }
-    
+
         [HttpPost("find")]
         [ProducesResponseType(typeof(List<BrandManageHeaderDto>), 200)]
         public async Task<IActionResult> ListBrands([FromBody] ManageBrandFilterDto filter, [FromQuery] PaginationDto pagination)
@@ -39,7 +39,7 @@ namespace ProductRating.Web.ApiControllers.Admin
         public async Task<IActionResult> CreateBrand(CreateEditBrandDto brand)
         {
             var creatorId = (await currentUserService.GetCurrentUser()).Id;
-            var id =  await brandService.CreateBrand(brand, creatorId);
+            var id = await brandService.CreateBrand(brand, creatorId);
             return Ok(id);
         }
 

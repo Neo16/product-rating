@@ -85,6 +85,6 @@ namespace ProductRating.Web.ApiControllers.Admin
         {
             await productService.DeleteProduct(productId, currentUserService.User.Id, User.IsInRole(RoleNames.ADMIN_ROLE));
             return Ok();
-        }    
+        }
     }
 }

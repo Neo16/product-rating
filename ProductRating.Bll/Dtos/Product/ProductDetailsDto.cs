@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Bll.Dtos.Product
 {
@@ -18,7 +17,7 @@ namespace ProductRating.Bll.Dtos.Product
         public Guid CategoryId { get; set; }
 
         public ICollection<AttributeBase> Attributes { get; set; }
-        
+
         public List<string> Pictures { get; set; }
 
         public string ThumbnailImage { get; set; }

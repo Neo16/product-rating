@@ -17,11 +17,11 @@ namespace ProductRating.Web.ApiControllers.Admin
     {
         private readonly IUserService userService;
 
-        public ManageUsersController(IUserService userService) 
+        public ManageUsersController(IUserService userService)
         {
             this.userService = userService;
         }
-   
+
         [HttpPost("find")]
         [ProducesResponseType(typeof(List<UserManageHeaderDto>), 200)]
         public async Task<IActionResult> Listusers([FromBody] UserManageFilterDto filter, [FromQuery] PaginationDto pagination)
@@ -30,8 +30,8 @@ namespace ProductRating.Web.ApiControllers.Admin
             return Ok(users);
         }
 
-        [HttpPost("{userId}/lockout")]     
-        public async Task<IActionResult> LockoutUser(Guid userId )
+        [HttpPost("{userId}/lockout")]
+        public async Task<IActionResult> LockoutUser(Guid userId)
         {
             await userService.LockoutUser(userId);
             return Ok();

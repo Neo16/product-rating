@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProductRating.Bll.Dtos.Enum
+﻿namespace ProductRating.Bll.Dtos.Enum
 {
     public enum Role
     {
         Customer = 1,
-        WebshopOwner = 2        
+        WebshopOwner = 2
     }
 }

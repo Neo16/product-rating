@@ -1,7 +1,6 @@
 ﻿using ProductRating.Bll.Dtos.Review;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.ServiceInterfaces
@@ -24,6 +23,6 @@ namespace ProductRating.Bll.ServiceInterfaces
 
         Task DownVoteReview(Guid userId, Guid reviewId);
 
-        Task<double?> GetScoreOfProduct(Guid productId);       
+        Task<double?> GetScoreOfProduct(Guid productId);
     }
 }

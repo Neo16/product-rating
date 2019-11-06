@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProductRating.Bll.Dtos;
 using ProductRating.Bll.Dtos.Category;
 using ProductRating.Bll.Dtos.Category.CategoryAttributes;
-using ProductRating.Bll.Dtos.Product;
-using ProductRating.Bll.Dtos.Product.Attributes;
 using ProductRating.Bll.ServiceInterfaces;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -38,10 +34,10 @@ namespace ProductRating.Controllers
             //}, 
             //new PaginationDto());
 
-           await categoryService.CreateCategory(new CreateEditCategoryDto()
+            await categoryService.CreateCategory(new CreateEditCategoryDto()
             {
-               Name = "Játékok",
-               Attributes = new List<CreateEditCategoryAttributeDto>()
+                Name = "Játékok",
+                Attributes = new List<CreateEditCategoryAttributeDto>()
                {
                    new CreateEditCategoryAttributeDto()
                    {
@@ -64,7 +60,7 @@ namespace ProductRating.Controllers
                    }
                }
             });
-            
+
             return Ok();
         }
     }

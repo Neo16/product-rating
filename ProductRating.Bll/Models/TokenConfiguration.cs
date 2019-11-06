@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ProductRating.Bll.Models
+﻿namespace ProductRating.Bll.Models
 {
     public class TokenConfiguration
     {

@@ -44,16 +44,16 @@ namespace ProductRating.Bll.Services
 
         public async Task<List<SubscriptionDto>> GetSubscriptions(Guid userId)
         {
-           var result = await context.Subscriptions
-                .Where(e => e.UserId == userId)
-                .Select(e => new SubscriptionDto()
-                {
-                    Id = e.Id,
-                    Key = e.ApiKey,
-                    Url  = e.SiteBaseUrl,
-                    DayLimit = e.DayLimit                    
-                })
-                .ToListAsync();
+            var result = await context.Subscriptions
+                 .Where(e => e.UserId == userId)
+                 .Select(e => new SubscriptionDto()
+                 {
+                     Id = e.Id,
+                     Key = e.ApiKey,
+                     Url = e.SiteBaseUrl,
+                     DayLimit = e.DayLimit
+                 })
+                 .ToListAsync();
 
             return result;
         }

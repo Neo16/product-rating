@@ -24,7 +24,7 @@ namespace ProductRating.Web.ApiControllers
         public async Task<IActionResult> GetMainCategories()
         {
             var categories = await categoryService.GetMainCategories();
-            return  Ok(categories);
+            return Ok(categories);
         }
 
         [HttpGet("{categoryId}/subcategories")]

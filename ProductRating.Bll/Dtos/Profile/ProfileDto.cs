@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProductRating.Bll.Dtos.Profile
+﻿namespace ProductRating.Bll.Dtos.Profile
 {
     public class ProfileDto
     {
         public string NickName { get; set; }
-        
+
         public string Email { get; set; }
 
         public PictureDto Avatar { get; set; }
 
-        public string Nationality { get; set; }       
+        public string Nationality { get; set; }
 
-        public string Introduction  { get; set; }
+        public string Introduction { get; set; }
 
         public string Address { get; set; }
 

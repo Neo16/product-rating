@@ -35,7 +35,7 @@ namespace ProductRating.Web.ApiControllers
 
         [HttpGet("{productId}")]
         public async Task<IActionResult> Details(Guid productId)
-        {  
+        {
             Guid? userId = null;
 
             if (currentUserService.User != null)
@@ -46,11 +46,11 @@ namespace ProductRating.Web.ApiControllers
             var productResult = await productService.GetDetails(productId, userId);
             return Ok(productResult);
         }
-        
-        [HttpGet("{productId}/reviews")]      
+
+        [HttpGet("{productId}/reviews")]
         public async Task<IActionResult> Reviews(Guid productId)
         {
-            Guid? userId = null;           
+            Guid? userId = null;
 
             if (currentUserService.User != null)
             {
@@ -82,7 +82,7 @@ namespace ProductRating.Web.ApiControllers
 
         [HttpGet("dummy-json")]
         public IActionResult DummyJson()
-        {           
+        {
             return Ok();
         }
 

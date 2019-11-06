@@ -1,7 +1,4 @@
 ﻿using ProductRating.Dal;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Bll.Services
 {

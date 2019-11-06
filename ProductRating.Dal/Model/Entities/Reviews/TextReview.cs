@@ -7,9 +7,9 @@ namespace ProductRating.Dal.Model.Entities.Reviews
     {
         public Guid Id { get; set; }
 
-        public string Text { get; set; }       
+        public string Text { get; set; }
 
-        public ReviewMood Mood { get; set; }  
+        public ReviewMood Mood { get; set; }
 
         public ICollection<ReviewVote> Votes { get; set; }
 

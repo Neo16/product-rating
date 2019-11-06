@@ -560,8 +560,9 @@ namespace ProductRating.Bll.Services
 
         public async Task<List<ProductHeaderDto>> ListFirstTen()
         {
-            return await context.Products.Take(10)       
-                .Select(e => new ProductHeaderDto() { 
+            return await context.Products.Take(10)
+                .Select(e => new ProductHeaderDto()
+                {
                     Id = e.Id,
                     BrandName = null,
                     Name = e.Name,

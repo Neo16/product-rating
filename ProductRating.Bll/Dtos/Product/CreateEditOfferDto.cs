@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ProductRating.Bll.Dtos.Product
+﻿namespace ProductRating.Bll.Dtos.Product
 {
     public class CreateEditOfferDto
     {

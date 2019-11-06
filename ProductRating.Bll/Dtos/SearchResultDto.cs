@@ -10,8 +10,8 @@ namespace ProductRating.Bll.Dtos
 
         public List<CategoryHeaderDto> Categories { get; set; }
 
-        public List<BrandHeaderDto> Brands { get; set; }      
+        public List<BrandHeaderDto> Brands { get; set; }
 
-        public int TotalNumOfResults  { get; set; }
+        public int TotalNumOfResults { get; set; }
     }
 }

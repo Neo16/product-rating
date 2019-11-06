@@ -19,7 +19,7 @@ namespace ProductRating.Dal.Model.Identity
         /// <summary>
         /// Max number of requests/day with this subscription 
         /// </summary>
-        public long DayLimit  { get; set; }
+        public long DayLimit { get; set; }
 
         /// <summary>
         /// Log of requests 

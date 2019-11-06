@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProductRating.Dal.Model.Entities.Reviews;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ProductRating.Dal.Configure
 {

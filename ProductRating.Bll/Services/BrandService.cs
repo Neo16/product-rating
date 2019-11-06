@@ -9,7 +9,6 @@ using ProductRating.Dal.Model.Entities.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ProductRating.Bll.Services
@@ -31,8 +30,8 @@ namespace ProductRating.Bll.Services
 
         public async Task<List<BrandManageHeaderDto>> AdminGetBrands(ManageBrandFilterDto filter, Guid userId, PaginationDto pagination)
         {
-            var query = context.Brands                
-                 .Include(e => e.Products)       
+            var query = context.Brands
+                 .Include(e => e.Products)
                  .ThenInclude(f => f.Category)
                  .AsQueryable();
 
@@ -63,7 +62,7 @@ namespace ProductRating.Bll.Services
 
         public async Task<Guid> CreateBrand(CreateEditBrandDto brand, Guid creatorId)
         {
-            var dbBrand = new Brand() 
+            var dbBrand = new Brand()
             {
                 Name = brand.Name,
                 CreatorId = creatorId
@@ -100,30 +99,30 @@ namespace ProductRating.Bll.Services
                 {
                     ErrorCode = ErrorCode.InvalidArgument
                 };
-            }           
+            }
 
-            var brand = await context.Brands            
+            var brand = await context.Brands
               .SingleOrDefaultAsync(e => e.Id == brandId);
-            
+
             if (brand != null)
             {
                 context.Brands.Remove(brand);
                 await context.SaveChangesAsync();
-            }           
+            }
         }
 
         public async Task<CreateEditBrandDto> GetBrandForUpdate(Guid brandId)
         {
-            var dbBrand = await context.Brands               
+            var dbBrand = await context.Brands
                 .FirstOrDefaultAsync(e => e.Id == brandId);
-            var mappedCategory = mapper.Map<CreateEditBrandDto>(dbBrand);        
+            var mappedCategory = mapper.Map<CreateEditBrandDto>(dbBrand);
 
             return mappedCategory;
         }
 
         public async Task UpdateBrand(Guid brandId, CreateEditBrandDto brand)
         {
-            var oldDbBrand = await context.Brands             
+            var oldDbBrand = await context.Brands
                 .SingleOrDefaultAsync(e => e.Id == brandId);
 
             if (oldDbBrand == null)
