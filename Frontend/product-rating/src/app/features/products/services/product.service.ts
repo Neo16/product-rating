@@ -7,10 +7,11 @@ import { SearchResult } from 'src/app/models/search/SearchResult';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ProductDetailsData } from 'src/app/models/products/ProductDetailsData';
 import { OfferHeaderData } from 'src/app/models/products/OfferHeaderData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ProductService {
-  private BASE_URL = 'https://localhost:44394';
+  private BASE_URL = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 

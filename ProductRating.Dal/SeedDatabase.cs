@@ -26,12 +26,12 @@ namespace ProductRating.Dal
                     .CreateRoles()
                     .CreateUsers()
                     //.CreateCategories()
-                    .MassCreateBrands(500)
-                    .MassCreateCategories(500)
-                    .MassCreateFixedValues(2) //value per fixed attr
+                    .MassCreateBrands(10)
+                    .MassCreateCategories(10)
+                    .MassCreateFixedValues(5) //value per fixed attr
                                               //  .CreateBrands()
                                               //  .CreateProducts()
-                    .MassCreateProducts(100000)
+                    .MassCreateProducts(100)
                     .CreateReviews(200);
                 //CreateScrores(1);
             }
@@ -276,7 +276,7 @@ namespace ProductRating.Dal
                 categories.Add(category);
 
 
-                if (i % 100 == 0)
+                if (i % 50 == 0)
                 {
                     context.Categories.AddRange(categories);
                     context.SaveChanges();

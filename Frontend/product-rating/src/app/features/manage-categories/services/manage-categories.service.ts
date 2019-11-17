@@ -7,10 +7,11 @@ import { AttributeType } from 'src/app/models/categories/AttributeType';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ManageCategoryFilterData } from 'src/app/models/categories/ManageCategoryFilterData';
 import { CategoryManageHeaderData } from 'src/app/models/categories/CategoryManageHeaderData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ManageCategoriesService {
-  private BASE_URL = 'https://localhost:44394';
+  private BASE_URL = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 

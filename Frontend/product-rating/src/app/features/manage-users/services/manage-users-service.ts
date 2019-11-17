@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { UserManageHeaderData } from 'src/app/models/users/UserManageHeaderData';
 import { ManageUserFilterData } from 'src/app/models/users/ManageUserFilterData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ManageUsersService {
-    private BASE_URL = 'https://localhost:44394';
+    private BASE_URL = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 

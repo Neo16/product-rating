@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CategoryHeader } from 'src/app/models/search/CategoryHeader';
 import { SearchCategoryAttributeData } from 'src/app/models/categories/search/SearchCategoryAttributeData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class HelperService {
-  private BASE_URL = 'https://localhost:44394';
+  private BASE_URL = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
 

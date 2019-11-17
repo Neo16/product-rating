@@ -2,11 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PictureData } from 'src/app/models/PictureData';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable()
 export class PictureService {
-    private BASE_URL = 'https://localhost:44394';
+    private BASE_URL = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 

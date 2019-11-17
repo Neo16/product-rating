@@ -7,10 +7,11 @@ import { ManageProductFilterData } from 'src/app/models/products/ManageProductFi
 import { CreateEditProductData } from 'src/app/models/products/CreateEditProductData';
 import { OfferHeaderData } from 'src/app/models/products/OfferHeaderData';
 import { CreateEditOfferData } from 'src/app/models/products/CreateEditOfferData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ManageProductsService {
-    private BASE_URL = 'https://localhost:44394';
+    private BASE_URL = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 

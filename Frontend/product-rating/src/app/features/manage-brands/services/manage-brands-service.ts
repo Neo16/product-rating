@@ -5,10 +5,11 @@ import { PaginationParams } from 'src/app/models/search/PaginationParams';
 import { ManageBrandFilterData } from 'src/app/models/brands/ManageBrandFilterData';
 import { BrandManageHeaderData } from 'src/app/models/brands/BrandManageHeaderData';
 import { CreateEditBrandData } from 'src/app/models/brands/CreateEditBrandData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ManageBrandsService {
-  private BASE_URL = 'https://localhost:44394';
+  private BASE_URL = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 

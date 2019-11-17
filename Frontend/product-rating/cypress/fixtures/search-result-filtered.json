@@ -1,0 +1,83 @@
+{
+    "products": [      
+      {
+        "id": "0bd86fc0-a986-4b24-50e7-08d76b4045fd",
+        "name": "Dummy Product 2",
+        "brandName": "Brand 7",
+        "categoryName": "Category 8",
+        "thumbnailImage": null,
+        "price": 800,
+        "score": 0
+      }
+    ],
+    "categories": [
+      {
+        "id": "7f58bea4-a131-40b9-658f-08d76b4045be",
+        "name": "Category 2",
+        "numOfProducts": 3
+      },
+      {
+        "id": "02d139be-165f-4915-6595-08d76b4045be",
+        "name": "Category 8",
+        "numOfProducts": 1
+      },
+      {
+        "id": "d04244a1-e9e2-4bb3-6591-08d76b4045be",
+        "name": "Category 4",
+        "numOfProducts": 3
+      },
+      {
+        "id": "8c8be7fb-8960-4877-658e-08d76b4045be",
+        "name": "Category 1",
+        "numOfProducts": 1
+      },
+      {
+        "id": "03cd613b-053e-46fd-6596-08d76b4045be",
+        "name": "Category 9",
+        "numOfProducts": 1
+      },
+      {
+        "id": "0922a0fb-9e91-43d4-6590-08d76b4045be",
+        "name": "Category 3",
+        "numOfProducts": 1
+      },
+      {
+        "id": "bd418e6f-065d-4fb9-6594-08d76b4045be",
+        "name": "Category 7",
+        "numOfProducts": 0
+      },
+      {
+        "id": "67ff80d6-6fb1-4f97-6593-08d76b4045be",
+        "name": "Category 6",
+        "numOfProducts": 0
+      },
+      {
+        "id": "c53445b7-042a-4780-6592-08d76b4045be",
+        "name": "Category 5",
+        "numOfProducts": 0
+      }
+    ],
+    "brands": [
+      {
+        "id": "f81488b4-b07a-4858-66a5-08d76b4045b9",
+        "name": "Brand 1"
+      },
+      {
+        "id": "224ebee5-3e70-4cf1-66a6-08d76b4045b9",
+        "name": "Brand 2"
+      },
+      {
+        "id": "62f559e2-8566-4751-66a7-08d76b4045b9",
+        "name": "Brand 3"
+      },
+      {
+        "id": "25f86dd3-fe4b-4494-66a8-08d76b4045b9",
+        "name": "Brand 4"
+      },
+      {
+        "id": "d6a2d4e6-4cc5-4b5c-66a9-08d76b4045b9",
+        "name": "Brand 5"
+      } 
+    ],
+    "totalNumOfResults": 100
+  }

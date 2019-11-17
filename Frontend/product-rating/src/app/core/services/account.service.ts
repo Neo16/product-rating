@@ -4,10 +4,12 @@ import { User } from '../../models/User';
 import { Observable } from 'rxjs';
 import { LoginResultData } from 'src/app/models/LoginResultData';
 import { RegisterData } from 'src/app/models/RegisterData';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable()
 export class AccountService {
-  private BASE_URL = 'https://localhost:44394';
+  private BASE_URL = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) { }
 

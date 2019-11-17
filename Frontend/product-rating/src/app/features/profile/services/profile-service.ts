@@ -7,10 +7,11 @@ import { ChangePasswordData } from 'src/app/models/ChangePasswordData';
 import { RequireSubscriptionData } from 'src/app/models/profile/RequireSubscriptionData';
 import { SubscriptionData } from 'src/app/models/profile/SubscriptionData';
 import { TextReviewWithProductInfoData } from 'src/app/models/profile/TextReviewWithProductInfoData';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ProfileService {
-    private BASE_URL = 'https://localhost:44394';
+    private BASE_URL = environment.apiBaseUrl;
 
     constructor(private http: HttpClient) { }
 
